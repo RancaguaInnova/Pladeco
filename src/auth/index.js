@@ -49,9 +49,9 @@ export default (type, params) => {
 }
 const permissions = {
   admin: {
-    ...buildFullAccessFor(['users', 'news', 'profile'])
+    ...buildFullAccessFor(['users',  'profile'])
   },
   user: {
-    ...buildFullAccessFor(['news', 'profile'])
+    ...buildFullAccessFor([ 'profile'])
   }
 }

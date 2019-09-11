@@ -6,13 +6,10 @@ import {
   DateField,
   EditButton,
   DeleteButton,
-  ArrayField,
-  SingleFieldList,
-  ChipField,
-  BooleanField
+
 } from 'react-admin'
 export const UserList = props => (
-  <List {...props}>
+  <List {...props} title="Listado de Usuarios">
     <Datagrid rowClick='edit'>
       <TextField source='profile.firstName' label='Nombre' />
       <TextField source='profile.lastName' label='Apellido' />

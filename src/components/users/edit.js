@@ -5,16 +5,13 @@ import {
   Edit,
   SelectInput,
   DisabledInput,
-  ArrayInput,
-  SimpleFormIterator,
-  BooleanInput
+
 } from 'react-admin'
-import { DateInput, TimeInput, DateTimeInput } from 'react-admin-date-inputs'
-import DateFnsUtils from '@date-io/date-fns'
-import esLocale from 'date-fns/locale/es'
+import { DateInput } from 'react-admin-date-inputs'
+
 
 const UserEdit = props => (
-  <Edit {...props}>
+  <Edit {...props} title="Editando usuario">
     <SimpleForm>
       <DisabledInput source='id' />
       <TextInput source='profile.firstName' label='Nombre' />

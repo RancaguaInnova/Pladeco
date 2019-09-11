@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Admin, Resource, ListGuesser, ShowGuesser, EditGuesser } from 'react-admin'
-import News from './components/news'
 import Provider from './provider'
 import Theme from './theme'
 import './App.scss'
@@ -13,7 +12,7 @@ import Profile from './components/profile'
 import Users from './components/users'
 import { ResourceWithPermissions } from 'ra-auth-acl'
 
-class App extends Component {
+   class App extends Component {
   render() {
     return (
       <Admin
@@ -29,7 +28,6 @@ class App extends Component {
             <Resource name='users' list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
         */}
         {permissions => [
-          <ResourceWithPermissions name='news' {...News} permissions={permissions} />,
           <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
           <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />
         ]}

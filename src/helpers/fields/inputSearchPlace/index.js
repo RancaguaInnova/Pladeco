@@ -1,40 +1,28 @@
-import { Field } from 'redux-form'
-import { TextInput, SimpleForm, Labeled, addField } from 'react-admin'
+import { TextInput} from 'react-admin'
 import { geocodeByAddress, geocodeByPlaceLocation } from './util'
-
 import PlacesAutocomplete, { getLatLng } from 'react-places-autocomplete'
 import React, { useState, useEffect } from 'react'
 import './style.scss'
-import TextField from '@material-ui/core/TextField'
 
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => (
-  <TextField
-    label={label}
-    error={!!(touched && error)}
-    helperText={touched && error}
-    {...input}
-    {...custom}
-  />
-)
+
 function InputSearchPlace(props) {
   const source = props.source
-  console.log(props)
 
-  const [address, setAddress] = useState('')
-  const [latitude, setLatitude] = useState(-34.1703131)
-  const [longitude, setLongitude] = useState(-70.74064759999999)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [streetName, setStreetName] = useState('')
-  const [streetNumber, setStreetNumber] = useState('')
-  const [departmentNumber, setDepartmentNumber] = useState('')
-  const [city, setCity] = useState('')
-  const [postalCode, setPostalCode] = useState('')
-  const [administrativeAreaLevel1, setAdministrativeAreaLevel1] = useState('')
-  const [administrativeAreaLevel2, setAdministrativeAreaLevel2] = useState('')
-  const [country, setCountry] = useState('')
-  const [formatted_address, setFormatted_address] = useState('')
-  const [place_id, setPlace_id] = useState('')
-  const [componentForm, setComponentForm] = useState({
+  let [address, setAddress] = useState('')
+  let [latitude, setLatitude] = useState(-34.1703131)
+  let [longitude, setLongitude] = useState(-70.74064759999999)
+  let [errorMessage, setErrorMessage] = useState('')
+  let [streetName, setStreetName] = useState('')
+  let [streetNumber, setStreetNumber] = useState('')
+  let [departmentNumber, setDepartmentNumber] = useState('')
+  let [city, setCity] = useState('')
+  let [postalCode, setPostalCode] = useState('')
+  let [administrativeAreaLevel1, setAdministrativeAreaLevel1] = useState('')
+  let [administrativeAreaLevel2, setAdministrativeAreaLevel2] = useState('')
+  let [country, setCountry] = useState('')
+  let [formatted_address, setFormatted_address] = useState('')
+  let [place_id, setPlace_id] = useState('')
+  let [componentForm, setComponentForm] = useState({
     street_number: 'short_name',
     route: 'long_name',
     locality: 'long_name',
@@ -76,15 +64,16 @@ function InputSearchPlace(props) {
                 setDepartmentNumber('')
               }
             } else if (addressType === 'route') {
-              setStreetName(streetName + place.address_components[i][componentForm[addressType]])
+              setStreetName(place.address_components[i][componentForm[addressType]])
             } else if (
               addressType === 'establishment' ||
               addressType === 'park' ||
               addressType === 'point_of_interest' ||
               addressType === 'stadium'
             ) {
-              streetName =
+              setStreetName(
                 place.address_components[i][componentForm[addressType]] + ' - ' + streetName
+              )
             } else if (addressType === 'locality') {
               setCity(place.address_components[i][componentForm[addressType]])
             } else if (addressType === 'postal_code') {
@@ -111,6 +100,7 @@ function InputSearchPlace(props) {
         iniciarMap()
         resolve(1)
       } catch (e) {
+        console.log('error line 119')
         reject(e)
       }
     })
@@ -122,6 +112,7 @@ function InputSearchPlace(props) {
       lng: e.latLng.lng()
     }
     geocodeByPlaceLocation(LatLng).then(res => {
+      console.log('update', res)
       fillInAddress(res[0], 'marker')
     })
   }
@@ -150,7 +141,11 @@ function InputSearchPlace(props) {
     })
     var position = { lat: latitude, lng: longitude }
 
-    var marker = new window.google.maps.Marker({ position: position, map: map, draggable: true })
+    var marker = new window.google.maps.Marker({
+      position: position,
+      map: map,
+      draggable: true
+    })
 
     window.google.maps.event.addListener(marker, 'dragend', update)
   }
@@ -196,95 +191,38 @@ function InputSearchPlace(props) {
           mapa
         </div>
         <div id='infowindow-content'>
-          <img src='' width='16' height='16' id='place-icon' />
+          <img alt='' src='' width='16' height='16' id='place-icon' />
           <div id='place-name' className='title' />
           <div id='place-address' />
         </div>
       </div>
       <div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.streetName'}
-            component={renderTextField}
-            type='text'
-            label='Calle'
-            className='field'
-            parse={streetName}
-          />
+          <TextInput source={source + '.streetName'} defaultValue={streetName} label="Calle" />
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.streetNumber'}
-            component={renderTextField}
-            type='text'
-            className='field'
-            label='Número'
-            options={{ value: '123' }}
-          />
-        </div>
-
-        <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.departmentNumber'}
-            component={renderTextField}
-            type='text'
-            label='Numero de departamento'
-            className='field'
-          />
+          <TextInput source={source + '.streetNumber'} defaultValue={streetNumber} label="Número"/>
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.city'}
-            component={renderTextField}
-            type='text'
-            label='Ciudad'
-            className='field'
-          />
+          <TextInput source={source + '.departmentNumber'} defaultValue={departmentNumber} label="Departamento" />
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.postalCode'}
-            component={renderTextField}
-            type='text'
-            label='Código postal'
-            className='field'
-          />
+          <TextInput source={source + '.city'} defaultValue={city}  label="Ciudad"/>
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.place_id'}
-            component={renderTextField}
-            type='text'
-            label='Id lugar'
-            className='field'
-          />
+          <TextInput source={source + '.postalCode'} defaultValue={postalCode} label="Código Postal"/>
+        </div>
+        <div className='divInput FormInput-input-55 hidden' >
+          <TextInput source={source + '.place_id'} defaultValue={place_id} />
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.longitude'}
-            component={renderTextField}
-            type='text'
-            label='Longitud'
-            className='field'
-          />
+          <TextInput source={source + '.longitude'} defaultValue={longitude} label="Longitud" />
         </div>
         <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.latitude'}
-            component={renderTextField}
-            type='number'
-            label='Latitud'
-            className='field'
-          />
+          <TextInput source={source + '.latitude'} defaultValue={latitude} label="Latitud"/>
         </div>
-        <div className='divInput FormInput-input-55'>
-          <Field
-            name={source + '.formatted_address'}
-            component={renderTextField}
-            type='number'
-            label='Dirección En formato Google'
-            className='field'
-          />
+        <div className='divInput FormInput-input-55' hidden>
+          <TextInput source={source + '.formatted_address'} defaultValue={formatted_address} />
         </div>
       </div>
     </div>
