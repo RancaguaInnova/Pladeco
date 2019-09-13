@@ -1,0 +1,13 @@
+{
+    "vsprettier.endOfLine": "lf",
+    "vsprettier.printWidth": 100,
+    "vsprettier.requireConfig": true,
+    "vsprettier.requirePragma": true,
+    "vsprettier.singleQuote": true,
+    "vsprettier.useEsLint": true,
+    "vsprettier.useStyleLint": true,
+    "vsprettier.useTabs": true,
+    "vsprettier.useTsLint": true,
+    "vsprettier.jsxSingleQuote": true,
+    "prettier.alignObjectProperties": true
+}

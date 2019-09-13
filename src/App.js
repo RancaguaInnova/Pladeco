@@ -12,7 +12,7 @@ import Profile from './components/profile'
 import Users from './components/users'
 import { ResourceWithPermissions } from 'ra-auth-acl'
 
-   class App extends Component {
+class App extends Component {
   render() {
     return (
       <Admin
@@ -27,10 +27,13 @@ import { ResourceWithPermissions } from 'ra-auth-acl'
         {/*    <Resource name='news' {...News} />
             <Resource name='users' list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
         */}
-        {permissions => [
-          <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
-          <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />
-        ]}
+        {permissions => {
+          console.log(permissions)
+          return [
+            <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
+            <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />
+          ]
+        }}
       </Admin>
     )
   }

@@ -9,6 +9,7 @@ import getEnv from './getEnv'
 const env = getEnv()
 
 if (env !== 'local' && window.location.protocol !== 'https:') {
-  window.location.protocol = 'https:'
+       window.location.protocol = 'https:'
 }
-    export default urls[env]
+    
+export default urls[env]

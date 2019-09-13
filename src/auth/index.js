@@ -1,4 +1,5 @@
 import url from '../provider/url'
+import { fetchUtils } from 'react-admin'
 
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
 import { buildFullAccessFor } from 'ra-auth-acl'
@@ -23,7 +24,7 @@ export default (type, params) => {
       })
       .then(({ token }) => {
         localStorage.setItem('token', token)
-        localStorage.setItem('role', 'admin')
+        localStorage.setItem('role', 'prueba')
       })
   }
   if (type === AUTH_LOGOUT) {
@@ -47,11 +48,35 @@ export default (type, params) => {
   }
   return Promise.resolve()
 }
-const permissions = {
-  admin: {
-    ...buildFullAccessFor(['users',  'profile'])
+function permissions(role) {
+  const urlPermission = url + '/GetPermissions'
+  const httpClient = (urlPermission, options = {}) => {
+    if (!options.headers) {
+      options.headers = new Headers({ Accept: 'application/json' })
+    }
+    const token = localStorage.getItem('token')
+    options.headers.set('Authorization', `Bearer ${token}`)
+    options.headers.set('X-Origin', 'pladeco')
+
+    // add your own headers here
+    return fetchUtils.fetchJson(url, options)
+  }
+
+  /*admin: {
+    ...buildFullAccessFor(['users', 'profile'])
   },
   user: {
-    ...buildFullAccessFor([ 'profile'])
+    ...buildFullAccessFor(['profile'])
+  },
+  prueba: {
+    users: {
+      create: true,
+      edit: false,
+      enabled: true,
+      list: true,
+      show: true,
+      delete: false
+    }
   }
+  */
 }
