@@ -1,5 +1,15 @@
-import Edit from './edit'
+import Notes from '@material-ui/icons/Notes'
+
+import create from './create'
+import edit from './edit'
+import list from './list'
+import show from './show'
 
 export default {
-  edit: Edit
+  list: list,
+  create: create,
+  edit: edit,
+  icon: Notes,
+  show: show,
+  options: { label: 'Plan de trabajo' }
 }
