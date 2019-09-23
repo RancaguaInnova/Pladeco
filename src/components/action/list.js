@@ -1,7 +1,7 @@
 import React from 'react'
-import { List, Datagrid, TextField, EditButton, DeleteButton,DateField } from 'react-admin'
+import { List, Datagrid, TextField, EditButton, DeleteButton } from 'react-admin'
 export const ActionList = props => (
-  <List {...props} title='Planes de trabajo'>
+  <List {...props} title='Acciones'>
     <Datagrid rowClick='edit'>
       <TextField source='name' label='Nombre' />
       <TextField source='responsible' label='Responsable' />
@@ -11,7 +11,6 @@ export const ActionList = props => (
       <TextField source='endDate' label='Fecha de termino' />
       <TextField source='weight' label='Peso' />
       <TextField source='activities' label='Actividades' />
-
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

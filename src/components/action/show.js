@@ -1,15 +1,18 @@
 import React from 'react'
-import { Show, TextField, SimpleShowLayout, DateField } from 'react-admin'
+import { Show, TextField, SimpleShowLayout } from 'react-admin'
 
-const WorkPlanShow = props => (
+const ActionShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
-      <TextField source='id' />
       <TextField source='name' label='Nombre' />
-      <TextField source='description' label='Descripción' />
-      <DateField source='initialDate' label='Fecha de Inicio' />
-      <DateField source='endDate' label='Fecha de Termino' />
+      <TextField source='responsible' label='Responsable' />
+      <TextField source='dependensOn' label='depende de:' />
+      <TextField source='state' label='Fecha de Termino' />
+      <TextField source='initialDate' label='Fecha de inicio' />
+      <TextField source='endDate' label='Fecha de termino' />
+      <TextField source='weight' label='Peso' />
+      <TextField source='activities' label='Actividades' />
     </SimpleShowLayout>
   </Show>
 )
-export default WorkPlanShow
+export default ActionShow

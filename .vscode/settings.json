@@ -9,5 +9,9 @@
     "vsprettier.useTabs": true,
     "vsprettier.useTsLint": true,
     "vsprettier.jsxSingleQuote": true,
-    "prettier.alignObjectProperties": true
+    "prettier.alignObjectProperties": true,
+    "cSpell.words": [
+        "icon",
+        "props"
+    ]
 }

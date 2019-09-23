@@ -1,4 +1,4 @@
-import Notes from '@material-ui/icons/Notes'
+import Action from '@material-ui/icons/CallToActionOutlined'
 
 import create from './create'
 import edit from './edit'
@@ -9,7 +9,7 @@ export default {
   list: list,
   create: create,
   edit: edit,
-  icon: Notes,
+  icon:Action,
   show: show,
-  options: { label: 'Plan de trabajo' }
+  options: { label: 'Acciones' }
 }
