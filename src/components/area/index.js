@@ -11,5 +11,5 @@ export default {
   edit: edit,
   icon: Notes,
   show: show,
-  options: { label: 'Plan de trabajo' }
+  options: { label: 'Áreas' }
 }

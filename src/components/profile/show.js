@@ -1,7 +1,7 @@
 import React from 'react'
 import { Show, TextField, SimpleShowLayout, DateField } from 'react-admin'
 
-const WorkPlanShow = props => (
+const ProfileShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source='id' />
@@ -12,4 +12,4 @@ const WorkPlanShow = props => (
     </SimpleShowLayout>
   </Show>
 )
-export default WorkPlanShow
+export default ProfileShow

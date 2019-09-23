@@ -1,7 +1,7 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create,DateInput  } from 'react-admin'
+import { TextInput, SimpleForm, Create,DateInput  } from 'react-admin'
 
-const WorkPlaneCreate = props => {
+const ProfileCreate = props => {
   return (
     <Create title='Crear Plan de trabajo' {...props}>
       <SimpleForm >
@@ -13,4 +13,4 @@ const WorkPlaneCreate = props => {
     </Create>
   )
 }
-export default WorkPlaneCreate
+export default ProfileCreate

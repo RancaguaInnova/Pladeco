@@ -49,7 +49,7 @@ export default (type, params) => {
   return Promise.resolve()
 }
 function permissions(role) {
-  const urlPermission = url + '/GetPermissions'
+  /*const urlPermission = url + '/GetPermissions'
   const httpClient = (urlPermission, options = {}) => {
     if (!options.headers) {
       options.headers = new Headers({ Accept: 'application/json' })
@@ -59,7 +59,8 @@ function permissions(role) {
     options.headers.set('X-Origin', 'pladeco')
 
     // add your own headers here
-    return fetchUtils.fetchJson(url, options)
+    return fetchUtils.fetchJson(url, options)*/
+
   }
 
   /*admin: {
@@ -78,5 +79,6 @@ function permissions(role) {
       delete: false
     }
   }
-  */
+  
 }
+*/

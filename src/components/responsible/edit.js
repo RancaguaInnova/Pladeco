@@ -1,9 +1,9 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Edit, ReferenceInput,DateInput  } from 'react-admin'
+import { TextInput, SimpleForm, Edit, DateInput  } from 'react-admin'
 
-const WorkPlaneEdit = props => {
+const ResponsibleEdit = props => {
   return (
-    <Edit title='Editar Plan de trabajo' {...props}>
+    <Edit title='Editar Responsable' {...props}>
       <SimpleForm >
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
@@ -13,4 +13,4 @@ const WorkPlaneEdit = props => {
     </Edit>
   )
 }
-export default WorkPlaneEdit
+export default ResponsibleEdit

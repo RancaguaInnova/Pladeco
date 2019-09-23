@@ -1,6 +1,6 @@
 import React from 'react'
 import { List, Datagrid, TextField, EditButton, DeleteButton,DateField } from 'react-admin'
-export const WorkPlanList = props => (
+export const ProfileList = props => (
   <List {...props} title='Planes de trabajo'>
     <Datagrid rowClick='edit'>
       <TextField source='name' label='Nombre' />
@@ -14,4 +14,4 @@ export const WorkPlanList = props => (
   </List>
 )
 
-export default WorkPlanList
+export default ProfileList

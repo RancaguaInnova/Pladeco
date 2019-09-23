@@ -34,7 +34,6 @@ const validateUserCreation = values => {
   return errors
 }
 const UserCreate = props => {
-  console.log(props)
   return (
     <Create title='Crear Usuario' {...props}>
       <SimpleForm validate={validateUserCreation}>

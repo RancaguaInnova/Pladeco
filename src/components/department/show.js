@@ -1,15 +1,13 @@
 import React from 'react'
-import { Show, TextField, SimpleShowLayout, DateField } from 'react-admin'
+import { Show, TextField, SimpleShowLayout } from 'react-admin'
 
-const WorkPlanShow = props => (
-  <Show {...props}>
+const DepartmentShow = props => (
+  <Show {...props} title="Departamento">
     <SimpleShowLayout>
       <TextField source='id' />
       <TextField source='name' label='Nombre' />
       <TextField source='description' label='Descripción' />
-      <DateField source='initialDate' label='Fecha de Inicio' />
-      <DateField source='endDate' label='Fecha de Termino' />
     </SimpleShowLayout>
   </Show>
 )
-export default WorkPlanShow
+export default DepartmentShow

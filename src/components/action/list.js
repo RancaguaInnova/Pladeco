@@ -10,7 +10,7 @@ export const ActionList = props => (
       <TextField source='initialDate' label='Fecha de inicio' />
       <TextField source='endDate' label='Fecha de termino' />
       <TextField source='weight' label='Peso' />
-      <TextField source='activities' label='Actividades' />
+      <TextField source='objetive' label='Objetivo' />
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

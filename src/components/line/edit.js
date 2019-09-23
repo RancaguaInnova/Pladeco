@@ -1,16 +1,15 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Edit, ReferenceInput,DateInput  } from 'react-admin'
+import { TextInput, SimpleForm, SelectInput, Edit } from 'react-admin'
 
-const WorkPlaneEdit = props => {
+const LineEdit = props => {
   return (
-    <Edit title='Editar Plan de trabajo' {...props}>
+    <Edit title='Editar Linea' {...props}>
       <SimpleForm >
         <TextInput source='name' label='Nombre' defaultValue='' />
-        <TextInput source='description' label='Descripción' defaultValue='' />
-        <DateInput  source='initialDate' label='Fecha Inicio'  />
-        <DateInput  source='endDate' label='Fecha de termino'/>
+        <SelectInput source='area' label='Área' />
+        <SelectInput source='responsible' label='Responsable' />
       </SimpleForm>
     </Edit>
   )
 }
-export default WorkPlaneEdit
+export default LineEdit

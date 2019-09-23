@@ -1,17 +1,14 @@
 import React from 'react'
-import { List, Datagrid, TextField, EditButton, DeleteButton,DateField } from 'react-admin'
-export const WorkPlanList = props => (
-  <List {...props} title='Planes de trabajo'>
+import { List, Datagrid, TextField, EditButton, DeleteButton } from 'react-admin'
+export const ObjectiveList = props => (
+  <List {...props} title='Objetivos'>
     <Datagrid rowClick='edit'>
-      <TextField source='name' label='Nombre' />
-      <TextField source='description' label='Descripción' />
-      <DateField source='initialDate' label='Fecha de Inicio' />
-      <DateField source='endDate' label='Fecha de Termino' />
-
+      <TextField source='name' label='Nombre' defaultValue='' />
+      <TextField source='line' label='Linea' />
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>
   </List>
 )
 
-export default WorkPlanList
+export default ObjectiveList

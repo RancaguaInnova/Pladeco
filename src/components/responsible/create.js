@@ -1,16 +1,15 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create,DateInput  } from 'react-admin'
+import { TextInput, SimpleForm, Create  } from 'react-admin'
 
-const WorkPlaneCreate = props => {
+const ResponsibleCreate = props => {
   return (
-    <Create title='Crear Plan de trabajo' {...props}>
+    <Create title='Crear responsable' {...props}>
       <SimpleForm >
-        <TextInput source='name' label='Nombre' defaultValue='' />
-        <TextInput source='description' label='Descripción' defaultValue='' />
-        <DateInput  source='initialDate' label='Fecha Inicio' />
-        <DateInput  source='endDate' label='Fecha de termino'/>
+        <TextInput source='name' label='Nombre' defaultValue='' />      
+          <TextInput source='departmentId' label='Nombre' defaultValue='' />
+
       </SimpleForm>
     </Create>
   )
 }
-export default WorkPlaneCreate
+export default ResponsibleCreate

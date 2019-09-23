@@ -9,7 +9,7 @@ export default {
   list: list,
   create: create,
   edit: edit,
-  icon:Action,
+  icon: Action,
   show: show,
   options: { label: 'Acciones' }
 }

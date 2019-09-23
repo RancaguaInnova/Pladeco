@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, Datagrid, TextField, EditButton, DeleteButton,DateField } from 'react-admin'
-export const WorkPlanList = props => (
-  <List {...props} title='Planes de trabajo'>
+export const ResponsibleList = props => (
+  <List {...props} title='Responsables'>
     <Datagrid rowClick='edit'>
       <TextField source='name' label='Nombre' />
       <TextField source='description' label='Descripción' />
@@ -14,4 +14,4 @@ export const WorkPlanList = props => (
   </List>
 )
 
-export default WorkPlanList
+export default ResponsibleList

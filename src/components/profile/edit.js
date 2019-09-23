@@ -1,7 +1,7 @@
 import React from 'react'
 import { TextInput, SimpleForm, SelectInput, Edit, ReferenceInput,DateInput  } from 'react-admin'
 
-const WorkPlaneEdit = props => {
+const ProfileEdit = props => {
   return (
     <Edit title='Editar Plan de trabajo' {...props}>
       <SimpleForm >
@@ -13,4 +13,4 @@ const WorkPlaneEdit = props => {
     </Edit>
   )
 }
-export default WorkPlaneEdit
+export default ProfileEdit
