@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Admin, Resource, ListGuesser, ShowGuesser, EditGuesser } from 'react-admin'
+import { Admin, ListGuesser, ShowGuesser, EditGuesser } from 'react-admin'
 import Provider from './provider'
 import Theme from './theme'
 import './App.scss'
@@ -36,7 +36,6 @@ class App extends Component {
             <Resource name='users' list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
         */}
         {permissions => {
-          console.log(permissions)
           return [
             <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,

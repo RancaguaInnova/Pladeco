@@ -11,7 +11,10 @@
     "vsprettier.jsxSingleQuote": true,
     "prettier.alignObjectProperties": true,
     "cSpell.words": [
+        "Bearer",
+        "Typography",
         "icon",
-        "props"
+        "props",
+        "registrate"
     ]
 }
