@@ -19,12 +19,14 @@ import Objective from './components/objective'
 import Responsible from './components/responsible'
 import Line from './components/line'
 import WorkPlan from './components/workPlan'
+import Dashboard from './components/dashboard';
 
 class App extends Component {
   render() {
     return (
       <Admin
         loginPage={LoginPage}
+        dashboard={Dashboard}
         customRoutes={[<Route key='Perfil' path='/profile' component={Profile.edit} />]}
         authProvider={AuthProvider}
         theme={Theme}
@@ -32,22 +34,18 @@ class App extends Component {
         locale='es'
         i18nProvider={I18nProvider}
       >
-        {/*    <Resource name='news' {...News} />
-            <Resource name='users' list={ListGuesser} edit={EditGuesser} show={ShowGuesser} />
-        */}
         {permissions => {
-          return [
+          return [            
+            <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
+            <ResourceWithPermissions name='areas' {...Area} permissions={permissions} />,
+            <ResourceWithPermissions name='lines' {...Line} permissions={permissions} />,
+            <ResourceWithPermissions name='objectives' {...Objective} permissions={permissions} />,
+            <ResourceWithPermissions name='actions' {...Action} permissions={permissions} />,
+            <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />,
             <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
-            <ResourceWithPermissions name='action' {...Action} permissions={permissions} />,
-            <ResourceWithPermissions name='activity' {...Activity} permissions={permissions} />,
-            <ResourceWithPermissions name='area' {...Area} permissions={permissions} />,
             <ResourceWithPermissions name='deparment' {...Deparment} permissions={permissions} />,
-            <ResourceWithPermissions name='line' {...Line} permissions={permissions} />,
-            <ResourceWithPermissions name='objective' {...Objective} permissions={permissions} />,
-            <ResourceWithPermissions name='responsible' {...Responsible} permissions={permissions} />,
-            <ResourceWithPermissions name='workplan' {...WorkPlan} permissions={permissions} />
-
+            <ResourceWithPermissions name='responsible' {...Responsible} permissions={permissions} />
           ]
         }}
       </Admin>

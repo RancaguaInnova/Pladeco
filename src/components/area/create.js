@@ -1,12 +1,23 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create  } from 'react-admin'
+import {
+  TextInput,
+  SimpleForm,
+  SelectInput,
+  Create,
+  ReferenceInput,
+  SelectArrayInput,
+  ChipField
+} from 'react-admin'
 
 const AreaCreate = props => {
   return (
     <Create title='Crear Área' {...props}>
-      <SimpleForm >
+      <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
-        <SelectInput source='pladeco' label='Pladeco' />
+        <TextInput source='description' label='Descripción' defaultValue='' />
+        <ReferenceInput reference='workplans' source='workplanId' label='Pladeco'>
+          <SelectInput optionText='name' />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   )

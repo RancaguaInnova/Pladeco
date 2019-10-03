@@ -1,11 +1,24 @@
 import React from 'react'
-import { List, Datagrid, TextField, EditButton, DeleteButton, DateField } from 'react-admin'
+import {
+  List,
+  Datagrid,
+  TextField,
+  EditButton,
+  DeleteButton,
+  DateField,
+  ReferenceField
+} from 'react-admin'
 export const LineList = props => (
   <List {...props} title='Lineas'>
     <Datagrid rowClick='edit'>
       <TextField source='name' label='Nombre' defaultValue='' />
-      <TextField source='area' label='Área' />
-      <TextField source='responsible' label='Responsable' />
+      <TextField source='description' label='Descripción' defaultValue='' />
+      <ReferenceField reference='areas' source='areaId' label='Area'>
+        <TextField source='name' />
+      </ReferenceField>
+      <ReferenceField reference='users' source='responsibleId' label='Responsable'>
+        <TextField source='identifier' />
+      </ReferenceField>
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

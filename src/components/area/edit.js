@@ -1,12 +1,15 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Edit  } from 'react-admin'
+import { TextInput, SimpleForm, SelectInput, Edit, ReferenceInput } from 'react-admin'
 
 const AreaEdit = props => {
   return (
     <Edit title='Editar Área' {...props}>
-      <SimpleForm >
-      <TextInput source='name' label='Nombre' defaultValue='' />
-        <SelectInput source='pladeco' label='Pladeco' />
+      <SimpleForm>
+        <TextInput source='name' label='Nombre' defaultValue='' />
+        <TextInput source='description' label='Descripción' defaultValue='' />
+        <ReferenceInput reference='workplans' source='workplanId' label='Pladeco'>
+          <SelectInput optionText='name' />
+        </ReferenceInput>
       </SimpleForm>
     </Edit>
   )

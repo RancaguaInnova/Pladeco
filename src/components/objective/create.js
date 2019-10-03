@@ -1,12 +1,15 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create  } from 'react-admin'
+import { TextInput, SimpleForm, SelectInput, Create ,ReferenceInput} from 'react-admin'
 
 const ObjectiveCreate = props => {
   return (
     <Create title='Objetivos' {...props}>
-      <SimpleForm >
+      <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
-        <SelectInput source='line' label='Linea' />
+        <TextInput source='description' label='Descripción' defaultValue='' />
+        <ReferenceInput reference='lines' source='lineId' label='Linea'>
+          <SelectInput optionText='name' />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   )
