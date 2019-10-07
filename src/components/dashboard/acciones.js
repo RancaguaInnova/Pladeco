@@ -30,7 +30,7 @@ function Event(props) {
     <div>
       <List
         resource='actions'
-        title='Acciones'
+        title=''
         basePath='/actions'
         hasCreate={false}
         hasEdit={false}
