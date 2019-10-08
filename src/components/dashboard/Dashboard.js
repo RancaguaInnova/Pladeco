@@ -15,6 +15,7 @@ import Gantt from './pladeco.gantt'
 import ChartPladeco from './chartPladeco'
 import ActivityList from './pladeco.list'
 import ActionList from './acciones'
+import { Title } from 'react-admin';
 
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import InsertChartIcon from '@material-ui/icons/InsertChart';
@@ -111,6 +112,8 @@ export default function Dashboard(props) {
 
   return (
     <div className={classes.root}>
+              <Title title="Dashboard" />
+
       <main className={classes.content}>
         <Container maxWidth='lg' className={classes.container}>
           <Grid container spacing={10}>

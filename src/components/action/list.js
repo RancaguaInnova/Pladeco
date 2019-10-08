@@ -11,7 +11,7 @@ import {
   ChipField,
   SelectField
 } from 'react-admin'
- import DateField from '../../helpers/fields/DateField'
+import DateField from '../../helpers/fields/DateField'
 export const ActionList = props => (
   <List {...props} title='Acciones'>
     <Datagrid rowClick='edit'>
@@ -25,16 +25,16 @@ export const ActionList = props => (
         </SingleFieldList>
       </ReferenceArrayField>
       <SelectField
-          source='status'
-          label='Estado'
-          choices={[
-            { id: 'not-started', name: 'No iniciado' },
-            { id: 'in-progress', name: 'En progreso' },
-            { id: 'finished', name: 'Finalizado' }
-          ]}
-        />
-      <DateField source='initialDate' label='Fecha de inicio'  />
-      <DateField source='endDate' label='Fecha de termino'  />
+        source='status'
+        label='Estado'
+        choices={[
+          { id: 'not-started', name: 'No iniciado' },
+          { id: 'in-progress', name: 'En progreso' },
+          { id: 'finished', name: 'Finalizado' }
+        ]}
+      />
+      <DateField source='initialDate' label='Fecha de inicio' />
+      <DateField source='endDate' label='Fecha de termino' />
       <TextField source='weight' label='Peso' />
       <ReferenceField reference='objectives' source='objectiveId' label='Objetivo'>
         <TextField source='name' />

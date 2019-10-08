@@ -39,9 +39,11 @@ const ActionCreateToolbar = props => (
     <SaveButton label='Guardar y Agregar' redirect={false} submitOnEnter={false} variant='flat' />
   </Toolbar>
 )
+
+
 const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
   return (
-    <Create title='Crear Acción' {...props}>
+    <Create title='Crear Acción' {...props} >
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />

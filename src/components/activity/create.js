@@ -14,10 +14,39 @@ import {
   BooleanInput
 } from 'react-admin'
 import inputSearchPlace from '../../helpers/fields/inputSearchPlace'
+
+const validateActivityCreation = values => {
+  const errors = {}
+  if (!values.name) {
+    errors.name = ['El nombre de la actividad es requerido']
+  }
+  if (!values.description) {
+    errors.description = ['La descripción de la actividad es requerida']
+  }
+  if (!values.actionId) {
+    errors.actionId = ['Debe asociar la actividad a una acción']
+  }
+  if (!values.beneficiaries) {
+    errors.beneficiaries = ['Debe agregar los beneficiarios de la  actividad']
+  }
+  if (!values.status) {
+    errors.status = ['Debe agregar el estado de la actividad']
+  }
+  if (!values.createAt) {
+    errors.createAt = ['Debe agregar la fecha de creacion de la actividad']
+  }
+  if (!values.location) {
+    errors.location = ['Debe agregar la localización']
+  }
+  
+  
+  return errors
+}
+
 const ActivityCreate = props => {
   return (
     <Create title='Crear Actividad' {...props}>
-      <SimpleForm>
+      <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
         <ReferenceInput reference='actions' source='actionId' label='Acción'>
@@ -33,7 +62,6 @@ const ActivityCreate = props => {
           ]}
         />
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
-   
         <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
           <SelectInput optionText='identifier' />
         </ReferenceInput>
@@ -43,11 +71,9 @@ const ActivityCreate = props => {
             <NumberInput source='amount' label='amount' />
           </SimpleFormIterator>
         </ArrayInput>
-
         <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
           <SelectArrayInput optionText='identifier' />
         </ReferenceArrayInput>
-
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>
             <TextInput source='description' label='Descripción' />
@@ -57,7 +83,6 @@ const ActivityCreate = props => {
         <TextInput source='location.name' label='Localización nombre' />
         <NumberInput source='location.lat' label='Localización latitud' />
         <NumberInput source='location.lng' label='Localización longitud' />
-
         <TextInput source='comments' label='Comentarios' defaultValue='' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
