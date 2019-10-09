@@ -15,7 +15,7 @@ const listStyles = {
       backgroundColor: 'red',
   },
   thead: {
-      background:'#BCD6DD',
+    background:'linear-gradient(60deg, #26c6da, #BCD6DD)',
       color:'#fff !important'
   },
 };
