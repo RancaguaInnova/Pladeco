@@ -1,7 +1,7 @@
 import getEnv from './getEnv'
 
   const urls = {
-  local: `http://192.168.100.113:3200/api`,
+  local: `http://25.45.109.225:3200/api`,
   dev: `https://services.smartrancagua.com`,
   prod: 'https://services.smartrancagua.com'
 }
