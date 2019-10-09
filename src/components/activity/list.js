@@ -13,10 +13,23 @@ import {
   SingleFieldList
 } from 'react-admin'
 import DateField from '../../helpers/fields/DateField'
-
-export const ActivityList = props => (
+import { withStyles } from '@material-ui/core/styles';
+const listStyles = {
+  actions: {
+      backgroundColor: 'red',
+  },
+  thead: {
+    background:'#BCD6DD',
+    color:'#fff'
+  },
+  table:{
+    color:'#fff',
+  }
+    
+};
+export const ActivityList =  withStyles(listStyles)(({ classes, ...props })  => (
   <List {...props} title='Actividades'>
-    <Datagrid rowClick='edit'>
+    <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
       <ReferenceField reference='actions' source='actionId' label='Acción'>
@@ -38,6 +51,6 @@ export const ActivityList = props => (
       <DeleteButton label='Eliminar' />
     </Datagrid>
   </List>
-)
+))
 
 export default ActivityList

@@ -1,22 +1,22 @@
 // ##############################
 // // // Tasks for TasksCard - see Dashboard view
 // #############################
-
 var bugs = [
-  'Sign contract for "What are conference organizers afraid of?"',
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  "Create 4 Invisible User Experiences you Never Knew About"
+  "Actividad 1",
+  "Actividad 2",
+  "Actividad 3",
+  "Actividad 4"
 ];
 var website = [
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
+  "Actividad 5",
+  'Actividad 6'
 ];
 var server = [
-  "Lines From Great Russian Literature? Or E-mails From My Boss?",
-  "Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit",
-  'Sign contract for "What are conference organizers afraid of?"'
+  "Actividad 7",
+  "Actividad 8",
+  'Actividad 9'
 ];
+
 
 module.exports = {
   // these 3 are used to create the tasks lists in TasksCard - Dashboard view

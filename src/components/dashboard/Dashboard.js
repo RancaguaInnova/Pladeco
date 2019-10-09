@@ -33,7 +33,9 @@ import Accessibility from '@material-ui/icons/Accessibility'
 import BugReport from '@material-ui/icons/BugReport'
 import Code from '@material-ui/icons/Code'
 import Cloud from '@material-ui/icons/Cloud'
-
+import HourglassEmptyTwoToneIcon from '@material-ui/icons/HourglassEmptyTwoTone';
+import DonutLargeTwoToneIcon from '@material-ui/icons/DonutLargeTwoTone';
+import DoneAllTwoToneIcon from '@material-ui/icons/DoneAllTwoTone';
 // core components
 import GridItem from '../../helpers/Grid/GridItem.js'
 import GridContainer from '../../helpers/Grid/GridContainer.js'
@@ -47,9 +49,14 @@ import CardIcon from '../../helpers/Card/CardIcon.js'
 import CardBody from '../../helpers/Card/CardBody.js'
 import CardFooter from '../../helpers/Card/CardFooter.js'
 import { bugs, website, server } from './general.js'
+import TimelapseIcon from '@material-ui/icons/Timelapse';
+import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
+import upperCase from 'upper-case'
+
+
+
 
 const drawerWidth = 240
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
@@ -129,6 +136,28 @@ const useStyles = makeStyles(theme => ({
   },
   fixedHeightPaperInformation: {
     height: 350
+  },
+  texto:{
+    fontSize:'40px',
+    textTransform:"capitalize"
+
+  },
+  texto2:{
+    fontSize:'30px',
+    paddingTop:'10px',
+    paddingBottom:'10px',
+    textTransform:"capitalize"
+
+
+  },
+  texto3:{
+    fontSize:'20px',
+    textTransform:"capitalize"
+
+
+  },
+  stats:{
+    textTransform:"upperCase"
   }
 }))
 
@@ -150,21 +179,16 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='warning' stats icon>
                   <CardIcon color='warning'>
-                    <Icon>content_copy</Icon>
+                    <div className={classes.texto}>
+                    40%
+                  </div>
                   </CardIcon>
-                  <p className={classes.cardCategory}>Used Space</p>
-                  <h3 className={classes.cardTitle}>
-                    49/50 <small>GB</small>
-                  </h3>
+              
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Danger>
-                      <Warning />
-                    </Danger>
-                    <a href='#pablo' onClick={e => e.preventDefault()}>
-                      Get more space
-                    </a>
+                     Pladeco completado
+                
                   </div>
                 </CardFooter>
               </Card>
@@ -173,15 +197,14 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='success' stats icon>
                   <CardIcon color='success'>
-                    <Store />
+                  <div className={classes.texto2}>
+                  789/2300 
+                  </div>
                   </CardIcon>
-                  <p className={classes.cardCategory}>Revenue</p>
-                  <h3 className={classes.cardTitle}>$34,245</h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <DateRange />
-                    Last 24 Hours
+                    Acciones Aprobadas
                   </div>
                 </CardFooter>
               </Card>
@@ -190,15 +213,13 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='danger' stats icon>
                   <CardIcon color='danger'>
-                    <Icon>info_outline</Icon>
+                    <TimelapseIcon></TimelapseIcon>
+                  <div className={classes.texto3}>300 días</div>
                   </CardIcon>
-                  <p className={classes.cardCategory}>Fixed Issues</p>
-                  <h3 className={classes.cardTitle}>75</h3>
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <LocalOffer />
-                    Tracked from Github
+                     Para finalizar pladeco
                   </div>
                 </CardFooter>
               </Card>
@@ -207,15 +228,15 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='info' stats icon>
                   <CardIcon color='info'>
-                    <Accessibility />
+                    <RecordVoiceOverIcon />
+                    <div className={classes.texto3}>129/2300 </div> 
                   </CardIcon>
-                  <p className={classes.cardCategory}>Followers</p>
-                  <h3 className={classes.cardTitle}>+245</h3>
+                
                 </CardHeader>
                 <CardFooter stats>
                   <div className={classes.stats}>
-                    <Update />
-                    Just Updated
+                 Actividades difundidas a la comunidad
+
                   </div>
                 </CardFooter>
               </Card>
@@ -228,20 +249,20 @@ export default function Dashboard(props) {
                 headerColor='info'
                 tabs={[
                   {
-                    tabName: 'por comenzar',
-                    tabIcon: BugReport,
+                    tabName: 'Pendientes',
+                    tabIcon: HourglassEmptyTwoToneIcon,
                     tabContent: (
                       <Tasks checkedIndexes={[0, 3]} tasksIndexes={[0, 1, 2, 3]} tasks={bugs} />
                     )
                   },
                   {
-                    tabName: 'En progreso',
-                    tabIcon: Code,
+                    tabName: 'Iniciada',
+                    tabIcon: DonutLargeTwoToneIcon,
                     tabContent: <Tasks checkedIndexes={[0]} tasksIndexes={[0, 1]} tasks={website} />
                   },
                   {
                     tabName: 'Finalizadas',
-                    tabIcon: Cloud,
+                    tabIcon: DoneAllTwoToneIcon,
                     tabContent: (
                       <Tasks checkedIndexes={[1]} tasksIndexes={[0, 1, 2]} tasks={server} />
                     )
@@ -252,18 +273,17 @@ export default function Dashboard(props) {
             <GridItem xs={12} sm={12} md={6}>
               <Card>
                 <CardHeader color='warning'>
-                  <h4 className={classes.cardTitleWhite}>Employees Stats</h4>
-                  <p className={classes.cardCategoryWhite}>New employees on 15th September, 2016</p>
+                  <h4 className={classes.cardTitleWhite}> <InsertChartIcon />Lineas</h4>
                 </CardHeader>
                 <CardBody>
                   <Table
                     tableHeaderColor='warning'
-                    tableHead={['ID', 'Name', 'Salary', 'Country']}
+                    tableHead={['ID', 'Linea', 'Avance']}
                     tableData={[
-                      ['1', 'Dakota Rice', '$36,738', 'Niger'],
-                      ['2', 'Minerva Hooper', '$23,789', 'Curaçao'],
-                      ['3', 'Sage Rodriguez', '$56,142', 'Netherlands'],
-                      ['4', 'Philip Chaney', '$38,735', 'Korea, South']
+                      ['1', 'Linea 1', '45%'],
+                      ['2', 'Linea 2', '56%'],
+                      ['3', 'Linea 3', '20%'],
+                      ['4', 'Linea 4', '70%']
                     ]}
                   />
                 </CardBody>

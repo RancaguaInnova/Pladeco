@@ -1,8 +1,23 @@
 import React from 'react'
 import { List, Datagrid, TextField, EditButton, DeleteButton, ReferenceField } from 'react-admin'
-export const ObjectiveList = props => (
+import { withStyles } from '@material-ui/core/styles';
+const listStyles = {
+  actions: {
+      backgroundColor: 'red',
+  },
+  thead: {
+    background:'#BCD6DD',
+    color:'#fff'
+  },
+  table:{
+    color:'#fff',
+  }
+    
+};
+
+export const ObjectiveList =  withStyles(listStyles)(({ classes, ...props })  => (
   <List {...props} title='Objetivos'>
-    <Datagrid rowClick='edit'>
+    <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
       <ReferenceField label='Linea' source='lineId' reference='lines'>
@@ -12,6 +27,6 @@ export const ObjectiveList = props => (
       <DeleteButton label='Eliminar' />
     </Datagrid>
   </List>
-)
+))
 
 export default ObjectiveList

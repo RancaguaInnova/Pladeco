@@ -8,9 +8,22 @@ import {
   DateField,
   ReferenceField
 } from 'react-admin'
-export const LineList = props => (
+import { withStyles } from '@material-ui/core/styles';
+
+const listStyles = {
+  actions: {
+      backgroundColor: 'red',
+  },
+  thead: {
+      background:'#BCD6DD',
+      color:'#fff !important'
+  },
+};
+
+
+export const LineList = withStyles(listStyles)(({ classes, ...props })  => (
   <List {...props} title='Lineas'>
-    <Datagrid rowClick='edit'>
+    <Datagrid rowClick='edit'  classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
       <ReferenceField reference='areas' source='areaId' label='Area'>
@@ -23,6 +36,6 @@ export const LineList = props => (
       <DeleteButton label='Eliminar' />
     </Datagrid>
   </List>
-)
+))
 
 export default LineList

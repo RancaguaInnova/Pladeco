@@ -12,9 +12,24 @@ import {
   SelectField
 } from 'react-admin'
 import DateField from '../../helpers/fields/DateField'
-export const ActionList = props => (
+import { withStyles } from '@material-ui/core/styles';
+const listStyles = {
+  actions: {
+      backgroundColor: 'red',
+  },
+  thead: {
+    background:'#BCD6DD',
+    color:'#fff'
+  },
+  table:{
+    color:'#fff',
+  }
+    
+};
+
+export const ActionList =  withStyles(listStyles)(({ classes, ...props })  => (
   <List {...props} title='Acciones'>
-    <Datagrid rowClick='edit'>
+    <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' />
       <ReferenceField reference='users' source='responsibleId' label='Responsable'>
         <TextField source='identifier' />
@@ -43,6 +58,6 @@ export const ActionList = props => (
       <DeleteButton label='Eliminar' />
     </Datagrid>
   </List>
-)
+))
 
 export default ActionList
