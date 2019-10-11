@@ -1,4 +1,5 @@
-import Notes from '@material-ui/icons/Notes'
+import People from '@material-ui/icons/People'
+import React, { Component } from 'react'
 
 import create from './create'
 import edit from './edit'
@@ -9,7 +10,7 @@ export default {
   list: list,
   create: create,
   edit: edit,
-  icon: Notes,
+  icon: People,
   show: show,
-  options: { label: 'Lineas' }
+  options: { label: 'Usuarios' }
 }

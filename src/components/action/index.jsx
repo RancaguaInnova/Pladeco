@@ -1,15 +1,17 @@
-import Notes from '@material-ui/icons/Notes'
-
+import Action from '@material-ui/icons/CallToActionOutlined'
+import Icofont from "react-icofont";
 import create from './create'
 import edit from './edit'
 import list from './list'
 import show from './show'
+import icon from './icon'
+
 
 export default {
   list: list,
   create: create,
   edit: edit,
-  icon: Notes,
+  icon:icon  ,
   show: show,
-  options: { label: 'Actividades' }
+  options: { label: 'Acciones' }
 }
