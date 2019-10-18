@@ -13,7 +13,6 @@ import {
   NumberInput,
   BooleanInput
 } from 'react-admin'
-import inputSearchPlace from '../../helpers/fields/inputSearchPlace'
 
 const validateActivityCreation = values => {
   const errors = {}
@@ -49,7 +48,7 @@ const ActivityCreate = props => {
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='actions' source='actionId' label='Acción'>
+        <ReferenceInput reference='actions' source='actionId' label='Acción'  linkType="show">
           <SelectInput optionText='name' />
         </ReferenceInput>
         <SelectInput
@@ -62,7 +61,7 @@ const ActivityCreate = props => {
           ]}
         />
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
           <SelectInput optionText='identifier' />
         </ReferenceInput>
         <ArrayInput source='executedFunds' label='Fondos ejecutados'>
@@ -71,7 +70,7 @@ const ActivityCreate = props => {
             <NumberInput source='amount' label='amount' />
           </SimpleFormIterator>
         </ArrayInput>
-        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
+        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'  linkType="show">
           <SelectArrayInput optionText='identifier' />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
@@ -86,16 +85,16 @@ const ActivityCreate = props => {
         <TextInput source='comments' label='Comentarios' defaultValue='' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area'>
+            <ReferenceInput reference='areas' source='areaId' label='Area'  linkType="show">
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea'>
+            <ReferenceInput reference='lines' source='lineId' label='Linea'  linkType="show">
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'>
+            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'  linkType="show">
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción'>
+            <ReferenceInput reference='actions' source='actionId' label='Acción'  linkType="show">
               <SelectInput optionText='name' />
             </ReferenceInput>
           </SimpleFormIterator>

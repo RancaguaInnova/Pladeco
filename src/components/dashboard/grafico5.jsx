@@ -83,7 +83,11 @@ export default class ChartMonth extends PureComponent {
         ]}
         options={{
           title: '',
-
+          animation: {
+            startup: true,
+            easing: 'linear',
+            duration: 1500,
+          },
           gantt: {
             criticalPathEnabled: true,
             criticalPathStyle: {

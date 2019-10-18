@@ -39,16 +39,12 @@ const UserEdit = props => (
       <TextInput source='firstName' label='Nombre' defaultValue='' />
       <TextInput source='lastName' label='Apellido' defaultValue='' />
       <TextInput source='identifier' label='Número de Documento' defaultValue='' />
-      <TextInput source='email' type='email' label='Email' />
-      <TextInput source='username' label='Usuario' />
-      <TextInput source='password' label='Contraseña' />
-      <TextInput source='departmentId' label='Departamento Municipal' defaultValue='' />
-      <ReferenceInput label='Departamento Municipal' source='departmentId' reference='Departments'>
-        <SelectInput optionText='descriptions' />
-      </ReferenceInput>
-      <ReferenceInput label='Rol' source='rolId' reference='roles'>
+      <TextInput source='email.address' type='email' label='Email' />
+
+      <ReferenceInput label='Departamento Municipal' source='departmentId' reference='departments'>
         <SelectInput optionText='name' />
       </ReferenceInput>
+  
     </SimpleForm>
   </Edit>
 )

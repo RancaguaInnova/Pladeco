@@ -6,10 +6,10 @@ const LineShow = props => (
     <SimpleShowLayout>
     <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
-      <ReferenceField reference='areas' source='areaId' label='Area'>
+      <ReferenceField reference='areas' source='areaId' label='Area'  linkType="show">
         <TextField source='name' />
       </ReferenceField>
-      <ReferenceField reference='users' source='responsibleId' label='Responsable'>
+      <ReferenceField reference='users' source='responsibleId' label='Responsable'  linkType="show">
         <TextField source='identifier' />
       </ReferenceField>
     </SimpleShowLayout>

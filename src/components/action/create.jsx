@@ -7,23 +7,17 @@ import {
   required,
   minLength,
   maxLength,
-  minValue,
-  maxValue,
-  number,
-  regex,
-  email,
-  choices,
+
   SaveButton,
   Toolbar,
   DateInput,
   ReferenceInput,
   NumberInput,
   BooleanInput,
-  ReferenceArrayField,
-  SingleFieldList,
+
   ReferenceArrayInput,
   SelectArrayInput,
-  ChipField
+  
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
 const styles = {
@@ -32,7 +26,7 @@ const styles = {
   }
 }
 
-const validateName = [required(), minLength(2), maxLength(150)]
+const validateName = [required(), minLength(0), maxLength(550)]
 const ActionCreateToolbar = props => (
   <Toolbar {...props}>
     <SaveButton label='Guardar y Mostrar' redirect='show' submitOnEnter={true} />
@@ -47,10 +41,10 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
+        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'  linkType="show">
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
         <SelectInput
@@ -65,7 +59,7 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
+        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'  linkType="show">
           <SelectInput optionText='name' />
         </ReferenceInput>
         <BooleanInput label='Aprobado' source='approved' defaultValue={false} />

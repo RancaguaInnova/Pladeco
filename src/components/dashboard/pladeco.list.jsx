@@ -52,7 +52,7 @@ function Event(props) {
         <Datagrid>
           <TextField source='name' label='Nombre' defaultValue='' className={classes.table}/>
           <TextField source='description' label='Descripción' defaultValue='' className={classes.table}/>
-          <ReferenceField reference='actions' source='actionId' label='Acción' className={classes.table}>
+          <ReferenceField reference='actions' source='actionId' label='Acción' className={classes.table}  linkType="show">
             <TextField source='name' className={classes.table}/>
           </ReferenceField>
           <SelectField

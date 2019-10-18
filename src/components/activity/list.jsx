@@ -32,7 +32,7 @@ export const ActivityList =  withStyles(listStyles)(({ classes, ...props })  => 
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
-      <ReferenceField reference='actions' source='actionId' label='Acción'>
+      <ReferenceField reference='actions' source='actionId' label='Acción'  linkType="show">
         <TextField source='name' />
       </ReferenceField>
       <SelectField

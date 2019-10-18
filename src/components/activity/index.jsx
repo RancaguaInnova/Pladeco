@@ -1,5 +1,3 @@
-import Notes from '@material-ui/icons/Notes'
-
 import create from './create'
 import edit from './edit'
 import list from './list'

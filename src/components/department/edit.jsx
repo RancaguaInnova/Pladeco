@@ -7,6 +7,7 @@ const DepartmentEdit = props => {
       <SimpleForm >
       <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
+        managerId
       </SimpleForm>
     </Edit>
   )

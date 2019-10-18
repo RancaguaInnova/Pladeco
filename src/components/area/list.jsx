@@ -20,7 +20,7 @@ export const AreaList =  withStyles(listStyles)(({ classes, ...props })  => (
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='descripcion' defaultValue='' />
-      <ReferenceField label="Pladeco" source="workplanId" reference="workplans">
+      <ReferenceField label="Pladeco" source="workplanId" reference="workplans"  linkType="show">
                 <TextField source="name" />
             </ReferenceField>
       <EditButton label='Editar' />

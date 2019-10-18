@@ -1,58 +1,41 @@
-import ChartDayEvent from './chartDayEvent'
-import ChartMonth from './chartMonth'
+
 import Container from '@material-ui/core/Container'
-import Grid from '@material-ui/core/Grid'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import NotificationsIcon from '@material-ui/icons/Notifications'
-import Paper from '@material-ui/core/Paper'
+
 import React from 'react'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
-import Gantt from './pladeco.gantt'
 import ChartPladeco from './chartPladeco'
 import ActivityList from './pladeco.list'
 import ActionList from './acciones'
 import { Title } from 'react-admin'
-
+import Icofont from 'react-icofont'
 import AssignmentIcon from '@material-ui/icons/Assignment'
 import InsertChartIcon from '@material-ui/icons/InsertChart'
-// @material-ui/core
-import Icon from '@material-ui/core/Icon'
-// @material-ui/icons
-import Store from '@material-ui/icons/Store'
-import Warning from '@material-ui/icons/Warning'
-import DateRange from '@material-ui/icons/DateRange'
-import LocalOffer from '@material-ui/icons/LocalOffer'
-import Update from '@material-ui/icons/Update'
-import ArrowUpward from '@material-ui/icons/ArrowUpward'
-import AccessTime from '@material-ui/icons/AccessTime'
-import Accessibility from '@material-ui/icons/Accessibility'
-import BugReport from '@material-ui/icons/BugReport'
-import Code from '@material-ui/icons/Code'
-import Cloud from '@material-ui/icons/Cloud'
-import HourglassEmptyTwoToneIcon from '@material-ui/icons/HourglassEmptyTwoTone';
-import DonutLargeTwoToneIcon from '@material-ui/icons/DonutLargeTwoTone';
-import DoneAllTwoToneIcon from '@material-ui/icons/DoneAllTwoTone';
+import DonutLargeTwoToneIcon from '@material-ui/icons/DonutLargeTwoTone'
+import DoneAllTwoToneIcon from '@material-ui/icons/DoneAllTwoTone'
 // core components
 import GridItem from '../../helpers/Grid/GridItem'
 import GridContainer from '../../helpers/Grid/GridContainer'
 import Table from '../../helpers/Table/Table'
 import Tasks from '../../helpers/Tasks/Tasks'
 import CustomTabs from '../../helpers/CustomTabs/CustomTabs'
-import Danger from '../../helpers/Typography/Danger'
 import Card from '../../helpers/Card/Card'
 import CardHeader from '../../helpers/Card/CardHeader'
 import CardIcon from '../../helpers/Card/CardIcon'
 import CardBody from '../../helpers/Card/CardBody'
 import CardFooter from '../../helpers/Card/CardFooter'
 import { bugs, website, server } from './general'
-import TimelapseIcon from '@material-ui/icons/Timelapse';
-import RecordVoiceOverIcon from '@material-ui/icons/RecordVoiceOver';
-import upperCase from 'upper-case'
+import CountUp from 'react-countup'
 
+import Grafico1 from './grafico1'
+import Grafico2 from './grafico2'
+import Grafico3 from './grafico3'
+import Grafico4 from './grafico4'
+import Grafico5 from './grafico5'
+import Grafico6 from './grafico6'
+import Grafico7 from './grafico7'
+import Grafico8 from './grafico8'
 
 
 
@@ -137,27 +120,22 @@ const useStyles = makeStyles(theme => ({
   fixedHeightPaperInformation: {
     height: 350
   },
-  texto:{
-    fontSize:'40px',
-    textTransform:"capitalize"
-
+  texto: {
+    fontSize: '40px',
+    textTransform: 'capitalize'
   },
-  texto2:{
-    fontSize:'30px',
-    paddingTop:'10px',
-    paddingBottom:'10px',
-    textTransform:"capitalize"
-
-
+  texto2: {
+    fontSize: '30px',
+    paddingTop: '10px',
+    paddingBottom: '10px',
+    textTransform: 'capitalize'
   },
-  texto3:{
-    fontSize:'20px',
-    textTransform:"capitalize"
-
-
+  texto3: {
+    fontSize: '20px',
+    textTransform: 'capitalize'
   },
-  stats:{
-    textTransform:"upperCase"
+  stats: {
+    textTransform: 'upperCase'
   }
 }))
 
@@ -165,12 +143,68 @@ export default function Dashboard(props) {
   const classes = useStyles()
   console.log(props)
 
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-  const fixedHeightPaperInformation = clsx(classes.paper, classes.fixedHeightPaperInformation)
+  const iconChartBar = () => {
+    return (
+      <div>
+        <Icofont icon='icofont-chart-bar-graph' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartPie = () => {
+    return (
+      <div>
+        <Icofont icon='icofont-chart-pie' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartFlow = () => {
+    return (
+      <div>
+        <Icofont icon='icofont-chart-flow' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartFlow2 = () => {
+    return (
+      <div>
+        <Icofont icon='  icofont-chart-flow-2' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+
+  const iconChartLine = () => {
+    return (
+      <div>
+        <Icofont icon='  icofont-chart-line-alt' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartHistogram = () => {
+    return (
+      <div>
+        <Icofont icon='icofont-chart-histogram' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartCalendar = () => {
+    return (
+      <div>
+        <Icofont icon='  icofont-calendar' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+  const iconChartLine2 = () => {
+    return (
+      <div>
+        <Icofont icon=' icofont-chart-line' className='iconWhite' spin='false'></Icofont>
+      </div>
+    )
+  }
+
 
   return (
     <div className={classes.root}>
-      <Title title='Dashboard' />
+      <Title title='Gestión Pladeco' />
 
       <main className={classes.content}>
         <Container>
@@ -179,17 +213,16 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='warning' stats icon>
                   <CardIcon color='warning'>
+                    <Icofont icon='icofont-list' className='iconWhite' spin='false'></Icofont>
+
                     <div className={classes.texto}>
-                    40%
-                  </div>
+                      {' '}
+                      <CountUp start={1} end={47} duration={5} separator=' ' suffix=' %'></CountUp>
+                    </div>
                   </CardIcon>
-              
                 </CardHeader>
                 <CardFooter stats>
-                  <div className={classes.stats}>
-                     Pladeco completado
-                
-                  </div>
+                  <div className={classes.stats}>Pladeco completado</div>
                 </CardFooter>
               </Card>
             </GridItem>
@@ -197,15 +230,14 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='success' stats icon>
                   <CardIcon color='success'>
-                  <div className={classes.texto2}>
-                  789/2300 
-                  </div>
+                    <Icofont icon='icofont-law-document ' className='iconWhite'></Icofont>
+                    <div className={classes.texto}>
+                      <CountUp start={1} end={58} duration={5} separator=' ' suffix=' %'></CountUp>
+                    </div>
                   </CardIcon>
                 </CardHeader>
                 <CardFooter stats>
-                  <div className={classes.stats}>
-                    Acciones Aprobadas
-                  </div>
+                  <div className={classes.stats}>Acciones Aprobadas</div>
                 </CardFooter>
               </Card>
             </GridItem>
@@ -213,14 +245,12 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='danger' stats icon>
                   <CardIcon color='danger'>
-                    <TimelapseIcon></TimelapseIcon>
-                  <div className={classes.texto3}>300 días</div>
+                    <Icofont icon='icofont-clock-time' className='iconWhite'></Icofont>
+                    <div className={classes.texto}> <CountUp start={800} end={345} duration={5} separator=' ' suffix=' días'></CountUp> </div>
                   </CardIcon>
                 </CardHeader>
                 <CardFooter stats>
-                  <div className={classes.stats}>
-                     Para finalizar pladeco
-                  </div>
+                  <div className={classes.stats}>Para finalizar pladeco</div>
                 </CardFooter>
               </Card>
             </GridItem>
@@ -228,18 +258,66 @@ export default function Dashboard(props) {
               <Card>
                 <CardHeader color='info' stats icon>
                   <CardIcon color='info'>
-                    <RecordVoiceOverIcon />
-                    <div className={classes.texto3}>129/2300 </div> 
+                    <Icofont icon='icofont-megaphone-alt' className='iconWhite'></Icofont>
+                    <div className={classes.texto}>
+                      <CountUp start={1} end={67} duration={5} separator=' ' suffix=' %'></CountUp>
+                    </div>
                   </CardIcon>
-                
                 </CardHeader>
                 <CardFooter stats>
-                  <div className={classes.stats}>
-                 Actividades difundidas a la comunidad
-
-                  </div>
+                  <div className={classes.stats}>Actividades difundidas a la comunidad</div>
                 </CardFooter>
               </Card>
+            </GridItem>
+          </GridContainer>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <CustomTabs
+                title='Graficos:'
+                headerColor='primary'
+                tabs={[
+                  {
+                    tabName: 'Grafico 1',
+                    tabIcon: iconChartBar,
+                    tabContent: <Grafico1 />
+                  },
+                  {
+                    tabName: 'Grafico 2',
+                    tabIcon: iconChartPie,
+                    tabContent: <Grafico2 />
+                  },
+                  {
+                    tabName: 'Grafico 3',
+                    tabIcon: iconChartFlow2,
+                    tabContent: <Grafico3 />
+                  },
+                  {
+                    tabName: 'Grafico 4',
+                    tabIcon: iconChartHistogram,
+                    tabContent: <Grafico4 />
+                  },
+                  {
+                    tabName: 'Grafico 5',
+                    tabIcon: iconChartFlow,
+                    tabContent: <Grafico5 />
+                  },
+                  {
+                    tabName: 'Grafico 6',
+                    tabIcon: iconChartCalendar,
+                    tabContent: <Grafico6 />
+                  },
+                  {
+                    tabName: 'Grafico 7',
+                    tabIcon: iconChartLine,
+                    tabContent: <Grafico7 />
+                  },
+                  {
+                    tabName: 'Grafico 8',
+                    tabIcon: iconChartLine2,
+                    tabContent: <Grafico8 />
+                  }
+                ]}
+              />
             </GridItem>
           </GridContainer>
           <GridContainer>
@@ -250,7 +328,7 @@ export default function Dashboard(props) {
                 tabs={[
                   {
                     tabName: 'Pendientes',
-                    tabIcon: HourglassEmptyTwoToneIcon,
+                    tabIcon: InsertChartIcon,
                     tabContent: (
                       <Tasks checkedIndexes={[0, 3]} tasksIndexes={[0, 1, 2, 3]} tasks={bugs} />
                     )
@@ -273,7 +351,11 @@ export default function Dashboard(props) {
             <GridItem xs={12} sm={12} md={6}>
               <Card>
                 <CardHeader color='warning'>
-                  <h4 className={classes.cardTitleWhite}> <InsertChartIcon />Lineas</h4>
+                  <h4 className={classes.cardTitleWhite}>
+                    {' '}
+                    <InsertChartIcon />
+                    Lineas
+                  </h4>
                 </CardHeader>
                 <CardBody>
                   <Table
@@ -291,7 +373,7 @@ export default function Dashboard(props) {
             </GridItem>
           </GridContainer>
           <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
+            <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color='primary'>
                   <h4 className={classes.cardTitleWhite}>
@@ -303,7 +385,7 @@ export default function Dashboard(props) {
                 </CardBody>
               </Card>
             </GridItem>
-            <GridItem xs={12} sm={12} md={6}>
+            <GridItem xs={12} sm={12} md={12}>
               <Card>
                 <CardHeader color='success'>
                   <h4 className={classes.cardTitleWhite}>
@@ -318,19 +400,20 @@ export default function Dashboard(props) {
           </GridContainer>
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
-            <Card>
+              <Card>
                 <CardHeader color='danger'>
-                  <h4 className={classes.cardTitleWhite}> <AssignmentIcon /> Activades Pendientes</h4>
+                  <h4 className={classes.cardTitleWhite}>
+                    {' '}
+                    <AssignmentIcon /> Activades Pendientes
+                  </h4>
                 </CardHeader>
                 <CardBody>
-                <ActivityList {...props}></ActivityList>
+                  <ActivityList {...props} />
                 </CardBody>
               </Card>
             </GridItem>
-            </GridContainer>
+          </GridContainer>
         </Container>
-
-       
       </main>
     </div>
   )

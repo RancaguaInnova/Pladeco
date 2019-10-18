@@ -7,7 +7,6 @@ export const ProfileList = props => (
       <TextField source='description' label='Descripción' />
       <DateField source='initialDate' label='Fecha de Inicio' />
       <DateField source='endDate' label='Fecha de Termino' />
-
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

@@ -1,5 +1,3 @@
-import People from '@material-ui/icons/People'
-
 import create from './create'
 import edit from './edit'
 import list from './list'

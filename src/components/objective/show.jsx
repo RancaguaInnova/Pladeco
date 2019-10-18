@@ -6,9 +6,9 @@ const ObjetiveShow = props => (
     <SimpleShowLayout>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
-      <ReferenceField label='Linea' source='lineId' reference='lines'>
+      <ReferenceField label='Linea' source='lineId' reference='lines'  linkType="show">
         <TextField source='name' />
-      </ReferenceField>{' '}
+      </ReferenceField>
     </SimpleShowLayout>
   </Show>
 )

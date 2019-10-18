@@ -10,5 +10,5 @@
   "jsxBracketSameLine": false,
   "arrowParens": "avoid",
   "endOfLine": "lf",
-  "formatOnSave":"true"
+  "formatOnSave": "true"
 }

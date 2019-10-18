@@ -6,8 +6,8 @@ export const UserList = props => (
       <TextField source='firstName' label='Nombre' />
       <TextField source='lastName' label='Apellido' />
       <TextField source='identifier' label='Rut' />
-      <TextField source='email' label='Email' />
-      <TextField source='username' label='Usuario' />
+      <TextField source='email.address' label='Email' />
+      <TextField source='role.name' label='Rol' />
 
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />

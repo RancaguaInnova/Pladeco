@@ -27,7 +27,6 @@ class App extends Component {
       <Admin
         loginPage={LoginPage}
         dashboard={Dashboard}
-        customRoutes={[<Route key='Perfil' path='/profile' component={Profile.edit} />]}
         authProvider={AuthProvider}
         theme={Theme}
         dataProvider={AddUploadCapabilities(Provider)}
@@ -35,16 +34,18 @@ class App extends Component {
         i18nProvider={I18nProvider}
       >
         {permissions => {
+          console.log("permissions",permissions)
           return [            
             <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
             <ResourceWithPermissions name='areas' {...Area} permissions={permissions} />,
             <ResourceWithPermissions name='lines' {...Line} permissions={permissions} />,
             <ResourceWithPermissions name='objectives' {...Objective} permissions={permissions} />,
             <ResourceWithPermissions name='actions' {...Action} permissions={permissions} />,
-            <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />,
-            <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
+            <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />, 
+            <ResourceWithPermissions name='departments' {...Deparment} permissions={permissions} />,
+            <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,            
+          
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
-            <ResourceWithPermissions name='deparment' {...Deparment} permissions={permissions} />,
             <ResourceWithPermissions name='responsible' {...Responsible} permissions={permissions} />
           ]
         }}

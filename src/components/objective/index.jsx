@@ -1,6 +1,3 @@
-import Notes from '@material-ui/icons/Notes'
-import React, { Component } from 'react'
-
 import create from './create'
 import edit from './edit'
 import list from './list'

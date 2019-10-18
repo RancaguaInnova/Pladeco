@@ -26,10 +26,10 @@ export const LineList = withStyles(listStyles)(({ classes, ...props })  => (
     <Datagrid rowClick='edit'  classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
-      <ReferenceField reference='areas' source='areaId' label='Area'>
+      <ReferenceField reference='areas' source='areaId' label='Area'  linkType="show">
         <TextField source='name' />
       </ReferenceField>
-      <ReferenceField reference='users' source='responsibleId' label='Responsable'>
+      <ReferenceField reference='users' source='responsibleId' label='Responsable'  linkType="show">
         <TextField source='identifier' />
       </ReferenceField>
       <EditButton label='Editar' />
