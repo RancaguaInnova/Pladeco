@@ -4,7 +4,7 @@ import Icofont from "react-icofont";
 const icon =()=> {
     return (
       <div>
-        <Icofont icon='icofont-dart ' className='icon' spin="false"></Icofont>
+        <Icofont icon='icofont-layers' className='icon'></Icofont>
       </div>
     )
   }

@@ -88,3 +88,14 @@
  [class*=MuiTypography-body]{
 	 font-size: 0.875rem !important;
  }
+
+ [class*=FormInput-input]{
+	width: 100% !important;
+}
+
+.flex{
+	display: flex;
+}
+.column16{
+	width: 16.6%;
+}

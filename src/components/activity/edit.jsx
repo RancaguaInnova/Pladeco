@@ -18,10 +18,10 @@ import {
 const ActivityEdit = props => {
   return (
     <Edit title='Editar Actividad' {...props}>
-           <SimpleForm>
+      <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='actions' source='actionId' label='Acción' linkType="show">
+        <ReferenceInput reference='actions' source='actionId' label='Acción' linkType='show'>
           <SelectInput optionText='name' />
         </ReferenceInput>
         <SelectInput
@@ -36,20 +36,28 @@ const ActivityEdit = props => {
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
 
         <TextInput source='files' label='Archivos' defaultValue='' />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
+        <ReferenceInput
+          reference='users'
+          source='responsibleId'
+          label='Responsable'
+          linkType='show'
+        >
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ArrayInput source='executedFunds' label='Fondos ejecutados'  linkType="show">
+        <ArrayInput source='executedFunds' label='Fondos ejecutados' linkType='show'>
           <SimpleFormIterator>
             <TextInput source='source' label='source' />
             <NumberInput source='amount' label='amount' />
           </SimpleFormIterator>
         </ArrayInput>
-
-        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'  linkType="show">
+        <ReferenceArrayInput
+          reference='users'
+          source='coordinatedWith'
+          label='Coordinado con'
+          linkType='show'
+        >
           <SelectArrayInput optionText='identifier' />
         </ReferenceArrayInput>
-
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>
             <TextInput source='description' label='Descripción' />
@@ -59,20 +67,24 @@ const ActivityEdit = props => {
         <TextInput source='location.name' label='Localización nombre' />
         <NumberInput source='location.lat' label='Localización latitud' />
         <NumberInput source='location.lng' label='Localización longitud' />
-
         <TextInput source='comments' label='Comentarios' defaultValue='' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area'  linkType="show">
+            <ReferenceInput reference='areas' source='areaId' label='Area' linkType='show'>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea'  linkType="show">
+            <ReferenceInput reference='lines' source='lineId' label='Linea' linkType='show'>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'  linkType="show">
+            <ReferenceInput
+              reference='objectives'
+              source='objectiveId'
+              label='Objetivo'
+              linkType='show'
+            >
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción'  linkType="show">
+            <ReferenceInput reference='actions' source='actionId' label='Acción' linkType='show'>
               <SelectInput optionText='name' />
             </ReferenceInput>
           </SimpleFormIterator>

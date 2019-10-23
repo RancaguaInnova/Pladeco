@@ -7,7 +7,6 @@ const ResponsibleCreate = props => {
       <SimpleForm >
         <TextInput source='name' label='Nombre' defaultValue='' />      
           <TextInput source='departmentId' label='Nombre' defaultValue='' />
-
       </SimpleForm>
     </Create>
   )

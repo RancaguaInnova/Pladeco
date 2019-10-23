@@ -34,7 +34,6 @@ const ActivityShow = props => (
       />
       <DateField source='createAt' label='Fecha de creación' defaultValue='' />
 
-   
       <ReferenceField reference='users' source='responsibleId' label='Responsable'>
         <TextField source='identifier' />
       </ReferenceField>

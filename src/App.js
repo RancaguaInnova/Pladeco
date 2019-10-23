@@ -20,6 +20,7 @@ import Responsible from './components/responsible'
 import Line from './components/line'
 import WorkPlan from './components/workPlan'
 import Dashboard from './components/dashboard';
+import Roles from './components/roles'
 
 class App extends Component {
   render() {
@@ -43,8 +44,9 @@ class App extends Component {
             <ResourceWithPermissions name='actions' {...Action} permissions={permissions} />,
             <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />, 
             <ResourceWithPermissions name='departments' {...Deparment} permissions={permissions} />,
+            <ResourceWithPermissions name='roles' {...Roles} permissions={permissions} />,            
+
             <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,            
-          
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
             <ResourceWithPermissions name='responsible' {...Responsible} permissions={permissions} />
           ]

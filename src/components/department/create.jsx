@@ -7,9 +7,9 @@ const DepartmentCreate = props => {
       <SimpleForm >
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='users' source='managerId' label='Responsable' >
+    <ReferenceInput reference='users' source='managerId' label='Responsable' >
           <SelectInput optionText='identifier' />
-        </ReferenceInput>
+        </ReferenceInput> 
       </SimpleForm>
     </Create>
   )
