@@ -33,7 +33,7 @@ function Copyright() {
       {'Copyright © '}
       <Link color='inherit' href='http://smart.rancagua.cl/'>
         Corporación de Desarrollo e Innovación de Rancagua
-      </Link>{' '}
+      </Link>
       {new Date().getFullYear()}
       {'.'}
     </Typography>

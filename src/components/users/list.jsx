@@ -8,7 +8,6 @@ export const UserList = props => (
       <TextField source='identifier' label='Rut' />
       <TextField source='email.address' label='Email' />
       <TextField source='role.name' label='Rol' />
-
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

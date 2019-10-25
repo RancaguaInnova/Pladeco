@@ -37,8 +37,7 @@ const AreaEdit = props => {
           <span className='flex'>
             <BooleanInput label='Crear' source='lines.create' className='column16' />
             <BooleanInput label='Listar' source='lines.list' className='column16' />
-            <BooleanInput label='Editar' source='objectives.edit' className='column16' />
-
+            <BooleanInput label='Editar' source='lines.edit' className='column16' />
             <BooleanInput label='Mostrar' source='lines.show' className='column16' />
             <BooleanInput label='Eliminar' source='lines.delete' className='column16' />
             <BooleanInput label='Habilitado' source='lines.enabled' className='column16' />

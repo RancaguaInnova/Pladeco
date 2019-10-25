@@ -1,5 +1,5 @@
 import { fetchUtils } from 'react-admin'
-import jsonServerProvider from 'ra-data-simple-rest';
+import jsonServerProvider from 'ra-data-simple-rest'
 import url from './url'
 
 const httpClient = (url, options = {}) => {

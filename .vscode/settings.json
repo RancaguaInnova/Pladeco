@@ -12,7 +12,10 @@
     "prettier.alignObjectProperties": true,
     "cSpell.words": [
         "Bearer",
+        "Departamentos",
+        "Habilitado",
         "Linea",
+        "Listar",
         "Typography",
         "icon",
         "iniciado",

@@ -10,10 +10,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 // core components
 import Card from "../Card/Card";
-import CardBody from "../Card/CardBody.js";
-import CardHeader from "../Card/CardHeader.js";
+import CardBody from "../Card/CardBody";
+import CardHeader from "../Card/CardHeader";
 
-import styles from "./customTabsStyle.js";
+import styles from "./customTabsStyle";
 
 const useStyles = makeStyles(styles);
 
