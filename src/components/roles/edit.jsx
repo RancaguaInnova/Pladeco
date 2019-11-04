@@ -1,18 +1,11 @@
 import React from 'react'
-import {
-  TextInput,
-  SimpleForm,
-  BooleanInput,
-  Labeled,
-  Edit
-} from 'react-admin'
+import { TextInput, SimpleForm, BooleanInput, Labeled, Edit } from 'react-admin'
 
 const AreaEdit = props => {
   return (
     <Edit title='Editar Área' {...props}>
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
-
         <Labeled label='Plan de trabajo'>
           <span className='flex'>
             <BooleanInput label='Crear' source='workplans.create' className='column16' />

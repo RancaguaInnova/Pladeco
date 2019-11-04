@@ -44,7 +44,9 @@ const UserEdit = props => (
       <ReferenceInput label='Departamento Municipal' source='departmentId' reference='departments'>
         <SelectInput optionText='name' />
       </ReferenceInput>
-  
+      <ReferenceInput label='Rol' source='role.id' reference='roles'>
+        <SelectInput optionText='name' />
+      </ReferenceInput>
     </SimpleForm>
   </Edit>
 )

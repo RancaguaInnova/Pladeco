@@ -11,7 +11,6 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
-  BooleanInput
 } from 'react-admin'
 
 const validateActivityCreation = values => {
@@ -99,7 +98,6 @@ const ActivityCreate = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
       </SimpleForm>
     </Create>
   )

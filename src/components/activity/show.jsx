@@ -21,7 +21,7 @@ const ActivityShow = props => (
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
       <ReferenceField reference='actions' source='actionId' label='Acción'>
-        <TextField source='name' />
+        <TextField source='name' ></TextField>
       </ReferenceField>
       <SelectField
         source='status'
@@ -33,7 +33,6 @@ const ActivityShow = props => (
         ]}
       />
       <DateField source='createAt' label='Fecha de creación' defaultValue='' />
-
       <ReferenceField reference='users' source='responsibleId' label='Responsable'>
         <TextField source='identifier' />
       </ReferenceField>

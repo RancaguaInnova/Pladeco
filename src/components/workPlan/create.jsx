@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create,DateInput  } from 'react-admin'
+import { TextInput, SimpleForm, Create,DateInput  } from 'react-admin'
 
 const WorkPlaneCreate = props => {
   return (

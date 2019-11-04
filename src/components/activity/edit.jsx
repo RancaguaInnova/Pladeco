@@ -89,7 +89,6 @@ const ActivityEdit = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
       </SimpleForm>
     </Edit>
   )

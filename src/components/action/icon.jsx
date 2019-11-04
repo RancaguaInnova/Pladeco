@@ -1,10 +1,11 @@
 import React from 'react';
-import Icofont from "react-icofont";
+import { GoChecklist } from "react-icons/go";
+
 
 const icon =()=> {
     return (
       <div>
-        <Icofont icon='icofont-law-document ' className='icon'></Icofont>
+        <GoChecklist className='icon'></GoChecklist>
       </div>
     )
   }

@@ -1,10 +1,11 @@
 import React from 'react'
-import Icofont from 'react-icofont'
+//import Icofont from 'react-icofont'
+import { FaClipboardList } from "react-icons/fa";
 
 const icon = () => {
   return (
     <div>
-      <Icofont icon='icofont-tasks ' className='icon'></Icofont>
+      <FaClipboardList className='icon' ></FaClipboardList>
     </div>
   )
 }

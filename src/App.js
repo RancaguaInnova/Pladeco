@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Admin, ListGuesser, ShowGuesser, EditGuesser } from 'react-admin'
+import { Admin } from 'react-admin'
 import Provider from './provider'
 import Theme from './theme'
 import './App.scss'
@@ -7,7 +7,6 @@ import I18nProvider from './i18n'
 import AddUploadCapabilities from './addUploadCapabilities'
 import AuthProvider from './auth'
 import LoginPage from './components/login'
-import { Route } from 'react-router-dom'
 import Profile from './components/profile'
 import Users from './components/users'
 import { ResourceWithPermissions } from 'ra-auth-acl'
@@ -35,7 +34,6 @@ class App extends Component {
         i18nProvider={I18nProvider}
       >
         {permissions => {
-          console.log("permissions",permissions)
           return [            
             <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
             <ResourceWithPermissions name='areas' {...Area} permissions={permissions} />,
