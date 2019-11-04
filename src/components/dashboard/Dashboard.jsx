@@ -1,9 +1,5 @@
-
 import Container from '@material-ui/core/Container'
-
 import React from 'react'
-
-import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import ChartPladeco from './chartPladeco'
 import ActivityList from './pladeco.list'
@@ -27,7 +23,6 @@ import CardBody from '../../helpers/Card/CardBody'
 import CardFooter from '../../helpers/Card/CardFooter'
 import { bugs, website, server } from './general'
 import CountUp from 'react-countup'
-
 import Grafico1 from './grafico1'
 import Grafico2 from './grafico2'
 import Grafico3 from './grafico3'
@@ -36,8 +31,6 @@ import Grafico5 from './grafico5'
 import Grafico6 from './grafico6'
 import Grafico7 from './grafico7'
 import Grafico8 from './grafico8'
-
-
 
 const drawerWidth = 240
 const useStyles = makeStyles(theme => ({
@@ -141,7 +134,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dashboard(props) {
   const classes = useStyles()
-  console.log(props)
 
   const iconChartBar = () => {
     return (
@@ -201,7 +193,6 @@ export default function Dashboard(props) {
     )
   }
 
-
   return (
     <div className={classes.root}>
       <Title title='Gestión Pladeco' />
@@ -246,7 +237,16 @@ export default function Dashboard(props) {
                 <CardHeader color='danger' stats icon>
                   <CardIcon color='danger'>
                     <Icofont icon='icofont-clock-time' className='iconWhite'></Icofont>
-                    <div className={classes.texto}> <CountUp start={800} end={345} duration={5} separator=' ' suffix=' días'></CountUp> </div>
+                    <div className={classes.texto}>
+                      {' '}
+                      <CountUp
+                        start={800}
+                        end={345}
+                        duration={5}
+                        separator=' '
+                        suffix=' días'
+                      ></CountUp>{' '}
+                    </div>
                   </CardIcon>
                 </CardHeader>
                 <CardFooter stats>

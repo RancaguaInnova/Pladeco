@@ -2,12 +2,7 @@ import React from 'react'
 import {
   TextInput,
   SimpleForm,
-  SelectInput,
   Create,
-  ReferenceInput,
-  SelectArrayInput,
-  ChipField,
-  CheckboxGroupInput,
   BooleanInput,
   Labeled
 } from 'react-admin'

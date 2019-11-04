@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Datagrid, TextField, EditButton, DeleteButton ,ReferenceField,SelectField} from 'react-admin'
+import { List, Datagrid, TextField, EditButton, DeleteButton, ReferenceField } from 'react-admin'
 export const UserList = props => (
   <List {...props} title='Listado de Usuarios'>
     <Datagrid rowClick='edit'>

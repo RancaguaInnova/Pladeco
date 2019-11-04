@@ -2,7 +2,6 @@ import React from 'react'
 import {
   TextInput,
   SimpleForm,
-  Create,
   DateInput,
   SelectInput,
   ReferenceInput,
@@ -11,7 +10,6 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
-  BooleanInput,
   Edit
 } from 'react-admin'
 

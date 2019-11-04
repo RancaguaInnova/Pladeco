@@ -4,10 +4,6 @@ import {
   TextField,
   EditButton,
   DeleteButton,
-  ReferenceField,
-  ReferenceArrayField,
-  SingleFieldList,
-  ChipField,
   SelectField,
   withDataProvider
 } from 'react-admin'
@@ -15,20 +11,18 @@ import {
 import React from 'react'
 import compose from 'recompose/compose'
 import { makeStyles } from '@material-ui/core/styles'
-import DateField from '../../helpers/fields/DateField'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-   
+    display: 'flex'
   },
-  table:{
-     fontSize:"0.8125rem",
-     padding: "12px 8px",
-     fontFamily: "Roboto,Helvetica,Arial, sans-serif",
-     fontWeight: 300,
-     lineHeight: 1.42857143,
-     verticalAlign: "middle", 
+  table: {
+    fontSize: '0.8125rem',
+    padding: '12px 8px',
+    fontFamily: 'Roboto,Helvetica,Arial, sans-serif',
+    fontWeight: 300,
+    lineHeight: 1.42857143,
+    verticalAlign: 'middle'
   }
 }))
 
@@ -50,8 +44,8 @@ function Event(props) {
         option={props.options}
         permissions={props.permissions}
       >
-        <Datagrid > 
-          <TextField source='name' label='Nombre'  className={classes.table}/>
+        <Datagrid>
+          <TextField source='name' label='Nombre' className={classes.table} />
           <SelectField
             source='status'
             label='Estado'
@@ -62,9 +56,9 @@ function Event(props) {
               { id: 'finished', name: 'Finalizado' }
             ]}
           />
-          <TextField source='weight' label='Peso'  className={classes.table}/>
-          <EditButton label='Editar'  className={classes.table}/>
-          <DeleteButton label='Eliminar'  className={classes.table}/>
+          <TextField source='weight' label='Peso' className={classes.table} />
+          <EditButton label='Editar' className={classes.table} />
+          <DeleteButton label='Eliminar' className={classes.table} />
         </Datagrid>
       </List>
     </div>

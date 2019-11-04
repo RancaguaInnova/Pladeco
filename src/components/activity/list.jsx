@@ -5,12 +5,9 @@ import {
   TextField,
   EditButton,
   DeleteButton,
-  NumberField,
   ReferenceField,
   SelectField,
-  ReferenceArrayField,
-  BooleanField,
-  SingleFieldList
+  BooleanField
 } from 'react-admin'
 import DateField from '../../helpers/fields/DateField'
 import { withStyles } from '@material-ui/core/styles'

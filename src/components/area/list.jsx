@@ -2,9 +2,6 @@ import React from 'react'
 import { List, Datagrid, TextField, EditButton, DeleteButton, ReferenceField } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
 const listStyles = {
-  actions: {
-    backgroundColor: 'red'
-  },
   thead: {
     background: 'linear-gradient(60deg, #26c6da, #BCD6DD)',
     color: '#fff'

@@ -1,7 +1,6 @@
 import {
   BooleanField,
   Datagrid,
-  FunctionField,
   List,
   ReferenceField,
   TextField,
@@ -18,16 +17,15 @@ import DateField from '../../helpers/fields/DateField'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
-   
+    display: 'flex'
   },
-  table:{
-     fontSize:"0.8125rem",
-     padding: "12px 8px",
-     fontFamily: "Roboto,Helvetica,Arial, sans-serif",
-     fontWeight: 300,
-     lineHeight: 1.42857143,
-     verticalAlign: "middle", 
+  table: {
+    fontSize: '0.8125rem',
+    padding: '12px 8px',
+    fontFamily: 'Roboto,Helvetica,Arial, sans-serif',
+    fontWeight: 300,
+    lineHeight: 1.42857143,
+    verticalAlign: 'middle'
   }
 }))
 
@@ -50,10 +48,21 @@ function Event(props) {
         permissions={props.permissions}
       >
         <Datagrid>
-          <TextField source='name' label='Nombre' defaultValue='' className={classes.table}/>
-          <TextField source='description' label='Descripción' defaultValue='' className={classes.table}/>
-          <ReferenceField reference='actions' source='actionId' label='Acción' className={classes.table}  linkType="show">
-            <TextField source='name' className={classes.table}/>
+          <TextField source='name' label='Nombre' defaultValue='' className={classes.table} />
+          <TextField
+            source='description'
+            label='Descripción'
+            defaultValue=''
+            className={classes.table}
+          />
+          <ReferenceField
+            reference='actions'
+            source='actionId'
+            label='Acción'
+            className={classes.table}
+            linkType='show'
+          >
+            <TextField source='name' className={classes.table} />
           </ReferenceField>
           <SelectField
             source='status'
@@ -65,10 +74,20 @@ function Event(props) {
               { id: 'finished', name: 'Finalizado' }
             ]}
           />
-          <DateField source='createAt' label='Fecha de creación' defaultValue='' className={classes.table}/>
-          <BooleanField source='approved' label='Aprobado' defaultValue='' className={classes.table}/>
-          <EditButton label='Editar' className={classes.table}/>
-          <DeleteButton label='Eliminar' className={classes.table}/>
+          <DateField
+            source='createAt'
+            label='Fecha de creación'
+            defaultValue=''
+            className={classes.table}
+          />
+          <BooleanField
+            source='approved'
+            label='Aprobado'
+            defaultValue=''
+            className={classes.table}
+          />
+          <EditButton label='Editar' className={classes.table} />
+          <DeleteButton label='Eliminar' className={classes.table} />
         </Datagrid>
       </List>
     </div>

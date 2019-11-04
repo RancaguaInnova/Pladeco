@@ -2,43 +2,43 @@ import React from 'react'
 import {
   TextInput,
   SimpleForm,
-  Create,
   SelectInput,
   required,
   minLength,
   maxLength,
-  minValue,
-  maxValue,
-  number,
-  regex,
-  email,
-  choices,
-  SaveButton,
-  Toolbar,
   DateInput,
   ReferenceInput,
   NumberInput,
-  BooleanInput,Edit,
+  BooleanInput,
+  Edit,
   ReferenceArrayInput,
-  SelectArrayInput,
-  ChipField
-
+  SelectArrayInput
 } from 'react-admin'
 const validateName = [required(), minLength(0), maxLength(550)]
 
 const ActionEdit = props => {
   return (
     <Edit title='Editar acción' {...props}>
-      <SimpleForm >
-      <TextInput source='name' label='Nombre' validate={validateName} />
+      <SimpleForm>
+        <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
+        <ReferenceInput
+          reference='users'
+          source='responsibleId'
+          label='Responsable'
+          linkType='show'
+        >
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ReferenceArrayInput source='dependsOnIds' reference='actions' label="Depende de:"  linkType="show">
+        <ReferenceArrayInput
+          source='dependsOnIds'
+          reference='actions'
+          label='Depende de:'
+          linkType='show'
+        >
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
- 
+
         <SelectInput
           source='status'
           label='Estado'
@@ -51,10 +51,15 @@ const ActionEdit = props => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de termino' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'  linkType="show">
+        <ReferenceInput
+          reference='objectives'
+          source='objectiveId'
+          label='Objetivos'
+          linkType='show'
+        >
           <SelectInput optionText='name' />
         </ReferenceInput>
-        <BooleanInput label="Aprobado" source="approved" defaultValue={false}/>
+        <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
       </SimpleForm>
     </Edit>
   )

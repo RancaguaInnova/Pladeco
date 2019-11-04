@@ -18,7 +18,7 @@ import Objective from './components/objective'
 import Responsible from './components/responsible'
 import Line from './components/line'
 import WorkPlan from './components/workPlan'
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashboard'
 import Roles from './components/roles'
 
 class App extends Component {
@@ -34,19 +34,23 @@ class App extends Component {
         i18nProvider={I18nProvider}
       >
         {permissions => {
-          return [            
+          return [
             <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
             <ResourceWithPermissions name='areas' {...Area} permissions={permissions} />,
             <ResourceWithPermissions name='lines' {...Line} permissions={permissions} />,
             <ResourceWithPermissions name='objectives' {...Objective} permissions={permissions} />,
             <ResourceWithPermissions name='actions' {...Action} permissions={permissions} />,
-            <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />, 
+            <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />,
             <ResourceWithPermissions name='departments' {...Deparment} permissions={permissions} />,
-            <ResourceWithPermissions name='roles' {...Roles} permissions={permissions} />,            
+            <ResourceWithPermissions name='roles' {...Roles} permissions={permissions} />,
 
-            <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,            
+            <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
-            <ResourceWithPermissions name='responsible' {...Responsible} permissions={permissions} />
+            <ResourceWithPermissions
+              name='responsible'
+              {...Responsible}
+              permissions={permissions}
+            />
           ]
         }}
       </Admin>
