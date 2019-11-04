@@ -5,7 +5,6 @@ import {
   TextField,
   EditButton,
   DeleteButton,
-  DateField,
   ReferenceField
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles';

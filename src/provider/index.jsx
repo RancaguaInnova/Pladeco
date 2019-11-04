@@ -1,5 +1,5 @@
 import { fetchUtils } from 'react-admin'
-import jsonServerProvider from 'ra-data-simple-rest'
+import moleculerDataProvider from 'moleculer-data-provider'
 import url from './url'
 
 const httpClient = (url, options = {}) => {
@@ -13,5 +13,6 @@ const httpClient = (url, options = {}) => {
   // add your own headers here
   return fetchUtils.fetchJson(url, options)
 }
-const dataProvider = jsonServerProvider(url, httpClient)
+
+const dataProvider = moleculerDataProvider(url, httpClient)
 export default dataProvider
