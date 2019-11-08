@@ -25,6 +25,7 @@
 		"moment-timezone": "^0.5.26",
 		"node-sass": "^4.12.0",
 		"npm": "^6.12.1",
+		"prettier": "^1.18.2",
 		"ra-auth-acl": "^0.1.1",
 		"react": "^16.9.0",
 		"react-admin": "^2.9.6",
@@ -62,6 +63,8 @@
 		]
 	},
 	"devDependencies": {
+		"eslint-config-prettier": "^6.5.0",
+		"eslint-plugin-prettier": "^3.1.1",
 		"eslint-plugin-react-hooks": "^2.0.1"
 	}
 }

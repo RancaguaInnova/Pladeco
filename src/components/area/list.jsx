@@ -15,7 +15,6 @@ export const AreaList = withStyles(listStyles)(({ classes, ...props }) => (
   <List {...props} title='Áreas'>
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
-      <TextField source='description' label='descripcion' defaultValue='' />
       <ReferenceField label='Pladeco' source='workplanId' reference='workplans' linkType='show'>
         <TextField source='name' />
       </ReferenceField>

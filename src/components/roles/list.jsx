@@ -19,7 +19,6 @@ export const RolesList = withStyles(listStyles)(({ classes, ...props }) => (
   <List {...props} title='Roles'>
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' />
-
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

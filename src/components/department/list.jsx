@@ -4,7 +4,6 @@ export const DepartmentList = props => (
   <List {...props} title='Departamentos'>
     <Datagrid rowClick='edit'>
       <TextField source='name' label='Nombre' />
-      <TextField source='description' label='Descripción' />
       <EditButton label='Editar' />
       <DeleteButton label='Eliminar' />
     </Datagrid>

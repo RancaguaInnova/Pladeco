@@ -20,17 +20,21 @@ import Line from './components/line'
 import WorkPlan from './components/workPlan'
 import Dashboard from './components/dashboard'
 import Roles from './components/roles'
+import { Layout } from './components/layout'
+import CustomRouters from './components/customRouters'
 
 class App extends Component {
   render() {
     return (
       <Admin
+        customRoutes={CustomRouters}
         loginPage={LoginPage}
         dashboard={Dashboard}
         authProvider={AuthProvider}
         theme={Theme}
         dataProvider={AddUploadCapabilities(Provider)}
         locale='es'
+        appLayout={Layout}
         i18nProvider={I18nProvider}
       >
         {permissions => {
@@ -43,7 +47,6 @@ class App extends Component {
             <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />,
             <ResourceWithPermissions name='departments' {...Deparment} permissions={permissions} />,
             <ResourceWithPermissions name='roles' {...Roles} permissions={permissions} />,
-
             <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
             <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
             <ResourceWithPermissions
