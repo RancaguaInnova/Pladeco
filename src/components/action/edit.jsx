@@ -17,6 +17,7 @@ import {
 const validateName = [required(), minLength(0), maxLength(550)]
 
 const ActionEdit = props => {
+  props.permissions ? console.log(props.permissions.actions) : console.log('nada')
   return (
     <Edit title='Editar acción' {...props}>
       <SimpleForm>

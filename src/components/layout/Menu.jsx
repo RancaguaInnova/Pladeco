@@ -62,27 +62,13 @@ class Menu extends Component {
           leftIcon={<Objective.icon />}
           onClick={onMenuClick}
         />
+        <MenuItemLink
+          to={`/actions`}
+          primaryText={Action.options.label}
+          leftIcon={<Action.icon />}
+          onClick={onMenuClick}
+        />
 
-        <SubMenu
-          handleToggle={() => this.handleToggle('menuAccion')}
-          isOpen={this.state.menuAccion}
-          sidebarIsOpen={open}
-          name='Acciones'
-          icon={<Action.icon />}
-        >
-          <MenuItemLink
-            to={`/actions`}
-            primaryText='Configurar Acciones'
-            leftIcon={<Action.icon />}
-            onClick={onMenuClick}
-          />
-          <MenuItemLink
-            to={`/AccionValidation`}
-            primaryText='Validar acciones'
-            leftIcon={<Action.icon />}
-            onClick={onMenuClick}
-          />
-        </SubMenu>
         <MenuItemLink
           to={`/activities`}
           primaryText={Activity.options.label}
@@ -140,8 +126,7 @@ const enhance = compose(
   connect(
     mapStateToProps,
     {}
-  ),
-  translate
+  )
 )
 
 export default enhance(Menu)

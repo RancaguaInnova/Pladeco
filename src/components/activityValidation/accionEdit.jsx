@@ -18,25 +18,22 @@ const validateName = [required(), minLength(0), maxLength(550)]
 
 const ActionEdit = props => {
   console.log(props)
-  /*  return (
-    <Edit title='Editar acción' {...props} resource='actions' basePath='/AccionValidation/:Id'>
+  return (
+    /*   <div>hola</div>*/
+    <Edit
+      title='Editar acción'
+      {...props}
+      resource='actions'
+      basePath='/AccionValidation'
+      id={props.match.params.id}
+    >
       <SimpleForm>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput
-          reference='users'
-          source='responsibleId'
-          label='Responsable'
-          linkType='show'
-        >
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ReferenceArrayInput
-          source='dependsOnIds'
-          reference='actions'
-          label='Depende de:'
-          linkType='show'
-        >
+        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
 
@@ -52,17 +49,12 @@ const ActionEdit = props => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de termino' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput
-          reference='objectives'
-          source='objectiveId'
-          label='Objetivos'
-          linkType='show'
-        >
+        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
           <SelectInput optionText='name' />
         </ReferenceInput>
         <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
       </SimpleForm>
     </Edit>
-  ) */
+  )
 }
 export default ActionEdit
