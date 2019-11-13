@@ -18,7 +18,7 @@ import Tab from '@material-ui/core/Tab'
 
 const ActionFilter = props => (
   <Filter {...props}>
-    <TextInput label='Search' source='q' alwaysOn />
+    <TextInput label='Buscar' source='q' alwaysOn />
     <DateInput label='Fecha Inicio' source='initialDate' />
     <DateInput label='Fecha Fin' source='endDate' />
   </Filter>
@@ -59,7 +59,6 @@ class TabbedDatagrid extends React.Component {
           onChange={this.handleChange}
         >
           {this.tabs.map(choice => {
-            console.log('choice', choice)
             return <Tab key={choice.id} label={choice.name} value={choice.id} />
           })}
         </Tabs>
@@ -69,7 +68,6 @@ class TabbedDatagrid extends React.Component {
             <div>
               {filterValues.status === 'not-started' && (
                 <div>
-                  {console.log('estado', this.state['not-started'])}
                   <Datagrid {...props} ids={this.state['not-started']}>
                     <TextField source='name' label='Nombre' />
 

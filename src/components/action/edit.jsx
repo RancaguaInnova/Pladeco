@@ -12,56 +12,72 @@ import {
   BooleanInput,
   Edit,
   ReferenceArrayInput,
-  SelectArrayInput
+  SelectArrayInput,
+  TextField,
+  ReferenceField,
+  ReferenceArrayField,
+  SelectField
 } from 'react-admin'
 const validateName = [required(), minLength(0), maxLength(550)]
 
-const ActionEdit = props => {
-  props.permissions ? console.log(props.permissions.actions) : console.log('nada')
+const ActionEdit = ({ permissions, ...props }) => {
+  permissions ? console.log(permissions.actions) : console.log('nada')
   return (
     <Edit title='Editar acción' {...props}>
-      <SimpleForm>
-        <TextInput source='name' label='Nombre' validate={validateName} />
-        <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput
-          reference='users'
-          source='responsibleId'
-          label='Responsable'
-          linkType='show'
-        >
-          <SelectInput optionText='identifier' />
-        </ReferenceInput>
-        <ReferenceArrayInput
-          source='dependsOnIds'
-          reference='actions'
-          label='Depende de:'
-          linkType='show'
-        >
-          <SelectArrayInput optionText='name' />
-        </ReferenceArrayInput>
-
-        <SelectInput
-          source='status'
-          label='Estado'
-          choices={[
-            { id: 'not-started', name: 'No iniciado' },
-            { id: 'in-progress', name: 'En progreso' },
-            { id: 'finished', name: 'Finalizado' }
-          ]}
-        />
-        <DateInput source='initialDate' label='Fecha de inicio' />
-        <DateInput source='endDate' label='Fecha de termino' />
-        <NumberInput source='weight' label='Peso' />
-        <ReferenceInput
-          reference='objectives'
-          source='objectiveId'
-          label='Objetivos'
-          linkType='show'
-        >
-          <SelectInput optionText='name' />
-        </ReferenceInput>
-        <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
-      </SimpleForm>
+      {permissions && permissions.actions && permissions.actions.validate ? (
+        <SimpleForm>
+          <TextField source='name' label='Nombre' validate={validateName} />
+          <TextField source='description' label='Descripción' validate={validateName} />
+          <ReferenceField reference='users' source='responsibleId' label='Responsable'>
+            <TextField source='identifier' />
+          </ReferenceField>
+          <ReferenceArrayField source='dependsOnIds' reference='actions' label='Depende de:'>
+            <TextField source='name' />
+          </ReferenceArrayField>
+          <SelectField
+            source='status'
+            label='Estado'
+            choices={[
+              { id: 'not-started', name: 'No iniciado' },
+              { id: 'in-progress', name: 'En progreso' },
+              { id: 'finished', name: 'Finalizado' }
+            ]}
+          />
+          <TextField source='initialDate' label='Fecha de inicio' />
+          <TextField source='endDate' label='Fecha de termino' />
+          <TextField source='weight' label='Peso' />
+          <ReferenceField reference='objectives' source='objectiveId' label='Objetivos'>
+            <TextField source='name' />
+          </ReferenceField>
+          <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
+        </SimpleForm>
+      ) : (
+        <SimpleForm>
+          <TextInput source='name' label='Nombre' validate={validateName} />
+          <TextInput source='description' label='Descripción' validate={validateName} />
+          <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+            <SelectInput optionText='identifier' />
+          </ReferenceInput>
+          <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
+            <SelectArrayInput optionText='name' />
+          </ReferenceArrayInput>
+          <SelectInput
+            source='status'
+            label='Estado'
+            choices={[
+              { id: 'not-started', name: 'No iniciado' },
+              { id: 'in-progress', name: 'En progreso' },
+              { id: 'finished', name: 'Finalizado' }
+            ]}
+          />
+          <DateInput source='initialDate' label='Fecha de inicio' />
+          <DateInput source='endDate' label='Fecha de termino' />
+          <NumberInput source='weight' label='Peso' />
+          <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
+            <SelectInput optionText='name' />
+          </ReferenceInput>
+        </SimpleForm>
+      )}
     </Edit>
   )
 }
