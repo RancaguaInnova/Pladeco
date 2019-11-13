@@ -1,19 +1,20 @@
 const firebase = require("firebase");
 require("firebase/firestore");
 
+
 firebase.initializeApp({
-  apiKey: "AIzaSyDbQVLaL2GnH4_hS3i3mDTtabTo1HWN04E",
-  authDomain: "pladeco-1.firebaseapp.com",
-  databaseURL: "https://pladeco-1.firebaseio.com",
-  projectId: "pladeco-1",
-  storageBucket: "gs://pladeco-1.appspot.com",
-  messagingSenderId: "750733626245"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASED_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 });
 
 var db = firebase.firestore();
 var storage = firebase.storage();
 var storageRoot = storage.ref();
-
+ console.log(process.env)
 // Disable deprecated features
 db.settings({
   timestampsInSnapshots: true
@@ -51,7 +52,6 @@ async function uploadFileToBucket(rawFile, storageRef) {
   return storageRef
     .put(rawFile)
     .then(snapshot => {
-
       return storageRef.getDownloadURL();
     })
     .catch(error => {
@@ -70,7 +70,6 @@ async function uploadFileToBucket(rawFile, storageRef) {
  */
 
 async function createOrUpdateFile(resource, rawFile, uploadFile) {
-
   var storageRef = storageRoot.child(resource + "/" + rawFile.name);
   return storageRef
     .getMetadata()
@@ -91,25 +90,26 @@ function listAllProperties(o) {
   var objectToInspect;
   var result = [];
 
-  for (objectToInspect = o; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {
+  for (
+    objectToInspect = o;
+    objectToInspect !== null;
+    objectToInspect = Object.getPrototypeOf(objectToInspect)
+  ) {
     result = result.concat(Object.entries(objectToInspect));
   }
 
   return result;
 }
 const addUploadCapabilities = requestHandler => (type, resource, params) => {
-
-
   if (type === "UPDATE" || type === "CREATE") {
-    console.log(params)
-    console.log(params.data.pictures)
-    var Properties = listAllProperties(params.data)
-    console.log("listAllProperties", Properties)
+    console.log(params);
+    console.log(params.data.pictures);
+    var Properties = listAllProperties(params.data);
+    console.log("listAllProperties", Properties);
 
-    Properties.map(function (item) {
-
-      console.log("Properties items:", item)
-    })
+    Properties.map(function(item) {
+      console.log("Properties items:", item);
+    });
     /* if (params.data.pictures) {
         const rawFile = params.data.pictures.rawFile
         console.log("newPictures", rawFile)
@@ -140,7 +140,7 @@ const addUploadCapabilities = requestHandler => (type, resource, params) => {
       }
   */
   }
-  console.log(params, "params ---a")
+  console.log(params, "params ---a");
   return requestHandler(type, resource, params);
 };
 export default addUploadCapabilities;
