@@ -1,7 +1,6 @@
 const firebase = require("firebase");
 require("firebase/firestore");
 
-
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -14,7 +13,7 @@ firebase.initializeApp({
 var db = firebase.firestore();
 var storage = firebase.storage();
 var storageRoot = storage.ref();
- console.log(process.env)
+console.log(process.env);
 // Disable deprecated features
 db.settings({
   timestampsInSnapshots: true
@@ -55,7 +54,6 @@ async function uploadFileToBucket(rawFile, storageRef) {
       return storageRef.getDownloadURL();
     })
     .catch(error => {
-      console.log(error);
       throw new Error({ message: error.message_, status: 401 });
     });
 }
@@ -102,45 +100,44 @@ function listAllProperties(o) {
 }
 const addUploadCapabilities = requestHandler => (type, resource, params) => {
   if (type === "UPDATE" || type === "CREATE") {
-    console.log(params);
-    console.log(params.data.pictures);
+
     var Properties = listAllProperties(params.data);
-    console.log("listAllProperties", Properties);
 
     Properties.map(function(item) {
-      console.log("Properties items:", item);
-    });
-    /* if (params.data.pictures) {
-        const rawFile = params.data.pictures.rawFile
-        console.log("newPictures", rawFile)
-        return Promise.resolve(createOrUpdateFile(resource, rawFile, uploadFileToBucket))
+      let name=''
+      item.map(function(atributo, index) {
+        console.log("Properties items:", atributo);
+        console.log("Properties items:", index);
+        if(index==0){
+          name=atributo
+        }
+        if(index==1){
+         if(atributo &&  atributo.rawFile){
+          const rawFile = atributo.rawFile
+          return Promise.resolve(createOrUpdateFile(resource, rawFile, uploadFileToBucket))
   
           .then(urlDownloadImage => {
-            console.log("urlDownloadImage", urlDownloadImage)
-            delete params.data.pictures.rawFile;
-            delete params.data.pictures.src;
-            var pictures = params.data.pictures
+          
+            delete params.data[name].rawFile;
+            delete params.data[name].src;
+            var pictures = params.data[name];
             pictures.src = urlDownloadImage;
   
             // or delete person["age"]; 
             requestHandler(type, resource, {
               ...params,
               data: {
-                ...params.data,
-                pictures: pictures
+                [name]:pictures
               }
             })
           })
-  
-  
-        // const urlImage = createOrUpdateFile(resource, params.data.pictures.rawFile, uploadFileToBucket);
-  
-  
-  
-      }
-  */
+         }
+        }
+      });
+    });
+
   }
-  console.log(params, "params ---a");
+ 
   return requestHandler(type, resource, params);
 };
 export default addUploadCapabilities;
