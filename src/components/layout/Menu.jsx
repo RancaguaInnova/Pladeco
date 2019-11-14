@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import compose from 'recompose/compose'
 import { withRouter } from 'react-router-dom'
-import { translate, DashboardMenuItem, MenuItemLink, Responsive } from 'react-admin'
-import SubMenu from './SubMenu'
+import { DashboardMenuItem, MenuItemLink, Responsive } from 'react-admin'
+//import SubMenu from './SubMenu'
 import Action from '../action'
 import Activity from '../activity'
 import Area from '../area'
@@ -33,7 +33,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { onMenuClick, open, logout } = this.props
+    const { onMenuClick, logout } = this.props
     return (
       <div>
         <DashboardMenuItem onClick={onMenuClick} />

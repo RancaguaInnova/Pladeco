@@ -17,7 +17,9 @@ import {
 
   ReferenceArrayInput,
   SelectArrayInput,
-  
+  ImageInput,
+  ImageField
+
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
 const styles = {
@@ -41,10 +43,10 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable' linkType="show">
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'  linkType="show">
+        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:' linkType="show">
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
         <SelectInput
@@ -59,10 +61,13 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'  linkType="show">
+        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' linkType="show">
           <SelectInput optionText='name' />
         </ReferenceInput>
         <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
+        <ImageInput source="pictures" label="Related pictures" accept="image/*" placeholder={<p>Drop your file here</p>}>
+          <ImageField source="src" title="title" />
+        </ImageInput>
       </SimpleForm>
     </Create>
   )

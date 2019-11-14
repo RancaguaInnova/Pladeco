@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Sidebar } from 'react-admin'
-import AppBar from './AppBar'
 import Menu from './Menu'
 import { darkTheme, lightTheme } from './themes'
 

@@ -54,6 +54,12 @@ const AreaEdit = props => {
             <BooleanInput label='Mostrar' source='actions.show' className='column16' />
             <BooleanInput label='Eliminar' source='actions.delete' className='column16' />
             <BooleanInput label='Habilitado' source='actions.enabled' className='column16' />
+            <BooleanInput
+              label='Validar'
+              source='actions.validate'
+              className='column16'
+              defaultValue={false}
+            />
           </span>
         </Labeled>
         <Labeled label='Actividades'>
@@ -84,6 +90,46 @@ const AreaEdit = props => {
             <BooleanInput label='Mostrar' source='departments.show' className='column16' />
             <BooleanInput label='Eliminar' source='departments.delete' className='column16' />
             <BooleanInput label='Habilitado' source='departments.enabled' className='column16' />
+          </span>
+        </Labeled>
+        <Labeled label='Roles'>
+          <span className='flex'>
+            <BooleanInput
+              label='Crear'
+              source='roles.create'
+              className='column16'
+              defaultValue={false}
+            />
+            <BooleanInput
+              label='Listar'
+              source='roles.list'
+              className='column16'
+              defaultValue={false}
+            />
+            <BooleanInput
+              label='Editar'
+              source='roles.edit'
+              className='column16'
+              defaultValue={false}
+            />
+            <BooleanInput
+              label='Mostrar'
+              source='roles.show'
+              className='column16'
+              defaultValue={false}
+            />
+            <BooleanInput
+              label='Eliminar'
+              source='roles.delete'
+              className='column16'
+              defaultValue={false}
+            />
+            <BooleanInput
+              label='Habilitado'
+              source='roles.enabled'
+              className='column16'
+              defaultValue={false}
+            />
           </span>
         </Labeled>
       </SimpleForm>
