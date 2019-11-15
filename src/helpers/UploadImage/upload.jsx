@@ -5,11 +5,9 @@ const Upload = item => {
     .child('images/' + item.title)
     .put(item.rawFile)
     .then(snapshot => {
-      // console.log('One success:', snapshot.downloadURL)
       return snapshot.downloadURL
     })
     .catch(error => {
-      console.log('One failed:', item, error.message)
       return error
     })
 }

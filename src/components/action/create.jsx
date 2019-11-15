@@ -7,18 +7,16 @@ import {
   required,
   minLength,
   maxLength,
-
   SaveButton,
   Toolbar,
   DateInput,
   ReferenceInput,
   NumberInput,
-  BooleanInput,
-
   ReferenceArrayInput,
   SelectArrayInput,
   ImageInput,
-  ImageField
+  ImageField,
+  FileField, FileInput
 
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
@@ -64,10 +62,14 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
         <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' linkType="show">
           <SelectInput optionText='name' />
         </ReferenceInput>
-        <BooleanInput label='Aprobado' source='approved' defaultValue={false} />
-        <ImageInput source="pictures" label="Related pictures" accept="image/*" placeholder={<p>Drop your file here</p>}>
+        <ImageInput source="pictures" label="Related pictures" accept="image/*"  multiple >
           <ImageField source="src" title="title" />
         </ImageInput>
+
+       <FileInput source="files" label="Related files" accept="application/pdf" multiple>
+          <FileField source="src" title="title" />
+        </FileInput>
+ 
       </SimpleForm>
     </Create>
   )

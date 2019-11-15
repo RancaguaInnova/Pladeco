@@ -18,7 +18,7 @@ import Tab from '@material-ui/core/Tab'
 
 const ActionFilter = props => (
   <Filter {...props}>
-    <TextInput label='Buscar' source='name' alwaysOn />
+    <TextInput label='Buscar' source='search.name' alwaysOn />
     <DateInput label='Fecha Inicio' source='initialDate' />
     <DateInput label='Fecha Fin' source='endDate' />
   </Filter>

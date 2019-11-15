@@ -7,8 +7,13 @@ import {
   ChipField,
   Show,
   SimpleShowLayout,
-  SelectField
+  SelectField,
+  ImageField,
+  FileField
 } from 'react-admin'
+import ImageViewerField from '../../helpers/fields/ImageViewerField'
+import PdfViewerField from '../../helpers/fields/PdfViewerField'
+
 import DateField from '../../helpers/fields/DateField'
 const ActionShow = props => (
   <Show {...props} Title='Acción'>
@@ -35,14 +40,20 @@ const ActionShow = props => (
           { id: 'in-progress', name: 'En progreso' },
           { id: 'finished', name: 'Finalizado' }
         ]}
-      />{' '}
+      />
       <DateField source='initialDate' label='Fecha de inicio' />
       <DateField source='endDate' label='Fecha de termino' />
       <TextField source='weight' label='Peso' />
       <ReferenceField reference='objectives' source='objectiveId' label='Objetivo' linkType='show'>
         <TextField source='name' />
       </ReferenceField>
+  
+      <ImageViewerField source='pictures' label='Imagenes'></ImageViewerField>
+{/*       <PdfViewerField source='files' label='Imagenes'></PdfViewerField>
+ */}
+      <FileField source="files.src" title="files.title" />
     </SimpleShowLayout>
+
   </Show>
 )
 export default ActionShow
