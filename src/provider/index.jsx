@@ -9,7 +9,6 @@ const httpClient = (url, options = {}) => {
   const token = localStorage.getItem('token')
   options.headers.set('Authorization', `Bearer ${token}`)
   options.headers.set('X-Origin', 'backoffice')
-
   // add your own headers here
   return fetchUtils.fetchJson(url, options)
 }
