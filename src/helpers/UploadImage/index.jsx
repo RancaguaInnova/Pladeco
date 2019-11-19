@@ -1,5 +1,6 @@
 const firebase = require("firebase");
 require("firebase/firestore");
+const _ = require("lodash")
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -27,8 +28,9 @@ db.settings({
 
 async function uploadFileToBucket(rawFile, storageRef) {
   try {
-    var snapshot = await storageRef.put(rawFile)
-    return await storageRef.getDownloadURL();
+    const snapshot = await storageRef.put(rawFile)
+    // return await storageRef.getDownloadURL();
+    return await snapshot.ref.getDownloadURL();
   } catch (error) {
     throw new Error({ message: error.message_, status: 401 });
   }
@@ -46,26 +48,35 @@ async function uploadFileToBucket(rawFile, storageRef) {
 async function createOrUpdateFile(resource, rawFile, uploadFile) {
   var storageRef = storageRoot.child(resource + "/" + rawFile.name);
 
-  var metadata = await storageRef.getMetadata()
+  try {
+    var metadata = await storageRef.getMetadata()
 
-  if (metadata && metadata.size === rawFile.size) {
-    return await storageRef.getDownloadURL();
-  } else {
-    return await uploadFile(rawFile, storageRef);
+    if (metadata && metadata.size === rawFile.size) {
+      const downloadUrl = await storageRef.getDownloadURL();
+      return downloadUrl
+    } else {
+      const uploaded = await uploadFile(rawFile, storageRef);
+      return  uploaded
+    }
+  } catch(error) {
   }
-
 }
 
 async function createOrUpdateFiles(resource, Files, uploadFile) {
-  await Files.map(async function (item, index) {
-    var urlDownload = await createOrUpdateFile(
-      resource,
-      item.rawFile,
-      uploadFile
-    );
-    delete item.rawFile;
-    item.src = urlDownload;
-  });
+  try {
+    await Files.forEach(async function (item) {
+      var urlDownload = await createOrUpdateFile(
+        resource,
+        item.rawFile,
+        uploadFile
+      );
+      delete item.rawFile;
+      item.src = urlDownload;
+    });
+  } catch(error) {
+    console.error("File already exists")
+  }
+  
   return Files;
 }
 
@@ -91,58 +102,26 @@ const addUploadCapabilities = requestHandler => async (
 ) => {
   if (type === "UPDATE" || type === "CREATE") {
     var Properties = listAllProperties(params.data);
-    console.log("params 0", params)
-    await Promise.all(Properties.map(async function (item) {
-      let name = "";
-      await item.map(async function (atributo, index) {
-        if (index === 0) {
-          name = atributo;
-        }
-        if (index === 1) {
-          if (atributo && atributo.rawFile) {
-            const rawFile = atributo.rawFile;
-            var urlDownloadImage = await createOrUpdateFile(
-              resource,
-              rawFile,
-              uploadFileToBucket
-            );
-            delete params.data[name].rawFile;
-            delete params.data[name].src;
-            var pictures = params.data[name];
-            pictures.src = urlDownloadImage;
-            console.log("params 1", params)
+    const filesToUpload = []
 
-            let data = { ...params.data, [name]: files }
-            params = {
-              ...params, data
-            };
+    // Iter on fields ([key, value]) of initial "data" object
+    Properties.forEach((keyValuePair) => {
+      const [ key, value ] = keyValuePair
+      if (value && typeof value === "object" && value.length) {
+        value.forEach(fileCandidate => {
+          if (_.has(fileCandidate, "rawFile")) {
+            // file confirmed (fileCandidate is a file object)
+            fileCandidate.fieldKey = key
+            filesToUpload.push(fileCandidate)
           }
-          if (atributo && Array.isArray(atributo) && atributo[0].rawFile) {
-            var files = await createOrUpdateFiles(
-              resource,
-              atributo,
-              uploadFileToBucket
-            );
-            let data = { ...params.data, [name]: files }
-            params = {
-              ...params, data
-            };
-            console.log("params 2", params)
+        })
+      }
+    })
 
-          }
-        }
-      });
-    }));
-    console.log("params 3", params)
-
+    await createOrUpdateFiles(resource, filesToUpload, uploadFileToBucket)
     return requestHandler(type, resource, params);
   } else {
     return requestHandler(type, resource, params);
   }
-
-  //console.log("return")
-
-
-  //
 };
 export default addUploadCapabilities;
