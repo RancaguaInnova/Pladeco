@@ -1,6 +1,6 @@
 const firebase = require("firebase");
 require("firebase/firestore");
-const _ = require("lodash")
+const _ = require("lodash");
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -28,8 +28,7 @@ db.settings({
 
 async function uploadFileToBucket(rawFile, storageRef) {
   try {
-    const snapshot = await storageRef.put(rawFile)
-    // return await storageRef.getDownloadURL();
+    const snapshot = await storageRef.put(rawFile);
     return await snapshot.ref.getDownloadURL();
   } catch (error) {
     throw new Error({ message: error.message_, status: 401 });
@@ -49,14 +48,13 @@ async function createOrUpdateFile(resource, rawFile, uploadFile) {
   var storageRef = storageRoot.child(resource + "/" + rawFile.name);
 
   try {
-    var metadata = await storageRef.getMetadata()
-
+    var metadata = await storageRef.getMetadata();
     if (metadata && metadata.size === rawFile.size) {
       const downloadUrl = await storageRef.getDownloadURL();
-      return downloadUrl
+      return downloadUrl;
     } else {
       const uploaded = await uploadFile(rawFile, storageRef);
-      return  uploaded
+      return  uploaded;
     }
   } catch(error) {
   }
@@ -74,9 +72,8 @@ async function createOrUpdateFiles(resource, Files, uploadFile) {
       item.src = urlDownload;
     });
   } catch(error) {
-    console.error("File already exists")
+    console.error("File already exists");
   }
-  
   return Files;
 }
 
@@ -106,19 +103,19 @@ const addUploadCapabilities = requestHandler => async (
 
     // Iter on fields ([key, value]) of initial "data" object
     Properties.forEach((keyValuePair) => {
-      const [ key, value ] = keyValuePair
+      const [ key, value ] = keyValuePair;
       if (value && typeof value === "object" && value.length) {
         value.forEach(fileCandidate => {
           if (_.has(fileCandidate, "rawFile")) {
             // file confirmed (fileCandidate is a file object)
-            fileCandidate.fieldKey = key
-            filesToUpload.push(fileCandidate)
+            fileCandidate.fieldKey = key;
+            filesToUpload.push(fileCandidate);
           }
         })
       }
     })
 
-    await createOrUpdateFiles(resource, filesToUpload, uploadFileToBucket)
+    await createOrUpdateFiles(resource, filesToUpload, uploadFileToBucket);
     return requestHandler(type, resource, params);
   } else {
     return requestHandler(type, resource, params);
