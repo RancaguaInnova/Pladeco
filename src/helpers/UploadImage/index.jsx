@@ -26,14 +26,12 @@ db.settings({
  */
 
 async function uploadFileToBucket(rawFile, storageRef) {
-  return storageRef
-    .put(rawFile)
-    .then(snapshot => {
-      return storageRef.getDownloadURL();
-    })
-    .catch(error => {
-      throw new Error({ message: error.message_, status: 401 });
-    });
+  try {
+    var snapshot = await storageRef.put(rawFile)
+    return await storageRef.getDownloadURL();
+  } catch (error) {
+    throw new Error({ message: error.message_, status: 401 });
+  }
 }
 
 /**
@@ -48,22 +46,18 @@ async function uploadFileToBucket(rawFile, storageRef) {
 async function createOrUpdateFile(resource, rawFile, uploadFile) {
   var storageRef = storageRoot.child(resource + "/" + rawFile.name);
 
-  return storageRef
-    .getMetadata()
-    .then(metadata => {
-      if (metadata && metadata.size === rawFile.size) {
-        return storageRef.getDownloadURL();
-      } else {
-        return uploadFile(rawFile, storageRef);
-      }
-    })
-    .catch(() => {
-      return uploadFile(rawFile, storageRef);
-    });
+  var metadata = await storageRef.getMetadata()
+
+  if (metadata && metadata.size === rawFile.size) {
+    return await storageRef.getDownloadURL();
+  } else {
+    return await uploadFile(rawFile, storageRef);
+  }
+
 }
 
 async function createOrUpdateFiles(resource, Files, uploadFile) {
-  Files.map(async function (item, index) {
+  await Files.map(async function (item, index) {
     var urlDownload = await createOrUpdateFile(
       resource,
       item.rawFile,
@@ -74,6 +68,7 @@ async function createOrUpdateFiles(resource, Files, uploadFile) {
   });
   return Files;
 }
+
 function listAllProperties(o) {
   var objectToInspect;
   var result = [];
@@ -88,6 +83,7 @@ function listAllProperties(o) {
 
   return result;
 }
+
 const addUploadCapabilities = requestHandler => async (
   type,
   resource,
@@ -96,7 +92,7 @@ const addUploadCapabilities = requestHandler => async (
   if (type === "UPDATE" || type === "CREATE") {
     var Properties = listAllProperties(params.data);
     console.log("params 0", params)
-    await Properties.map(async function (item) {
+    await Promise.all(Properties.map(async function (item) {
       let name = "";
       await item.map(async function (atributo, index) {
         if (index === 0) {
@@ -116,9 +112,9 @@ const addUploadCapabilities = requestHandler => async (
             pictures.src = urlDownloadImage;
             console.log("params 1", params)
 
-            let data={...params.data, [name]: files}
+            let data = { ...params.data, [name]: files }
             params = {
-              ...params,data
+              ...params, data
             };
           }
           if (atributo && Array.isArray(atributo) && atributo[0].rawFile) {
@@ -127,16 +123,16 @@ const addUploadCapabilities = requestHandler => async (
               atributo,
               uploadFileToBucket
             );
-           let data={...params.data, [name]: files}
+            let data = { ...params.data, [name]: files }
             params = {
-              ...params,data
+              ...params, data
             };
             console.log("params 2", params)
 
           }
         }
       });
-    });
+    }));
     console.log("params 3", params)
 
     return requestHandler(type, resource, params);
