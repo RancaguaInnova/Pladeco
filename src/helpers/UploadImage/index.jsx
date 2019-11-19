@@ -63,7 +63,7 @@ async function createOrUpdateFile(resource, rawFile, uploadFile) {
 }
 
 async function createOrUpdateFiles(resource, Files, uploadFile) {
-  Files.map(async function(item, index) {
+  Files.map(async function (item, index) {
     var urlDownload = await createOrUpdateFile(
       resource,
       item.rawFile,
@@ -88,17 +88,17 @@ function listAllProperties(o) {
 
   return result;
 }
-const addUploadCapabilities =  requestHandler => async (
+const addUploadCapabilities = requestHandler => async (
   type,
   resource,
   params
 ) => {
   if (type === "UPDATE" || type === "CREATE") {
     var Properties = listAllProperties(params.data);
-    console.log("params",params)
-    Properties.map(async function(item) {
+    console.log("params 0", params)
+    await Properties.map(async function (item) {
       let name = "";
-      item.map(async function(atributo, index) {
+      await item.map(async function (atributo, index) {
         if (index === 0) {
           name = atributo;
         }
@@ -114,38 +114,39 @@ const addUploadCapabilities =  requestHandler => async (
             delete params.data[name].src;
             var pictures = params.data[name];
             pictures.src = urlDownloadImage;
-           return requestHandler(type, resource, {
-              ...params,
-              data: {
-                [name]: pictures
-              }
-            });
+            console.log("params 1", params)
+
+            let data={...params.data, [name]: files}
+            params = {
+              ...params,data
+            };
           }
           if (atributo && Array.isArray(atributo) && atributo[0].rawFile) {
-            var files =await createOrUpdateFiles(
+            var files = await createOrUpdateFiles(
               resource,
               atributo,
               uploadFileToBucket
             );
-            
-            return requestHandler(type, resource, {
-              ...params,
-              data: {
-                [name]: files
-              }
-            });
+           let data={...params.data, [name]: files}
+            params = {
+              ...params,data
+            };
+            console.log("params 2", params)
+
           }
         }
       });
     });
+    console.log("params 3", params)
+
+    return requestHandler(type, resource, params);
   } else {
-    console.log("elese return")
-    //requestHandler(type, resource, params);
     return requestHandler(type, resource, params);
   }
+
   //console.log("return")
 
-  
+
   //
 };
 export default addUploadCapabilities;
