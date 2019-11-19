@@ -7,10 +7,10 @@ const LineCreate = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='areas' source='areaId' label='Area'  linkType="show">
+        <ReferenceInput reference='areas' source='areaId' label='Area'  >
           <SelectInput optionText='name' />
         </ReferenceInput>
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  linkType="show">
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  >
           <SelectInput optionText='identifier' />
         </ReferenceInput>
       </SimpleForm>

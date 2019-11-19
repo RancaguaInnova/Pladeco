@@ -16,7 +16,7 @@ import {
   SelectArrayInput,
   ImageInput,
   ImageField,
-  FileField, FileInput
+  FileField, FileInput,BooleanInput
 
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
@@ -41,10 +41,10 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable' linkType="show">
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable' >
           <SelectInput optionText='identifier' />
         </ReferenceInput>
-        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:' linkType="show">
+        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:' >
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
         <SelectInput
@@ -59,7 +59,7 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' linkType="show">
+        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' >
           <SelectInput optionText='name' />
         </ReferenceInput>
         <ImageInput source="pictures" label="Related pictures" accept="image/*"  multiple >
@@ -69,7 +69,8 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
        <FileInput source="files" label="Related files" accept="application/pdf" multiple>
           <FileField source="src" title="title" />
         </FileInput>
- 
+        <BooleanInput source="approved" />
+
       </SimpleForm>
     </Create>
   )

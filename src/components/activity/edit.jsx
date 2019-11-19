@@ -10,7 +10,7 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
-  Edit
+  Edit,BooleanField
 } from 'react-admin'
 
 const ActivityEdit = props => {
@@ -87,6 +87,7 @@ const ActivityEdit = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
+
       </SimpleForm>
     </Edit>
   )

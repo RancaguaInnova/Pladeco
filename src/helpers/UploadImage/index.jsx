@@ -13,12 +13,9 @@ firebase.initializeApp({
 var db = firebase.firestore();
 var storage = firebase.storage();
 var storageRoot = storage.ref();
-console.log(process.env);
-// Disable deprecated features
 db.settings({
   timestampsInSnapshots: true
 });
-
 
 /**
  * Utility function to upload a file in a Firebase storage bucket
@@ -50,10 +47,10 @@ async function uploadFileToBucket(rawFile, storageRef) {
 
 async function createOrUpdateFile(resource, rawFile, uploadFile) {
   var storageRef = storageRoot.child(resource + "/" + rawFile.name);
+
   return storageRef
     .getMetadata()
     .then(metadata => {
-      console.log(metadata);
       if (metadata && metadata.size === rawFile.size) {
         return storageRef.getDownloadURL();
       } else {
@@ -65,6 +62,18 @@ async function createOrUpdateFile(resource, rawFile, uploadFile) {
     });
 }
 
+async function createOrUpdateFiles(resource, Files, uploadFile) {
+  Files.map(async function(item, index) {
+    var urlDownload = await createOrUpdateFile(
+      resource,
+      item.rawFile,
+      uploadFile
+    );
+    delete item.rawFile;
+    item.src = urlDownload;
+  });
+  return Files;
+}
 function listAllProperties(o) {
   var objectToInspect;
   var result = [];
@@ -79,38 +88,64 @@ function listAllProperties(o) {
 
   return result;
 }
-const addUploadCapabilities = requestHandler => (type, resource, params) => {
+const addUploadCapabilities =  requestHandler => async (
+  type,
+  resource,
+  params
+) => {
   if (type === "UPDATE" || type === "CREATE") {
     var Properties = listAllProperties(params.data);
-    Properties.map(function (item) {
-      let name = ''
-      item.map(function (atributo, index) {
+    console.log("params",params)
+    Properties.map(async function(item) {
+      let name = "";
+      item.map(async function(atributo, index) {
         if (index === 0) {
-          name = atributo
+          name = atributo;
         }
         if (index === 1) {
           if (atributo && atributo.rawFile) {
-            const rawFile = atributo.rawFile
-            return Promise.resolve(createOrUpdateFile(resource, rawFile, uploadFileToBucket))
-              .then(urlDownloadImage => {
-                delete params.data[name].rawFile;
-                delete params.data[name].src;
-                var pictures = params.data[name];
-                pictures.src = urlDownloadImage;
-                requestHandler(type, resource, {
-                  ...params,
-                  data: {
-                    [name]: pictures
-                  }
-                })
-              })
+            const rawFile = atributo.rawFile;
+            var urlDownloadImage = await createOrUpdateFile(
+              resource,
+              rawFile,
+              uploadFileToBucket
+            );
+            delete params.data[name].rawFile;
+            delete params.data[name].src;
+            var pictures = params.data[name];
+            pictures.src = urlDownloadImage;
+           return requestHandler(type, resource, {
+              ...params,
+              data: {
+                [name]: pictures
+              }
+            });
+          }
+          if (atributo && Array.isArray(atributo) && atributo[0].rawFile) {
+            var files =await createOrUpdateFiles(
+              resource,
+              atributo,
+              uploadFileToBucket
+            );
+            
+            return requestHandler(type, resource, {
+              ...params,
+              data: {
+                [name]: files
+              }
+            });
           }
         }
       });
     });
-
+  } else {
+    console.log("elese return")
+    //requestHandler(type, resource, params);
+    return requestHandler(type, resource, params);
   }
+  //console.log("return")
 
-  return requestHandler(type, resource, params);
+  
+  //
 };
 export default addUploadCapabilities;
