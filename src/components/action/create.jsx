@@ -20,12 +20,6 @@ import {
   FileInput,
   BooleanInput
 } from "react-admin";
-import { withStyles } from "@material-ui/core/styles";
-const styles = {
-  hidden: {
-    display: "none"
-  }
-};
 
 const validateName = [required(), minLength(0), maxLength(550)];
 const ActionCreateToolbar = props => (
@@ -44,9 +38,9 @@ const ActionCreateToolbar = props => (
   </Toolbar>
 );
 
-const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
+const ActionCreate = ({ classes, ...props }) => {
   return (
-    <Create title="Crear Acción" {...props}>
+    <Create label="Crear" title="Crear Acción" {...props}>
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source="name" label="Nombre" validate={validateName} />
         <TextInput
@@ -103,5 +97,5 @@ const ActionCreate = withStyles(styles)(({ classes, ...props }) => {
       </SimpleForm>
     </Create>
   );
-});
+};
 export default ActionCreate;
