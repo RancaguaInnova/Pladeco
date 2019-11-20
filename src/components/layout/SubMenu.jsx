@@ -35,7 +35,7 @@ const SubMenu = ({
   icon,
   classes,
   children,
-  translate
+
 }) => (
   <Fragment>
     <ListItem dense button onClick={handleToggle} className={classes.listItem}>

@@ -14,9 +14,7 @@ firebase.initializeApp({
 var db = firebase.firestore()
 var storage = firebase.storage()
 var storageRoot = storage.ref()
-db.settings({
-  timestampsInSnapshots: true
-})
+
 
 /**
  * Utility function to upload a file in a Firebase storage bucket
@@ -73,8 +71,7 @@ const addUploadCapabilities = requestHandler => async (type, resource, params) =
       return requestHandler(type, resource, params)
     }
   } catch (error) {
-    console.log('85- error:', error)
-    return Promise.reject(requestHandler(type, resource, params))
+   requestHandler(type, resource, params)
   }
 }
 

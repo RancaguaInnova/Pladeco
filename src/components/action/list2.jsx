@@ -52,7 +52,6 @@ class TabbedDatagrid extends React.Component {
     return (
       <Fragment>
         <Tabs
-          fullWidth
           centered
           value={filterValues.status}
           indicatorColor='primary'

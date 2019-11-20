@@ -4,32 +4,34 @@ import { connect } from 'react-redux'
 import compose from 'recompose/compose'
 import { withRouter } from 'react-router-dom'
 import { DashboardMenuItem, MenuItemLink, Responsive } from 'react-admin'
-//import SubMenu from './SubMenu'
 import Action from '../action'
 import Activity from '../activity'
 import Area from '../area'
 import Deparment from '../department'
 import Objective from '../objective'
-//import Responsible from '../responsible'
 import Line from '../line'
 import WorkPlan from '../workPlan'
-//import Dashboard from '../dashboard'
 import Roles from '../roles'
 import Profile from '../profile'
 import Users from '../users'
 
 class Menu extends Component {
-  state = {
-    menuAccion: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      menuAccion: false
+    }
   }
 
   static propTypes = {
-    onMenuClick: PropTypes.func,
-    logout: PropTypes.object
+    logout: PropTypes.object,
+    onMenuClick: PropTypes.func
   }
 
   handleToggle = menu => {
-    this.setState(state => ({ [menu]: !state[menu] }))
+    this.setState(state => ({
+      [menu]: !state[menu]
+    }))
   }
 
   render() {
@@ -55,7 +57,6 @@ class Menu extends Component {
           leftIcon={<Line.icon />}
           onClick={onMenuClick}
         />
-
         <MenuItemLink
           to={`/objectives`}
           primaryText={Objective.options.label}
@@ -68,14 +69,12 @@ class Menu extends Component {
           leftIcon={<Action.icon />}
           onClick={onMenuClick}
         />
-
         <MenuItemLink
           to={`/activities`}
           primaryText={Activity.options.label}
           leftIcon={<Activity.icon />}
           onClick={onMenuClick}
         />
-
         <MenuItemLink
           to={`/departments`}
           primaryText={Deparment.options.label}
@@ -94,7 +93,6 @@ class Menu extends Component {
           leftIcon={<Users.icon />}
           onClick={onMenuClick}
         />
-
         <Responsive
           xsmall={
             <MenuItemLink
@@ -121,12 +119,6 @@ const mapStateToProps = state => ({
   locale: state.i18n.locale
 })
 
-const enhance = compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-    {}
-  )
-)
+const enhance = compose(withRouter, connect(mapStateToProps, {}))
 
 export default enhance(Menu)
