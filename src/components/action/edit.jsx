@@ -17,11 +17,17 @@ import {
   ReferenceField,
   ReferenceArrayField,
   SelectField,
+  ArrayField,
+  Datagrid,
+  ImageInput,
+  ImageField,
+  FileInput,
+  FileField,
 } from "react-admin"
 import ImageViewerField from "../../helpers/fields/ImageViewerField"
+import PdfFileField from "../../helpers/fields/PdfFileField"
 
 const validateName = [required(), minLength(0), maxLength(550)]
-
 const ActionEdit = ({ permissions, ...props }) => {
   return (
     <Edit title="Editar acción" {...props}>
@@ -52,6 +58,11 @@ const ActionEdit = ({ permissions, ...props }) => {
           </ReferenceField>
           <ImageViewerField source="images" label="Imagenes"></ImageViewerField>
 
+          <ArrayField source="documents" label="Documentos">
+            <Datagrid>
+              <PdfFileField source="src" label="Listado de documentos" />
+            </Datagrid>
+          </ArrayField>
           <BooleanInput label="Aprobado" source="approved" defaultValue={false} />
         </SimpleForm>
       ) : (
@@ -79,7 +90,13 @@ const ActionEdit = ({ permissions, ...props }) => {
           <ReferenceInput reference="objectives" source="objectiveId" label="Objetivos">
             <SelectInput optionText="name" />
           </ReferenceInput>
-          <ImageViewerField source="images" label="Imagenes"></ImageViewerField>
+          <ImageInput source="images" label="Imagenes" accept="image/*">
+            <ImageField source="src" title="title" />
+          </ImageInput>
+          <FileInput source="documents" label="Documentos" accept="application/pdf" multiple>
+            <FileField source="src" title="title" />
+          </FileInput>
+          <BooleanInput source="approved" />
         </SimpleForm>
       )}
     </Edit>

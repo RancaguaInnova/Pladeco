@@ -15,7 +15,7 @@ const ImageViewerField = ({ source, record, label = {} }) => {
                 setVisible(true)
               }}
             >
-              <img className='ImageViewerField' src={item.src} title={item.title}></img>
+              <img className='ImageViewerField' src={item.src} alt={item.title}></img>
             </div>
           )
         })}

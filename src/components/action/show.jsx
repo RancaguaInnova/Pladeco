@@ -8,15 +8,14 @@ import {
   Show,
   SimpleShowLayout,
   SelectField,
-  ImageField,
-  FileField,
+  ArrayField,
+  Datagrid,
 } from "react-admin"
 import ImageViewerField from "../../helpers/fields/ImageViewerField"
-import PdfViewerField from "../../helpers/fields/PdfViewerField"
-
+import PdfFileField from "../../helpers/fields/PdfFileField"
 import DateField from "../../helpers/fields/DateField"
 const ActionShow = props => (
-  <Show {...props} Title="Acción" className="w100">
+  <Show {...props} title="Acción" className="w100">
     <SimpleShowLayout>
       <TextField source="name" label="Nombre" />
       <ReferenceField reference="users" source="responsibleId" label="Responsable" linkType="show">
@@ -47,11 +46,12 @@ const ActionShow = props => (
       <ReferenceField reference="objectives" source="objectiveId" label="Objetivo" linkType="show">
         <TextField source="name" />
       </ReferenceField>
-
       <ImageViewerField source="images" label="Imagenes"></ImageViewerField>
-      {/*       <PdfViewerField source='files' label='Imagenes'></PdfViewerField>
-       */}
-      <FileField source="files.src" title="files.title" />
+      <ArrayField source="documents" label="Documentos">
+        <Datagrid>
+          <PdfFileField source="src" label="Listado de documentos" />
+        </Datagrid>
+      </ArrayField>
     </SimpleShowLayout>
   </Show>
 )
