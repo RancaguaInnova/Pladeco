@@ -33,7 +33,7 @@ const ActionCreateToolbar = props => (
     <SaveButton
       label="Guardar y Mostrar"
       redirect="show"
-      submitOnEnter={true}
+      submitOnEnter
     />
     <SaveButton
       label="Guardar y Agregar"
