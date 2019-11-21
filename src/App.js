@@ -20,7 +20,7 @@ import Line from './components/line'
 import WorkPlan from './components/workPlan'
 import Dashboard from './components/dashboard'
 import Roles from './components/roles'
-import { Layout } from './components/layout'
+//import { Layout } from './components/layout'
 import CustomRouters from './components/customRouters'
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
         theme={Theme}
         dataProvider={AddUploadCapabilities(Provider)}
         locale='es'
-        appLayout={Layout}
+      //  appLayout={Layout}
         i18nProvider={I18nProvider}
       >
         {permissions => {
