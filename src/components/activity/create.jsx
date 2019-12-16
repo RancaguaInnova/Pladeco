@@ -11,6 +11,10 @@ import {
   ArrayInput,
   SimpleFormIterator,
   NumberInput,
+  ImageInput,
+  ImageField,
+  FileInput,
+  FileField
 } from 'react-admin'
 
 const validateActivityCreation = values => {
@@ -36,8 +40,7 @@ const validateActivityCreation = values => {
   if (!values.location) {
     errors.location = ['Debe agregar la localización']
   }
-  
-  
+
   return errors
 }
 
@@ -47,7 +50,7 @@ const ActivityCreate = props => {
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='actions' source='actionId' label='Acción'  >
+        <ReferenceInput reference='actions' source='actionId' label='Acción'>
           <SelectInput optionText='name' />
         </ReferenceInput>
         <SelectInput
@@ -60,7 +63,7 @@ const ActivityCreate = props => {
           ]}
         />
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'  >
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
           <SelectInput optionText='identifier' />
         </ReferenceInput>
         <ArrayInput source='executedFunds' label='Fondos ejecutados'>
@@ -69,7 +72,7 @@ const ActivityCreate = props => {
             <NumberInput source='amount' label='amount' />
           </SimpleFormIterator>
         </ArrayInput>
-        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'  >
+        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
           <SelectArrayInput optionText='identifier' />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
@@ -84,20 +87,26 @@ const ActivityCreate = props => {
         <TextInput source='comments' label='Comentarios' defaultValue='' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area'  >
+            <ReferenceInput reference='areas' source='areaId' label='Area'>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea'  >
+            <ReferenceInput reference='lines' source='lineId' label='Linea'>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'  >
+            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción'  >
+            <ReferenceInput reference='actions' source='actionId' label='Acción'>
               <SelectInput optionText='name' />
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
+        <ImageInput source='images' label='Imagenes' accept='image/*'>
+          <ImageField source='src' title='title' />
+        </ImageInput>
+        <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
+          <FileField source='src' title='title' />
+        </FileInput>
       </SimpleForm>
     </Create>
   )

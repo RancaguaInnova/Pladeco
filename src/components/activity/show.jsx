@@ -14,14 +14,15 @@ import {
   ArrayField,
   Datagrid
 } from 'react-admin'
-
+import ImageViewerField from '../../helpers/fields/ImageViewerField'
+import PdfFileField from '../../helpers/fields/PdfFileField'
 const ActivityShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />
       <ReferenceField reference='actions' source='actionId' label='Acción'>
-        <TextField source='name' ></TextField>
+        <TextField source='name'></TextField>
       </ReferenceField>
       <SelectField
         source='status'
@@ -74,6 +75,13 @@ const ActivityShow = props => (
           <ReferenceField reference='actions' source='actionId' label='Acción'>
             <TextField source='name' />
           </ReferenceField>
+        </Datagrid>
+      </ArrayField>
+      <ImageViewerField source='images' label='Imagenes'></ImageViewerField>
+
+      <ArrayField source='documents' label='Documentos'>
+        <Datagrid>
+          <PdfFileField source='src' label='Listado de documentos' />
         </Datagrid>
       </ArrayField>
       <BooleanField label='Aprobado' source='approved' defaultValue={false} />

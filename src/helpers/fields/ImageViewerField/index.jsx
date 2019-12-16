@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import Viewer from 'react-viewer'
 const ImageViewerField = ({ source, record, label = {} }) => {
   const [visible, setVisible] = React.useState(false)
+  console.log('log', record[source])
   return (
     <div className='gridImages'>
       {record[source] &&
+        record[source].length > 0 &&
         record[source].map((item, i) => {
           return (
             <div
