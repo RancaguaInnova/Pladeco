@@ -1,6 +1,6 @@
-const firebase = require("firebase")
-require("firebase/firestore")
-const _ = require("lodash")
+const firebase = require('firebase')
+require('firebase/firestore')
+const _ = require('lodash')
 
 firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -8,7 +8,7 @@ firebase.initializeApp({
   databaseURL: process.env.REACT_APP_FIREBASED_DATABASE_URL,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 })
 
 var storage = firebase.storage()
@@ -48,18 +48,27 @@ function listAllProperties(o) {
 
 const addUploadCapabilities = requestHandler => async (type, resource, params) => {
   try {
-    if (type === "UPDATE" || type === "CREATE") {
+    if (type === 'UPDATE' || type === 'CREATE') {
       var Properties = listAllProperties(params.data)
       const filesToUpload = []
+
       Properties.forEach(keyValuePair => {
         const [key, value] = keyValuePair
-        if (value && typeof value === "object" && value.length) {
+        if (value && typeof value === 'object' && value.length) {
           value.forEach(fileCandidate => {
-            if (_.has(fileCandidate, "rawFile")) {
+            if (_.has(fileCandidate, 'rawFile')) {
+              console.log('candidate', key)
               fileCandidate.fieldKey = key
               filesToUpload.push(fileCandidate)
             }
           })
+        }
+        if (value && typeof value === 'object') {
+          if (_.has(value, 'rawFile')) {
+            console.log('candidate', key)
+            value.fieldKey = key
+            filesToUpload.push(value)
+          }
         }
       })
 
@@ -96,17 +105,21 @@ async function createOrUpdateFiles(resource, Files, uploadFile) {
 
 async function createOrUpdateFile(resource, file, uploadFile) {
   try {
-    var storageRef = storageRoot.child(resource + "/" + file.name)
+    var storageRef = storageRoot.child(resource + '/' + file.name)
     var metadata = await storageRef.getMetadata()
     if (metadata && metadata.size === file.size) {
       const downloadUrl = await storageRef.getDownloadURL()
+      console.log(downloadUrl)
       return downloadUrl
     } else {
       const uploaded = await uploadFile(file, storageRef)
+      console.log(uploaded)
+
       return uploaded
     }
   } catch (error) {
     const uploaded = await uploadFile(file, storageRef)
+    console.log(uploaded)
     return uploaded
   }
 }

@@ -91,7 +91,7 @@ const ActivityEdit = props => {
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
-        <ImageInput source='images' label='Imagenes' accept='image/*'>
+        <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
           <ImageField source='src' title='title' />
         </ImageInput>
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>

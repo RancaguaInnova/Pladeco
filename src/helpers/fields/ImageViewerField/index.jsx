@@ -7,6 +7,7 @@ const ImageViewerField = ({ source, record, label = {} }) => {
   return (
     <div className='gridImages'>
       {record[source] &&
+        record[source].length &&
         record[source].length > 0 &&
         record[source].map((item, i) => {
           return (
@@ -21,13 +22,37 @@ const ImageViewerField = ({ source, record, label = {} }) => {
             </div>
           )
         })}
-      {record[source] && (
+      {record[source] && record[source].length > 0 && (
         <Viewer
           visible={visible}
           onClose={() => {
             setVisible(false)
           }}
           images={record[source]}
+        />
+      )}
+
+      {record[source] && record[source].src && (
+        <div
+          className='imagesAccion'
+          onClick={() => {
+            setVisible(true)
+          }}
+        >
+          <img
+            className='ImageViewerField'
+            src={record[source].src}
+            alt={record[source].title}
+          ></img>
+        </div>
+      )}
+      {record[source] && record[source].src && (
+        <Viewer
+          visible={visible}
+          onClose={() => {
+            setVisible(false)
+          }}
+          images={[{ src: record[source].src, alt: record[source].title }]}
         />
       )}
     </div>
