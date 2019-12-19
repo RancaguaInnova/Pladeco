@@ -1,231 +1,240 @@
-import { TextInput} from 'react-admin'
-import { geocodeByAddress, geocodeByPlaceLocation } from './util'
-import PlacesAutocomplete, { getLatLng } from 'react-places-autocomplete'
-import React, { useState, useEffect } from 'react'
-import './style.scss'
+import React from 'react'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import parse from 'autosuggest-highlight/parse'
+import throttle from 'lodash/throttle'
 
+const autocompleteService = { current: null }
+const useStyles = makeStyles(theme => ({
+  icon: {
+    color: theme.palette.text.secondary,
+    marginRight: theme.spacing(2)
+  }
+}))
 
-function InputSearchPlace(props) {
-  const source = props.source
+export default function GoogleMaps({ source, record, label = {} }) {
+  const classes = useStyles()
+  const [inputValue, setInputValue] = React.useState('')
+  const [options, setOptions] = React.useState([])
+  const [location, setLocation] = React.useState({ name: '', lat: '', lng: '' })
 
-  let [address, setAddress] = useState('')
-  let [latitude, setLatitude] = useState(-34.1703131)
-  let [longitude, setLongitude] = useState(-70.74064759999999)
-  let [errorMessage, setErrorMessage] = useState('')
-  let [streetName, setStreetName] = useState('')
-  let [streetNumber, setStreetNumber] = useState('')
-  let [departmentNumber, setDepartmentNumber] = useState('')
-  let [city, setCity] = useState('')
-  let [postalCode, setPostalCode] = useState('')
-  let [administrativeAreaLevel1, setAdministrativeAreaLevel1] = useState('')
-  let [administrativeAreaLevel2, setAdministrativeAreaLevel2] = useState('')
-  let [country, setCountry] = useState('')
-  let [formatted_address, setFormatted_address] = useState('')
-  let [place_id, setPlace_id] = useState('')
-  let [componentForm, setComponentForm] = useState({
-    street_number: 'short_name',
-    route: 'long_name',
-    locality: 'long_name',
-    administrative_area_level_1: 'short_name',
-    country: 'long_name',
-    postal_code: 'short_name',
-    administrative_area_level_2: 'short_name',
-    establishment: 'long_name',
-    park: 'long_name',
-    point_of_interest: 'long_name',
-    stadium: 'long_name'
-  })
-
-  const handleChange = address => {
-    console.log(address)
-    setAddress(address)
+  const handleChange = event => {
+    setInputValue(event.target.value)
   }
 
-  const handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error))
-  }
-  const fillInAddress = (place, site) => {
-    return new Promise((resolve, reject) => {
-      try {
-        for (var i = 0; i < place.address_components.length; i++) {
-          var addressType = place.address_components[i].types[0]
+  const fetch = React.useMemo(
+    () =>
+      throttle((input, callback) => {
+        autocompleteService.current.getPlacePredictions(input, callback)
+      }, 200),
+    []
+  )
 
-          if (componentForm[addressType]) {
-            if (addressType === 'street_number') {
-              let cadena = place.address_components[i][componentForm[addressType]]
-              let aux = cadena.split(',')
-              setStreetNumber(aux[0])
-              try {
-                setDepartmentNumber(aux[1])
-              } catch (e) {
-                setDepartmentNumber('')
-              }
-            } else if (addressType === 'route') {
-              setStreetName(place.address_components[i][componentForm[addressType]])
-            } else if (
-              addressType === 'establishment' ||
-              addressType === 'park' ||
-              addressType === 'point_of_interest' ||
-              addressType === 'stadium'
-            ) {
-              setStreetName(
-                place.address_components[i][componentForm[addressType]] + ' - ' + streetName
-              )
-            } else if (addressType === 'locality') {
-              setCity(place.address_components[i][componentForm[addressType]])
-            } else if (addressType === 'postal_code') {
-              setPostalCode(place.address_components[i][componentForm[addressType]])
-            } else if (addressType === 'administrative_area_level_1') {
-              setAdministrativeAreaLevel1(place.address_components[i][componentForm[addressType]])
-            } else if (addressType === 'administrative_area_level_2') {
-              setAdministrativeAreaLevel2(place.address_components[i][componentForm[addressType]])
-            } else if (addressType === 'country') {
-              setCountry(place.address_components[i][componentForm[addressType]])
-            }
-          }
-        }
+  React.useEffect(() => {
+    let active = true
 
-        if (site === 'marker') {
-          setLatitude(place.geometry.location.lat())
-          setLongitude(place.geometry.location.lng())
-          setAddress(place.formatted_address)
-        } else {
-          setLatitude(place.geometry.location.lat())
-          setLongitude(place.geometry.location.lng())
-        }
+    if (!autocompleteService.current && window.google) {
+      autocompleteService.current = new window.google.maps.places.AutocompleteService()
+    }
+    if (!autocompleteService.current) {
+      return undefined
+    }
 
-        iniciarMap()
-        resolve(1)
-      } catch (e) {
-        console.log('error line 119')
-        reject(e)
+    if (inputValue === '') {
+      setOptions([])
+      return undefined
+    }
+
+    fetch({ input: inputValue }, results => {
+      if (active) {
+        setOptions(results || [])
       }
     })
-  }
 
-  const update = e => {
-    const LatLng = {
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng()
+    return () => {
+      active = false
     }
-    geocodeByPlaceLocation(LatLng).then(res => {
-      console.log('update', res)
-      fillInAddress(res[0], 'marker')
+  }, [inputValue, fetch])
+
+  const selectItem = async item => {
+    let location = await geocodeByPlaceId(item.place_id)
+    let r = {
+      name: item.description,
+      lat: location[0].geometry.location.lat(),
+      lng: location[0].geometry.location.lng()
+    }
+    setLocation(r)
+  }
+  const geocodeByPlaceLocation = LatLng => {
+    const geocoder = new window.google.maps.Geocoder()
+    const OK = window.google.maps.GeocoderStatus.OK
+
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({ location: LatLng }, (results, status) => {
+        if (status !== OK) {
+          reject(status)
+        }
+        resolve(results)
+      })
     })
   }
-  useEffect(() => {
-    iniciarMap()
-  })
-  const iniciarMap = () => {
-    var map = new window.google.maps.Map(document.getElementById('map'), {
-      center: { lat: latitude, lng: longitude },
-      zoom: 17,
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: window.google.maps.ControlPosition.TOP_CENTER
-      },
-      zoomControl: true,
-      zoomControlOptions: {
-        position: window.google.maps.ControlPosition.LEFT_CENTER
-      },
-      scaleControl: true,
-      streetViewControl: true,
-      streetViewControlOptions: {
-        position: window.google.maps.ControlPosition.LEFT_TOP
-      },
-      fullscreenControl: true
-    })
-    var position = { lat: latitude, lng: longitude }
 
-    var marker = new window.google.maps.Marker({
-      position: position,
-      map: map,
-      draggable: true
-    })
+  const geocodeByPlaceId = placeId => {
+    const geocoder = new window.google.maps.Geocoder()
+    const OK = window.google.maps.GeocoderStatus.OK
 
-    window.google.maps.event.addListener(marker, 'dragend', update)
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({ placeId }, (results, status) => {
+        if (status !== OK) {
+          reject(status)
+        }
+        resolve(results)
+      })
+    })
+  }
+  const clear = () => {
+    setLocation({ name: '', lat: '', lng: '' })
+    setInputValue('')
+  }
+  const myLocation = () => {
+    var startPos
+    var geoOptions = {
+      enableHighAccuracy: true
+    }
+
+    var geoSuccess = async function(position) {
+      startPos = position
+      var latlng = new window.google.maps.LatLng(
+        startPos.coords.latitude,
+        startPos.coords.longitude
+      )
+      try {
+        let location = await geocodeByPlaceLocation(latlng)
+        let r = {
+          name: location[0].formatted_address,
+          lat: location[0].geometry.location.lat(),
+          lng: location[0].geometry.location.lng()
+        }
+        setLocation(r)
+      } catch (e) {
+        console.log('Error occurred. Error : ' + e)
+      }
+    }
+    var geoError = function(error) {
+      console.log('Error occurred. Error code: ' + error.code)
+
+      // error.code can be:
+      //   0: unknown error
+      //   1: permission denied
+      //   2: position unavailable (error response from location provider)
+      //   3: timed out
+    }
+
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
   }
 
   return (
-    <div>
-      <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <input
-              {...getInputProps({
-                label: 'Search Places ...',
-                className: 'location-search-input'
-              })}
-            />
-            <div className='autocomplete-dropdown-container'>
-              {loading && <div>Loading...</div>}
-              {suggestions.map(suggestion => {
-                const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item'
-                // inline style for demonstration purpose
-                const style = suggestion.active
-                  ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                  : { backgroundColor: '#ffffff', cursor: 'pointer' }
-                return (
-                  <div
-                    {...getSuggestionItemProps(suggestion, {
-                      className,
-                      style
-                    })}
-                  >
-                    <span>{suggestion.description}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
-      {errorMessage.length > 0 && <div className='error-message'>{errorMessage}</div>}
+    <div className='inputsLocationMap'>
+      <div className='AutocompleteDiv'>
+        <Autocomplete
+          id='google-map-demo'
+          getOptionLabel={option => (typeof option === 'string' ? option : option.description)}
+          filterOptions={x => x}
+          options={options}
+          autoComplete
+          includeInputInList
+          freeSolo
+          disableOpenOnFocus
+          renderInput={params => {
+            return (
+              <TextField
+                {...params}
+                label='Buscar ubicación'
+                fullWidth
+                onChange={handleChange}
+                className='TextInput inputLocation'
+              />
+            )
+          }}
+          renderOption={option => {
+            const matches = option.structured_formatting.main_text_matched_substrings
+            const parts = parse(
+              option.structured_formatting.main_text,
+              matches.map(match => [match.offset, match.offset + match.length])
+            )
 
-      <div>
-        <div id='map' className='map'>
-          mapa
-        </div>
-        <div id='infowindow-content'>
-          <img alt='' src='' width='16' height='16' id='place-icon' />
-          <div id='place-name' className='title' />
-          <div id='place-address' />
-        </div>
+            return (
+              <Grid container alignItems='center' onClick={() => selectItem(option)}>
+                <Grid item>
+                  <LocationOnIcon className={classes.icon} />
+                </Grid>
+                <Grid item xs>
+                  {parts.map((part, index) => (
+                    <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
+                      {part.text}
+                    </span>
+                  ))}
+
+                  <Typography variant='body2' color='textSecondary'>
+                    {option.structured_formatting.secondary_text}
+                  </Typography>
+                </Grid>
+              </Grid>
+            )
+          }}
+        />
+        <Button variant='contained' color='primary' className='buttonMyLocation' onClick={clear}>
+          Limpiar
+        </Button>
+        <Button
+          variant='contained'
+          color='secondary'
+          className='buttonMyLocation'
+          onClick={myLocation}
+        >
+          Usar mi ubicación actual
+        </Button>
       </div>
-      <div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.streetName'} defaultValue={streetName} label="Calle" />
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.streetNumber'} defaultValue={streetNumber} label="Número"/>
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.departmentNumber'} defaultValue={departmentNumber} label="Departamento" />
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.city'} defaultValue={city}  label="Ciudad"/>
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.postalCode'} defaultValue={postalCode} label="Código Postal"/>
-        </div>
-        <div className='divInput FormInput-input-55 hidden' >
-          <TextInput source={source + '.place_id'} defaultValue={place_id} />
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.longitude'} defaultValue={longitude} label="Longitud" />
-        </div>
-        <div className='divInput FormInput-input-55'>
-          <TextInput source={source + '.latitude'} defaultValue={latitude} label="Latitud"/>
-        </div>
-        <div className='divInput FormInput-input-55' hidden>
-          <TextInput source={source + '.formatted_address'} defaultValue={formatted_address} />
-        </div>
-      </div>
+      <TextField
+        name='location.name'
+        label='Dirección'
+        value={location.name}
+        onChange={e => {
+          let l = { ...location }
+          l.name = e.target.value
+          setLocation(l)
+        }}
+        className='TextInput inputLocation'
+      />
+      <TextField
+        name='location.lat'
+        label='latitude'
+        disabled
+        value={location.lat}
+        onChange={e => {
+          let l = { ...location }
+          l.lat = e.target.value
+          setLocation(l)
+        }}
+        className='TextInput inputLocation'
+      />
+      <TextField
+        name='location.lng'
+        label='longitude'
+        disabled
+        value={location.lng}
+        onChange={e => {
+          let l = { ...location }
+          l.lng = e.target.value
+          setLocation(l)
+        }}
+        className='TextInput inputLocation'
+      />
     </div>
   )
 }
-export default InputSearchPlace

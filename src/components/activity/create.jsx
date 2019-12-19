@@ -16,6 +16,7 @@ import {
   FileInput,
   FileField
 } from 'react-admin'
+import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 
 const validateActivityCreation = values => {
   const errors = {}
@@ -50,6 +51,7 @@ const ActivityCreate = props => {
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
+
         <ReferenceInput reference='actions' source='actionId' label='Acción'>
           <SelectInput optionText='name' />
         </ReferenceInput>
@@ -64,7 +66,15 @@ const ActivityCreate = props => {
         />
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
         <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
-          <SelectInput optionText='identifier' />
+          <SelectInput
+            optionText={record => {
+              return (
+                <span>
+                  {record.firstName} {record.lastName}
+                </span>
+              )
+            }}
+          />
         </ReferenceInput>
         <ArrayInput source='executedFunds' label='Fondos ejecutados'>
           <SimpleFormIterator>
@@ -73,7 +83,15 @@ const ActivityCreate = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
-          <SelectArrayInput optionText='identifier' />
+          <SelectArrayInput
+            optionText={record => {
+              return (
+                <span>
+                  {record.firstName} {record.lastName}
+                </span>
+              )
+            }}
+          />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>
@@ -81,9 +99,8 @@ const ActivityCreate = props => {
             <NumberInput source='quantity' label='Cantidad' />
           </SimpleFormIterator>
         </ArrayInput>
-        <TextInput source='location.name' label='Localización nombre' />
-        <NumberInput source='location.lat' label='Localización latitud' />
-        <NumberInput source='location.lng' label='Localización longitud' />
+        <SearchGoogle source='description' label='Descripción' defaultValue='' />
+
         <TextInput source='comments' label='Comentarios' defaultValue='' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
