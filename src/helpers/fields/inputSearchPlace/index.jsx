@@ -17,11 +17,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function GoogleMaps({ source, record, label = {} }) {
+export default function GoogleMaps({ record }, props) {
   const classes = useStyles()
+
   const [inputValue, setInputValue] = React.useState('')
   const [options, setOptions] = React.useState([])
-  const [location, setLocation] = React.useState({ name: '', lat: '', lng: '' })
+  const [location, setLocation] = React.useState(record.location)
 
   const handleChange = event => {
     setInputValue(event.target.value)
@@ -70,6 +71,7 @@ export default function GoogleMaps({ source, record, label = {} }) {
     }
     setLocation(r)
   }
+
   const geocodeByPlaceLocation = LatLng => {
     const geocoder = new window.google.maps.Geocoder()
     const OK = window.google.maps.GeocoderStatus.OK
@@ -97,10 +99,12 @@ export default function GoogleMaps({ source, record, label = {} }) {
       })
     })
   }
+
   const clear = () => {
     setLocation({ name: '', lat: '', lng: '' })
     setInputValue('')
   }
+
   const myLocation = () => {
     var startPos
     var geoOptions = {
@@ -127,12 +131,6 @@ export default function GoogleMaps({ source, record, label = {} }) {
     }
     var geoError = function(error) {
       console.log('Error occurred. Error code: ' + error.code)
-
-      // error.code can be:
-      //   0: unknown error
-      //   1: permission denied
-      //   2: position unavailable (error response from location provider)
-      //   3: timed out
     }
 
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
@@ -200,10 +198,11 @@ export default function GoogleMaps({ source, record, label = {} }) {
           Usar mi ubicación actual
         </Button>
       </div>
+
       <TextField
         name='location.name'
         label='Dirección'
-        value={location.name}
+        value={location && location.name ? location.name : ''}
         onChange={e => {
           let l = { ...location }
           l.name = e.target.value
@@ -215,7 +214,7 @@ export default function GoogleMaps({ source, record, label = {} }) {
         name='location.lat'
         label='latitude'
         disabled
-        value={location.lat}
+        value={location && location.lat ? location.lat : ''}
         onChange={e => {
           let l = { ...location }
           l.lat = e.target.value
@@ -227,7 +226,7 @@ export default function GoogleMaps({ source, record, label = {} }) {
         name='location.lng'
         label='longitude'
         disabled
-        value={location.lng}
+        value={location && location.lng ? location.lng : ''}
         onChange={e => {
           let l = { ...location }
           l.lng = e.target.value

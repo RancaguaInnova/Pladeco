@@ -49,10 +49,10 @@ const ActivityCreate = props => {
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
-        <TextInput source='name' label='Nombre' defaultValue='' />
-        <TextInput source='description' label='Descripción' defaultValue='' />
+        <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
+        <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
 
-        <ReferenceInput reference='actions' source='actionId' label='Acción'>
+        <ReferenceInput reference='actions' source='actionId' label='Acción' className='TextInput'>
           <SelectInput optionText='name' />
         </ReferenceInput>
         <SelectInput
@@ -65,7 +65,12 @@ const ActivityCreate = props => {
           ]}
         />
         <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+        <ReferenceInput
+          reference='users'
+          source='responsibleId'
+          label='Responsable'
+          className='TextInput'
+        >
           <SelectInput
             optionText={record => {
               return (
@@ -76,13 +81,18 @@ const ActivityCreate = props => {
             }}
           />
         </ReferenceInput>
-        <ArrayInput source='executedFunds' label='Fondos ejecutados'>
+        <ArrayInput source='executedFunds' label='Fondos ejecutados' className='TextInput'>
           <SimpleFormIterator>
             <TextInput source='source' label='source' />
-            <NumberInput source='amount' label='amount' />
+            <NumberInput source='amount' label='Monto' />
           </SimpleFormIterator>
         </ArrayInput>
-        <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
+        <ReferenceArrayInput
+          reference='users'
+          source='coordinatedWith'
+          label='Coordinado con'
+          className='TextInput'
+        >
           <SelectArrayInput
             optionText={record => {
               return (
@@ -99,9 +109,9 @@ const ActivityCreate = props => {
             <NumberInput source='quantity' label='Cantidad' />
           </SimpleFormIterator>
         </ArrayInput>
-        <SearchGoogle source='description' label='Descripción' defaultValue='' />
+        <SearchGoogle />
 
-        <TextInput source='comments' label='Comentarios' defaultValue='' />
+        <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
             <ReferenceInput reference='areas' source='areaId' label='Area'>
