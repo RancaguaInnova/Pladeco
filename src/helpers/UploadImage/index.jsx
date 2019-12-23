@@ -49,7 +49,6 @@ function listAllProperties(o) {
 const addUploadCapabilities = requestHandler => async (type, resource, params) => {
   try {
     if (type === 'UPDATE' || type === 'CREATE') {
-      console.log(params.data)
       var Properties = listAllProperties(params.data)
       const filesToUpload = []
 
