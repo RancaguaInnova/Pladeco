@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   TextInput,
   SimpleForm,
@@ -17,7 +17,11 @@ import {
   FileField
 } from 'react-admin'
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
-
+import _merge from 'lodash/merge'
+import _includes from 'lodash/includes'
+import { crudCreate, SaveButton, Toolbar } from 'react-admin'
+import SaveWithLocationButton from './saveButton'
+import Button from '@material-ui/core/Button'
 const validateActivityCreation = values => {
   const errors = {}
   if (!values.name) {
@@ -46,9 +50,26 @@ const validateActivityCreation = values => {
 }
 
 const ActivityCreate = props => {
+  const [data, setData] = React.useState(props)
+  const [datos, setDatos] = React.useState('')
+  const [locationData, setLocationData] = React.useState({})
+
+  const updateProps = values => {
+    let location = values
+    let mer = _merge(datos, location)
+    setDatos(mer)
+    console.log(datos)
+  }
+  const handleChange = record => {
+    if (!_includes(Object.keys(record), '_dispatchInstances')) {
+      let mer = _merge(record, locationData)
+      setDatos(mer)
+    }
+  }
+
   return (
     <Create title='Crear Actividad' {...props}>
-      <SimpleForm validate={validateActivityCreation}>
+      <SimpleForm validate={validateActivityCreation} onChange={handleChange}>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
 
@@ -109,7 +130,7 @@ const ActivityCreate = props => {
             <NumberInput source='quantity' label='Cantidad' />
           </SimpleFormIterator>
         </ArrayInput>
-        <SearchGoogle />
+        <SearchGoogle updateProps={updateProps} />
 
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>

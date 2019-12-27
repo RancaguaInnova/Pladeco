@@ -17,8 +17,26 @@ import {
   FileInput
 } from 'react-admin'
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
+import _merge from 'lodash/merge'
+import _includes from 'lodash/includes'
 
 const ActivityEdit = props => {
+  const [data, setData] = React.useState(props)
+  const [datos, setDatos] = React.useState('')
+  const [locationData, setLocationData] = React.useState({})
+
+  const updateProps = values => {
+    let location = values
+    let mer = _merge(datos, location)
+    setDatos(mer)
+    console.log(datos)
+  }
+  const handleChange = record => {
+    if (!_includes(Object.keys(record), '_dispatchInstances')) {
+      let mer = _merge(record, locationData)
+      setDatos(mer)
+    }
+  }
   return (
     <Edit title='Editar Actividad' {...props}>
       <SimpleForm>
@@ -84,7 +102,7 @@ const ActivityEdit = props => {
             <NumberInput source='quantity' label='Cantidad' />
           </SimpleFormIterator>
         </ArrayInput>
-        <SearchGoogle source='location' label='Localización' defaultValue='' />
+        <SearchGoogle updateProps={updateProps} />
 
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
+import { addField } from 'react-admin'
 
 const autocompleteService = { current: null }
 const useStyles = makeStyles(theme => ({
@@ -17,9 +18,8 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function GoogleMaps({ record }, props) {
+function GoogleMaps({ record, updateProps }) {
   const classes = useStyles()
-
   const [inputValue, setInputValue] = React.useState('')
   const [options, setOptions] = React.useState([])
   const [location, setLocation] = React.useState(record.location)
@@ -65,11 +65,14 @@ export default function GoogleMaps({ record }, props) {
   const selectItem = async item => {
     let location = await geocodeByPlaceId(item.place_id)
     let r = {
-      name: item.description,
-      lat: location[0].geometry.location.lat(),
-      lng: location[0].geometry.location.lng()
+      location: {
+        name: item.description,
+        lat: location[0].geometry.location.lat(),
+        lng: location[0].geometry.location.lng()
+      }
     }
     setLocation(r)
+    updateProps(r)
   }
 
   const geocodeByPlaceLocation = LatLng => {
@@ -101,8 +104,10 @@ export default function GoogleMaps({ record }, props) {
   }
 
   const clear = () => {
-    setLocation({ name: '', lat: '', lng: '' })
+    setLocation({ location: { name: '', lat: '', lng: '' } })
     setInputValue('')
+
+    updateProps(location)
   }
 
   const myLocation = () => {
@@ -120,9 +125,11 @@ export default function GoogleMaps({ record }, props) {
       try {
         let location = await geocodeByPlaceLocation(latlng)
         let r = {
-          name: location[0].formatted_address,
-          lat: location[0].geometry.location.lat(),
-          lng: location[0].geometry.location.lng()
+          location: {
+            name: location[0].formatted_address,
+            lat: location[0].geometry.location.lat(),
+            lng: location[0].geometry.location.lng()
+          }
         }
         setLocation(r)
       } catch (e) {
@@ -202,10 +209,10 @@ export default function GoogleMaps({ record }, props) {
       <TextField
         name='location.name'
         label='Dirección'
-        value={location && location.name ? location.name : ''}
+        value={location.location && location.location.name ? location.location.name : ''}
         onChange={e => {
           let l = { ...location }
-          l.name = e.target.value
+          l.location.name = e.target.value
           setLocation(l)
         }}
         className='TextInput inputLocation'
@@ -213,11 +220,10 @@ export default function GoogleMaps({ record }, props) {
       <TextField
         name='location.lat'
         label='latitude'
-        disabled
-        value={location && location.lat ? location.lat : ''}
+        value={location.location && location.location.lat ? location.location.lat : ''}
         onChange={e => {
           let l = { ...location }
-          l.lat = e.target.value
+          l.location.lat = e.target.value
           setLocation(l)
         }}
         className='TextInput inputLocation'
@@ -225,11 +231,10 @@ export default function GoogleMaps({ record }, props) {
       <TextField
         name='location.lng'
         label='longitude'
-        disabled
-        value={location && location.lng ? location.lng : ''}
+        value={location.location && location.location.lat ? location.location.lat : ''}
         onChange={e => {
           let l = { ...location }
-          l.lng = e.target.value
+          l.location.lng = e.target.value
           setLocation(l)
         }}
         className='TextInput inputLocation'
@@ -237,3 +242,4 @@ export default function GoogleMaps({ record }, props) {
     </div>
   )
 }
+export default GoogleMaps // decorate with redux-form's <Field>
