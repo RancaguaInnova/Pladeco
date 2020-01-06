@@ -14,8 +14,12 @@ import {
   ImageInput,
   ImageField,
   FileInput,
-  FileField
+  FileField,
+
+  REDUX_FORM_NAME,
 } from 'react-admin'
+import { change, submit, isSubmitting } from "redux-form";
+
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 import _merge from 'lodash/merge'
 import _includes from 'lodash/includes'
@@ -54,22 +58,12 @@ const ActivityCreate = props => {
   const [datos, setDatos] = React.useState('')
   const [locationData, setLocationData] = React.useState({})
 
-  const updateProps = values => {
-    let location = values
-    let mer = _merge(datos, location)
-    setDatos(mer)
-    console.log(datos)
-  }
-  const handleChange = record => {
-    if (!_includes(Object.keys(record), '_dispatchInstances')) {
-      let mer = _merge(record, locationData)
-      setDatos(mer)
-    }
-  }
+
+
 
   return (
     <Create title='Crear Actividad' {...props}>
-      <SimpleForm validate={validateActivityCreation} onChange={handleChange}>
+      <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
 
@@ -130,7 +124,7 @@ const ActivityCreate = props => {
             <NumberInput source='quantity' label='Cantidad' />
           </SimpleFormIterator>
         </ArrayInput>
-        <SearchGoogle updateProps={updateProps} />
+        <SearchGoogle />
 
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>

@@ -9,6 +9,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
 import { addField } from 'react-admin'
+import { change } from 'redux-form'
+import { REDUX_FORM_NAME } from 'react-admin'
+import { connect } from 'react-redux'
+//import { useDispatch } from 'react-redux';
 
 const autocompleteService = { current: null }
 const useStyles = makeStyles(theme => ({
@@ -19,6 +23,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function GoogleMaps({ record, updateProps }) {
+ // const dispatch = useDispatch()
+
   const classes = useStyles()
   const [inputValue, setInputValue] = React.useState('')
   const [options, setOptions] = React.useState([])
@@ -71,8 +77,11 @@ function GoogleMaps({ record, updateProps }) {
         lng: location[0].geometry.location.lng()
       }
     }
+
+
     setLocation(r)
-    updateProps(r)
+   // dispatch(change(REDUX_FORM_NAME, "location", r));
+
   }
 
   const geocodeByPlaceLocation = LatLng => {
@@ -106,8 +115,11 @@ function GoogleMaps({ record, updateProps }) {
   const clear = () => {
     setLocation({ location: { name: '', lat: '', lng: '' } })
     setInputValue('')
+    //dispatch(change(REDUX_FORM_NAME, "location", location));
 
-    updateProps(location)
+
+
+    //updateProps(location)
   }
 
   const myLocation = () => {
@@ -116,7 +128,7 @@ function GoogleMaps({ record, updateProps }) {
       enableHighAccuracy: true
     }
 
-    var geoSuccess = async function(position) {
+    var geoSuccess = async function (position) {
       startPos = position
       var latlng = new window.google.maps.LatLng(
         startPos.coords.latitude,
@@ -132,11 +144,14 @@ function GoogleMaps({ record, updateProps }) {
           }
         }
         setLocation(r)
+       // dispatch(change(REDUX_FORM_NAME, "location", r));
+
+
       } catch (e) {
         console.log('Error occurred. Error : ' + e)
       }
     }
-    var geoError = function(error) {
+    var geoError = function (error) {
       console.log('Error occurred. Error code: ' + error.code)
     }
 
@@ -209,7 +224,7 @@ function GoogleMaps({ record, updateProps }) {
       <TextField
         name='location.name'
         label='Dirección'
-        value={location.location && location.location.name ? location.location.name : ''}
+        value={location && location.location && location.location.name ? location.location.name : ''}
         onChange={e => {
           let l = { ...location }
           l.location.name = e.target.value
@@ -220,7 +235,7 @@ function GoogleMaps({ record, updateProps }) {
       <TextField
         name='location.lat'
         label='latitude'
-        value={location.location && location.location.lat ? location.location.lat : ''}
+        value={location && location.location && location.location.lat ? location.location.lat : ''}
         onChange={e => {
           let l = { ...location }
           l.location.lat = e.target.value
@@ -231,7 +246,7 @@ function GoogleMaps({ record, updateProps }) {
       <TextField
         name='location.lng'
         label='longitude'
-        value={location.location && location.location.lat ? location.location.lat : ''}
+        value={location && location.location && location.location.lat ? location.location.lat : ''}
         onChange={e => {
           let l = { ...location }
           l.location.lng = e.target.value
@@ -242,4 +257,28 @@ function GoogleMaps({ record, updateProps }) {
     </div>
   )
 }
-export default GoogleMaps // decorate with redux-form's <Field>
+
+
+// Redux
+const mapDispatchToProps = dispatch => {
+  console.log(dispatch)
+  return {
+    selectItem: location => {
+      dispatch(change(REDUX_FORM_NAME, "location", location));
+
+    },
+
+  }
+}
+
+const mapStateToProps = state => {
+  console.log(state)
+  return (
+
+    {
+      record: state.form['record-form'].values
+    }
+  )
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoogleMaps);
