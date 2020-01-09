@@ -21,6 +21,7 @@ class Menu extends Component {
     this.state = {
       menuAccion: false
     }
+    console.log('props', props)
   }
 
   static propTypes = {
@@ -113,12 +114,11 @@ class Menu extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  open: state.admin.ui.sidebarOpen,
-  theme: state.theme,
-  locale: state.i18n.locale
-})
-
+const mapStateToProps = state => {
+  return {
+    open: state.admin.ui.sidebarOpen,
+    theme: state.theme
+  }
+}
 const enhance = compose(withRouter, connect(mapStateToProps, {}))
-
 export default enhance(Menu)

@@ -8,11 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
-import { addField } from 'react-admin'
-import { change } from 'redux-form'
-import { REDUX_FORM_NAME } from 'react-admin'
-import { connect } from 'react-redux'
-//import { useDispatch } from 'react-redux';
+import { useForm } from 'react-final-form'
+import { Field } from 'react-final-form'
 
 const autocompleteService = { current: null }
 const useStyles = makeStyles(theme => ({
@@ -22,13 +19,11 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function GoogleMaps({ record, updateProps }) {
- // const dispatch = useDispatch()
-
+const GoogleMaps = () => {
+  const form = useForm()
   const classes = useStyles()
   const [inputValue, setInputValue] = React.useState('')
   const [options, setOptions] = React.useState([])
-  const [location, setLocation] = React.useState(record.location)
 
   const handleChange = event => {
     setInputValue(event.target.value)
@@ -69,19 +64,13 @@ function GoogleMaps({ record, updateProps }) {
   }, [inputValue, fetch])
 
   const selectItem = async item => {
-    let location = await geocodeByPlaceId(item.place_id)
-    let r = {
-      location: {
-        name: item.description,
-        lat: location[0].geometry.location.lat(),
-        lng: location[0].geometry.location.lng()
-      }
+    let locationResponse = await geocodeByPlaceId(item.place_id)
+    let location = {
+      name: item.description,
+      lat: locationResponse[0].geometry.location.lat(),
+      lng: locationResponse[0].geometry.location.lng()
     }
-
-
-    setLocation(r)
-   // dispatch(change(REDUX_FORM_NAME, "location", r));
-
+    form.change('location', location)
   }
 
   const geocodeByPlaceLocation = LatLng => {
@@ -101,7 +90,6 @@ function GoogleMaps({ record, updateProps }) {
   const geocodeByPlaceId = placeId => {
     const geocoder = new window.google.maps.Geocoder()
     const OK = window.google.maps.GeocoderStatus.OK
-
     return new Promise((resolve, reject) => {
       geocoder.geocode({ placeId }, (results, status) => {
         if (status !== OK) {
@@ -113,13 +101,8 @@ function GoogleMaps({ record, updateProps }) {
   }
 
   const clear = () => {
-    setLocation({ location: { name: '', lat: '', lng: '' } })
+    form.change('location', { name: '', lat: '', lng: '' })
     setInputValue('')
-    //dispatch(change(REDUX_FORM_NAME, "location", location));
-
-
-
-    //updateProps(location)
   }
 
   const myLocation = () => {
@@ -128,33 +111,28 @@ function GoogleMaps({ record, updateProps }) {
       enableHighAccuracy: true
     }
 
-    var geoSuccess = async function (position) {
+    var geoSuccess = async function(position) {
       startPos = position
       var latlng = new window.google.maps.LatLng(
         startPos.coords.latitude,
         startPos.coords.longitude
       )
       try {
-        let location = await geocodeByPlaceLocation(latlng)
-        let r = {
-          location: {
-            name: location[0].formatted_address,
-            lat: location[0].geometry.location.lat(),
-            lng: location[0].geometry.location.lng()
-          }
+        let locationResponse = await geocodeByPlaceLocation(latlng)
+
+        let location = {
+          name: locationResponse[0].formatted_address,
+          lat: locationResponse[0].geometry.location.lat(),
+          lng: locationResponse[0].geometry.location.lng()
         }
-        setLocation(r)
-       // dispatch(change(REDUX_FORM_NAME, "location", r));
-
-
+        form.change('location', location)
       } catch (e) {
         console.log('Error occurred. Error : ' + e)
       }
     }
-    var geoError = function (error) {
+    var geoError = function(error) {
       console.log('Error occurred. Error code: ' + error.code)
     }
-
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
   }
 
@@ -220,65 +198,37 @@ function GoogleMaps({ record, updateProps }) {
           Usar mi ubicación actual
         </Button>
       </div>
-
-      <TextField
-        name='location.name'
-        label='Dirección'
-        value={location && location.location && location.location.name ? location.location.name : ''}
-        onChange={e => {
-          let l = { ...location }
-          l.location.name = e.target.value
-          setLocation(l)
-        }}
-        className='TextInput inputLocation'
-      />
-      <TextField
-        name='location.lat'
-        label='latitude'
-        value={location && location.location && location.location.lat ? location.location.lat : ''}
-        onChange={e => {
-          let l = { ...location }
-          l.location.lat = e.target.value
-          setLocation(l)
-        }}
-        className='TextInput inputLocation'
-      />
-      <TextField
-        name='location.lng'
-        label='longitude'
-        value={location && location.location && location.location.lat ? location.location.lat : ''}
-        onChange={e => {
-          let l = { ...location }
-          l.location.lng = e.target.value
-          setLocation(l)
-        }}
-        className='TextInput inputLocation'
-      />
+      <span className='locationData'>
+        <div className='locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
+          <Field
+            name='location.name'
+            component='input'
+            type='text'
+            placeholder='Dirección'
+            className=' TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
+          />
+        </div>
+        <div className=' locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
+          <Field
+            name='location.lat'
+            component='input'
+            type='text'
+            placeholder='latitude'
+            className='TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
+          />
+        </div>
+        <div className=' locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
+          <Field
+            name='location.lng'
+            component='input'
+            type='text'
+            placeholder='longitude'
+            className='TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
+          />
+        </div>
+      </span>
     </div>
   )
 }
 
-
-// Redux
-const mapDispatchToProps = dispatch => {
-  console.log(dispatch)
-  return {
-    selectItem: location => {
-      dispatch(change(REDUX_FORM_NAME, "location", location));
-
-    },
-
-  }
-}
-
-const mapStateToProps = state => {
-  console.log(state)
-  return (
-
-    {
-      record: state.form['record-form'].values
-    }
-  )
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(GoogleMaps);
+export default GoogleMaps

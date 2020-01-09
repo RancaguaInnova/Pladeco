@@ -15,7 +15,7 @@ export const ObjectiveList = withStyles(listStyles)(({ classes, ...props }) => (
   <List {...props} title='Objetivos'>
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
-      <ReferenceField label='Linea' source='lineId' reference='lines' linkType='show'>
+      <ReferenceField label='Linea' source='lineId' reference='lines' link='show'>
         <TextField source='name' />
       </ReferenceField>
       <EditButton label='Editar' />

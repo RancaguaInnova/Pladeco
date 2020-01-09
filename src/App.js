@@ -3,7 +3,6 @@ import { Admin } from 'react-admin'
 import Provider from './provider'
 import Theme from './theme'
 import './App.scss'
-import I18nProvider from './i18n'
 import AddUploadCapabilities from './helpers/UploadImage'
 import AuthProvider from './auth'
 import LoginPage from './components/login'
@@ -23,7 +22,10 @@ import Roles from './components/roles'
 import { Layout } from './components/layout'
 import CustomRouters from './components/customRouters'
 import ReactDependentScript from 'react-dependent-script'
+import spanishMessages from '@blackbox-vision/ra-language-spanish'
+import polyglotI18nProvider from 'ra-i18n-polyglot'
 
+const i18nProvider = polyglotI18nProvider(() => spanishMessages, 'es')
 class App extends Component {
   render() {
     return (
@@ -41,9 +43,8 @@ class App extends Component {
           authProvider={AuthProvider}
           theme={Theme}
           dataProvider={AddUploadCapabilities(Provider)}
-          locale='es'
-          appLayout={Layout}
-          i18nProvider={I18nProvider}
+          layout={Layout}
+          i18nProvider={i18nProvider}
         >
           {permissions => {
             return [

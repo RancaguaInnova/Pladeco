@@ -1,5 +1,5 @@
-@import "./variables.scss";
-@import "~bootstrap/scss/bootstrap.scss";
+@import './variables.scss';
+@import '~bootstrap/scss/bootstrap.scss';
 
 .App {
   text-align: center;
@@ -41,16 +41,16 @@
 }
 
 @font-face {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-size: 0.8rem;
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/materialicons/v48/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2)
-    format("woff2");
+    format('woff2');
 }
 
 .material-icons {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -87,7 +87,7 @@
   user-select: none;
 }
 
-[class*="MuiTypography-body"] {
+[class*='MuiTypography-body'] {
   font-size: 0.875rem !important;
 }
 
@@ -125,29 +125,49 @@
   margin-top: 6px;
   margin-bottom: 6px;
 }
+
 .MuiDialog-paperScrollPaper {
   max-height: calc(100vh - 64px);
   min-height: calc(100vh - 200px);
 }
+
 .TextInput {
   width: 500px !important;
 }
+
 .SelectInput {
   width: 500px !important;
 }
+
 .inputLocation {
   display: inline-block;
   height: 70px;
 }
+
 .inputsLocationMap {
   display: grid;
   margin-top: 20px;
 }
+
 .AutocompleteDiv {
   display: flex;
   width: 100%;
 }
+
 .buttonMyLocation {
   height: 35px;
   margin-left: 20px !important;
+}
+
+.locationData {
+  display: block;
+  max-width: 500px;
+}
+
+.locationPadding {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.MuiFormControl-root {
+  display: grid !important;
 }

@@ -17,7 +17,7 @@ import {
 import ImageViewerField from '../../helpers/fields/ImageViewerField'
 import PdfFileField from '../../helpers/fields/PdfFileField'
 const ActivityShow = props => (
-  <Show {...props}>
+  <Show {...props} title='Actividad'>
     <SimpleShowLayout>
       <TextField source='name' label='Nombre' defaultValue='' />
       <TextField source='description' label='Descripción' defaultValue='' />

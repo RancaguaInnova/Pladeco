@@ -25,7 +25,7 @@ const validateName = [required(), minLength(0), maxLength(550)]
 const ActionCreateToolbar = props => (
   <Toolbar {...props}>
     <SaveButton label='Guardar y Mostrar' redirect='show' submitOnEnter />
-    <SaveButton label='Guardar y Agregar' redirect={false} submitOnEnter={false} variant='flat' />
+    <SaveButton label='Guardar y Agregar' redirect={false} submitOnEnter={false} />
   </Toolbar>
 )
 
@@ -36,7 +36,7 @@ const ActionCreate = ({ classes, ...props }) => {
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
         <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
-          <SelectInput optionText='identifier' />
+          <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
         <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
           <SelectArrayInput optionText='name' />

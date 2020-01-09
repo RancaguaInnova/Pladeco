@@ -17,15 +17,16 @@ import {
   ReferenceField,
   ReferenceArrayField,
   SelectField,
-  ArrayField,
   Datagrid,
   Pagination,
   ReferenceManyField,
-  BooleanField
+  BooleanField,
+  SingleFieldList,
+  DateField
 } from 'react-admin'
 
 import ActivityQuickPreviewButton from './ActivityPreviewView'
-import { Field } from 'redux-form'
+import { Field } from 'react-final-form'
 
 const validateName = [required(), minLength(0), maxLength(550)]
 
@@ -41,10 +42,17 @@ const ActionEdit = ({ permissions, ...props }) => {
           <TextField source='name' label='Nombre' validate={validateName} />
           <TextField source='description' label='Descripción' validate={validateName} />
           <ReferenceField reference='users' source='responsibleId' label='Responsable'>
-            <TextField source='identifier' />
+            <Field
+              name='id'
+              component={users => {
+                return `${users.record.firstName} ${users.record.lastName}`
+              }}
+            />
           </ReferenceField>
           <ReferenceArrayField source='dependsOnIds' reference='actions' label='Depende de:'>
-            <TextField source='name' />
+            <SingleFieldList>
+              <TextField source='name' />
+            </SingleFieldList>
           </ReferenceArrayField>
           <SelectField
             source='status'
@@ -55,8 +63,8 @@ const ActionEdit = ({ permissions, ...props }) => {
               { id: 'finished', name: 'Finalizado' }
             ]}
           />
-          <TextField source='initialDate' label='Fecha de inicio' />
-          <TextField source='endDate' label='Fecha de termino' />
+          <DateField source='initialDate' label='Fecha de inicio' />
+          <DateField source='endDate' label='Fecha de termino' />
           <TextField source='weight' label='Peso' />
           <ReferenceField reference='objectives' source='objectiveId' label='Objetivos'>
             <TextField source='name' />
@@ -86,9 +94,11 @@ const ActionEdit = ({ permissions, ...props }) => {
       ) : (
         <SimpleForm>
           <TextInput source='name' label='Nombre' validate={validateName} />
+          <TextField source='description' label='Descripción' validate={validateName} />
+
           <TextInput source='description' label='Descripción' validate={validateName} />
           <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
-            <SelectInput optionText='identifier' />
+            <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
           </ReferenceInput>
           <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
             <SelectArrayInput optionText='name' />
@@ -102,8 +112,8 @@ const ActionEdit = ({ permissions, ...props }) => {
               { id: 'finished', name: 'Finalizado' }
             ]}
           />
-          <DateInput source='initialDate' label='Fecha de inicio' />
-          <DateInput source='endDate' label='Fecha de termino' />
+          <DateInput source='initialDate' label='Fecha de inicio' locales='es-ES' />
+          <DateInput source='endDate' label='Fecha de termino' locales='es-ES' />
           <NumberInput source='weight' label='Peso' />
           <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
             <SelectInput optionText='name' />

@@ -7,7 +7,7 @@ const AreaEdit = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='workplans' source='workplanId' label='Pladeco'  linkType="show">
+        <ReferenceInput reference='workplans' source='workplanId' label='Pladeco' link='show'>
           <SelectInput optionText='name' />
         </ReferenceInput>
       </SimpleForm>

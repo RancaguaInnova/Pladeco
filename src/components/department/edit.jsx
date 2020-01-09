@@ -8,7 +8,7 @@ const DepartmentEdit = props => {
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
         <ReferenceInput reference='users' source='managerId' label='Responsable'>
-          <SelectInput optionText='identifier' />
+          <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
       </SimpleForm>
     </Edit>

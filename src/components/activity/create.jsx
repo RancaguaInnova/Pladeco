@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   TextInput,
   SimpleForm,
@@ -14,59 +14,23 @@ import {
   ImageInput,
   ImageField,
   FileInput,
-  FileField,
-
-  REDUX_FORM_NAME,
+  FileField
 } from 'react-admin'
-import { change, submit, isSubmitting } from "redux-form";
 
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
-import _merge from 'lodash/merge'
-import _includes from 'lodash/includes'
-import { crudCreate, SaveButton, Toolbar } from 'react-admin'
-import SaveWithLocationButton from './saveButton'
-import Button from '@material-ui/core/Button'
+
 const validateActivityCreation = values => {
   const errors = {}
-  if (!values.name) {
-    errors.name = ['El nombre de la actividad es requerido']
-  }
-  if (!values.description) {
-    errors.description = ['La descripción de la actividad es requerida']
-  }
-  if (!values.actionId) {
-    errors.actionId = ['Debe asociar la actividad a una acción']
-  }
-  if (!values.beneficiaries) {
-    errors.beneficiaries = ['Debe agregar los beneficiarios de la  actividad']
-  }
-  if (!values.status) {
-    errors.status = ['Debe agregar el estado de la actividad']
-  }
-  if (!values.createAt) {
-    errors.createAt = ['Debe agregar la fecha de creacion de la actividad']
-  }
-  if (!values.location) {
-    errors.location = ['Debe agregar la localización']
-  }
 
   return errors
 }
 
 const ActivityCreate = props => {
-  const [data, setData] = React.useState(props)
-  const [datos, setDatos] = React.useState('')
-  const [locationData, setLocationData] = React.useState({})
-
-
-
-
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
-
         <ReferenceInput reference='actions' source='actionId' label='Acción' className='TextInput'>
           <SelectInput optionText='name' />
         </ReferenceInput>
@@ -86,15 +50,7 @@ const ActivityCreate = props => {
           label='Responsable'
           className='TextInput'
         >
-          <SelectInput
-            optionText={record => {
-              return (
-                <span>
-                  {record.firstName} {record.lastName}
-                </span>
-              )
-            }}
-          />
+          <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
         <ArrayInput source='executedFunds' label='Fondos ejecutados' className='TextInput'>
           <SimpleFormIterator>
@@ -107,16 +63,9 @@ const ActivityCreate = props => {
           source='coordinatedWith'
           label='Coordinado con'
           className='TextInput'
+          allowEmpty
         >
-          <SelectArrayInput
-            optionText={record => {
-              return (
-                <span>
-                  {record.firstName} {record.lastName}
-                </span>
-              )
-            }}
-          />
+          <SelectArrayInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>
