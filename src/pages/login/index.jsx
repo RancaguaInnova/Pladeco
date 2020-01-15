@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="http://smart.rancagua.cl/">
-        Corporación de Desarrollo e Innovación de Rancagua
+        Corporación de Desarrollo e Innovación de Rancagua&nbsp;
       </Link>
       {new Date().getFullYear()}
       {"."}
@@ -128,7 +128,7 @@ function MyLoginPage(props) {
               >
                 Enviar
               </Button>
-              <Grid container>
+              {/*               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Olvido su contraseña?
@@ -139,7 +139,7 @@ function MyLoginPage(props) {
                     {"No tienes cuenta? Registrate"}
                   </Link>
                 </Grid>
-              </Grid>
+</Grid> */}
               <Box mt={5}>
                 <Copyright />
               </Box>
