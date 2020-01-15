@@ -16,6 +16,11 @@ const useStyles = makeStyles(theme => ({
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2)
+  },
+  button: {
+    marginRight: 10,
+    marginBottom: 10,
+    marginTop: 10
   }
 }));
 function loadScript(src, position, id) {
@@ -225,15 +230,15 @@ const GoogleMaps = () => {
         <Button
           variant="contained"
           color="primary"
-          className="buttonMyLocation"
           onClick={clear}
+          className={classes.button}
         >
           Limpiar
         </Button>
         <Button
           variant="contained"
           color="secondary"
-          className="buttonMyLocation"
+          className={classes.button}
           onClick={myLocation}
         >
           Usar mi ubicación actual
