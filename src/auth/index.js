@@ -1,79 +1,103 @@
-import url from '../provider/url'
+/* globals localStorage */
+import {
+  AUTH_LOGIN,
+  AUTH_LOGOUT,
+  AUTH_CHECK,
+  AUTH_GET_PERMISSIONS
+} from "react-admin";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin'
+const baseConfig = {
+  collection: "users",
+  userAdminProp: "isAdmin",
+  localStorageTokenName: "RAFirebaseClientToken",
+  handleAuthStateChange: async (auth, config) => {
+    if (auth) {
+      const querySnapshot = await firebase
+        .firestore()
+        .collection(config.collection)
+        .where("uid", "==", auth.user.uid)
+        .limit(1)
+        .get();
 
-export default async (type, params) => {
-  if (type === AUTH_LOGIN) {
-    const { username, password } = params
-    let email = username
-    const request = new Request(url + '/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ username, email, password }),
-      headers: new Headers({ 'Content-Type': 'application/json' })
-    })
-    request.headers.set('X-Origin', 'backoffice')
-
-    const response = await fetch(request)
-    if (response.status < 200 || response.status >= 300) {
-      throw new Error(response.statusText)
+      let profile;
+      querySnapshot.forEach(function(doc) {
+        profile = doc.data();
+      });
+      if (profile && profile[config.userAdminProp]) {
+        const firebaseToken = await auth.user.getIdToken();
+        let user = { auth, profile, firebaseToken };
+        localStorage.setItem(config.localStorageTokenName, firebaseToken);
+        return user;
+      } else {
+        firebase.auth().signOut();
+        localStorage.removeItem(config.localStorageTokenName);
+        throw new Error("sign_in_error");
+      }
+    } else {
+      localStorage.removeItem(config.localStorageTokenName);
+      throw new Error("sign_in_error");
     }
-    const { id, identifier, email: email_1, services, role } = await response.json()
-    localStorage.setItem('id', id)
-    localStorage.setItem('token', services.authToken)
-    localStorage.setItem('roleId', role.id)
-    localStorage.setItem('identifier', identifier)
-    localStorage.setItem('email', email_1.address)
   }
-  if (type === AUTH_LOGOUT) {
-    localStorage.removeItem('token')
-    localStorage.removeItem('roleId')
-    localStorage.removeItem('identifier')
-    localStorage.removeItem('email')
-    localStorage.removeItem('id')
+};
 
-    return Promise.resolve()
-  }
-  if (type === AUTH_ERROR) {
-    const status = params.status
-    if (status === 401 || status === 403) {
-      localStorage.removeItem('token')
-      localStorage.removeItem('roleId')
-      localStorage.removeItem('identifier')
-      localStorage.removeItem('email')
-      localStorage.removeItem('id')
+export default (config = {}) => {
+  config = { ...baseConfig, ...config };
 
-      return Promise.reject()
+  const firebaseLoaded = () =>
+    new Promise(resolve => {
+      firebase.auth().onAuthStateChanged(resolve);
+    });
+
+  return async (type, params) => {
+    if (type === AUTH_LOGOUT) {
+      config.handleAuthStateChange(null, config).catch(() => {});
+      return firebase.auth().signOut();
     }
-    return Promise.resolve()
-  }
-  if (type === AUTH_CHECK) {
-    return localStorage.getItem('token') ? Promise.resolve() : Promise.reject()
-  }
-  if (type === AUTH_GET_PERMISSIONS) {
-    const roleId = localStorage.getItem('roleId')
-    const per = await permissions(roleId)
-    try {
-         delete per.id;
-    delete per.name;
-    } catch (error) {
-      
-    }
-    return Promise.resolve(per)
-  }
-  return Promise.resolve()
-}
-async function permissions(roleId) {
-  const token = localStorage.getItem('token')
-  const request = new Request(url + '/roles/'+roleId, {
-    method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json' })
-  })
-  request.headers.set('Authorization', `Bearer ${token}`)
-  request.headers.set('X-Origin', 'backoffice')
 
-  const response = await fetch(request)
-  if (response.status < 200 || response.status >= 300) {
-    throw new Error(response.statusText)
-  }
-  return await response.json();
-}
+    if (firebase.auth().currentUser) {
+      await firebase.auth().currentUser.reload();
+    }
+
+    if (type === AUTH_CHECK) {
+      await firebaseLoaded();
+
+      if (!firebase.auth().currentUser) {
+        throw new Error("sign_in_error");
+      }
+
+      return true;
+    }
+
+    if (type === AUTH_GET_PERMISSIONS) {
+      console.log("AUTH_GET_PERMISSIONS");
+      await firebaseLoaded();
+
+      if (!firebase.auth().currentUser) {
+        throw new Error("sign_in_error");
+      }
+
+      const token = await firebase.auth().currentUser.getIdTokenResult();
+      return token.claims;
+    }
+
+    if (type === AUTH_LOGIN) {
+      const { username, password, alreadySignedIn } = params;
+      let auth = firebase.auth().currentUser;
+
+      if (!auth || !alreadySignedIn) {
+        auth = await firebase
+          .auth()
+          .signInWithEmailAndPassword(username, password);
+      }
+      console.log("auth", auth);
+      console.log("config", config);
+
+      return config.handleAuthStateChange(auth, config);
+    }
+
+    return false;
+  };
+};
