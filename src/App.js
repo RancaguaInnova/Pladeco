@@ -38,7 +38,7 @@ const firebaseConfig = {
 // All options are optional
 const options = {
   // Enable logging of react-admin-firebase
-  logging: true
+  logging: false
 };
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, options);
