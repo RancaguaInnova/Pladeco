@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
   TextInput,
   SimpleForm,
@@ -14,18 +14,13 @@ import {
   ImageInput,
   ImageField,
   FileInput,
-  FileField,
-
-  REDUX_FORM_NAME,
+  FileField
 } from 'react-admin'
-import { change, submit, isSubmitting } from "redux-form";
 
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 import _merge from 'lodash/merge'
 import _includes from 'lodash/includes'
-import { crudCreate, SaveButton, Toolbar } from 'react-admin'
-import SaveWithLocationButton from './saveButton'
-import Button from '@material-ui/core/Button'
+
 const validateActivityCreation = values => {
   const errors = {}
   if (!values.name) {
@@ -54,13 +49,6 @@ const validateActivityCreation = values => {
 }
 
 const ActivityCreate = props => {
-  const [data, setData] = React.useState(props)
-  const [datos, setDatos] = React.useState('')
-  const [locationData, setLocationData] = React.useState({})
-
-
-
-
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
