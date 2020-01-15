@@ -1,15 +1,17 @@
-import React from 'react'
-import { Show, TextField, SimpleShowLayout, DateField } from 'react-admin'
+import React from "react";
+import { Show, TextField, SimpleShowLayout, ReferenceField } from "react-admin";
 
 const UserShow = props => (
   <Show {...props}>
     <SimpleShowLayout>
-      <TextField source='id' />
-      <TextField source='profile.firstName' label='Nombre' />
-      <TextField source='profile.lastName' label='Apellido' />
-      <TextField source='profile.gender' label='Sexo' />
-      <DateField source='profile.birthdate' label='Fecha de nacimiento' />
+      <TextField source="firstName" label="Nombre" />
+      <TextField source="lastName" label="Apellido" />
+      <TextField source="identifier" label="Rut" />
+      <TextField source="email.address" label="Email" />
+      <ReferenceField label="Rol" source="role" reference="roles">
+        <TextField source="name" />
+      </ReferenceField>
     </SimpleShowLayout>
   </Show>
-)
-export default UserShow
+);
+export default UserShow;
