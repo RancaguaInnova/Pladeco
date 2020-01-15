@@ -1,26 +1,30 @@
-import React from "react"
-import { Admin, Resource } from "react-admin"
-import Users from "./pages/users"
-import Action from "./pages/action"
-import Activity from "./pages/activity"
-import Area from "./pages/area"
-import Deparment from "./pages/department"
-import Objective from "./pages/objective"
-import Line from "./pages/line"
-import WorkPlan from "./pages/workPlan"
-import Dashboard from "./pages/dashboard"
-import Roles from "./pages/roles"
-import { Layout } from "./pages/layout"
-import CustomRouters from "./pages/customRouters"
-import spanishMessages from "@blackbox-vision/ra-language-spanish"
-import polyglotI18nProvider from "ra-i18n-polyglot"
-import AddUploadCapabilities from "./helpers/UploadImage"
-import { ResourceWithPermissions } from "ra-auth-acl"
-import Profile from "./pages/profile"
-import AuthProvider from "./auth"
-import { FirebaseAuthProvider, FirebaseDataProvider } from "react-admin-firebase"
+import React from "react";
+import { Admin, Resource } from "react-admin";
+import Users from "./pages/users";
+import Action from "./pages/action";
+import Activity from "./pages/activity";
+import Area from "./pages/area";
+import Deparment from "./pages/department";
+import Objective from "./pages/objective";
+import Line from "./pages/line";
+import WorkPlan from "./pages/workPlan";
+import Dashboard from "./pages/dashboard";
+import Roles from "./pages/roles";
+import { Layout } from "./pages/layout";
+import CustomRouters from "./pages/customRouters";
+import spanishMessages from "@blackbox-vision/ra-language-spanish";
+import polyglotI18nProvider from "ra-i18n-polyglot";
+import AddUploadCapabilities from "./helpers/UploadImage";
+import { ResourceWithPermissions } from "ra-auth-acl";
+import Profile from "./pages/profile";
+import AuthProvider from "./auth";
+import {
+  FirebaseAuthProvider,
+  FirebaseDataProvider
+} from "react-admin-firebase";
+import Login from "./pages/login";
 
-const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es")
+const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -29,16 +33,16 @@ const firebaseConfig = {
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
-}
+};
 
 // All options are optional
 const options = {
   // Enable logging of react-admin-firebase
   logging: true
-}
+};
 
-const dataProvider = FirebaseDataProvider(firebaseConfig, options)
-const authProvider = FirebaseAuthProvider(firebaseConfig, options)
+const dataProvider = FirebaseDataProvider(firebaseConfig, options);
+const authProvider = FirebaseAuthProvider(firebaseConfig, options);
 
 const App = () => (
   <Admin
@@ -47,6 +51,7 @@ const App = () => (
     layout={Layout}
     customRoutes={CustomRouters}
     authProvider={authProvider}
+    loginPage={Login}
   >
     {/*   {permissions => {
       return [
@@ -113,5 +118,5 @@ const App = () => (
     <Resource name="departments" {...Deparment} />
     <Resource name="roles" {...Roles} />
   </Admin>
-)
-export default App
+);
+export default App;
