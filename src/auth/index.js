@@ -13,6 +13,8 @@ const baseConfig = {
   collection: "users",
   userAdminProp: "isAdmin",
   localStorageTokenName: "RAFirebaseClientToken",
+  permission: "permission",
+
   handleAuthStateChange: async (auth, config) => {
     if (auth) {
       const querySnapshot = await firebase
@@ -28,8 +30,23 @@ const baseConfig = {
       });
       if (profile && profile[config.userAdminProp]) {
         const firebaseToken = await auth.user.getIdToken();
-        let user = { auth, profile, firebaseToken };
+
         localStorage.setItem(config.localStorageTokenName, firebaseToken);
+        /*Obtengo los permisos del usuario */
+        const queryPermission = await firebase
+          .firestore()
+          .collection("roles")
+          .doc(profile.role)
+
+          .get();
+
+        let profile;
+        querySnapshot.forEach(function(doc) {
+          profile = doc.data();
+        });
+
+        let user = { auth, profile, firebaseToken };
+
         return user;
       } else {
         firebase.auth().signOut();
@@ -92,9 +109,6 @@ export default (config = {}) => {
           .auth()
           .signInWithEmailAndPassword(username, password);
       }
-      console.log("auth", auth);
-      console.log("config", config);
-
       return config.handleAuthStateChange(auth, config);
     }
 
