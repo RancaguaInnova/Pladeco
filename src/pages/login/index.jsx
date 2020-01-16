@@ -21,7 +21,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="http://smart.rancagua.cl/">
-        Corporación de Desarrollo e Innovación de Rancagua
+        Corporación de Desarrollo e Innovación de Rancagua&nbsp;
       </Link>
       {new Date().getFullYear()}
       {"."}
@@ -37,7 +37,8 @@ function MyLoginPage(props) {
       height: "100vh"
     },
     image: {
-      backgroundImage: "url(https://source.unsplash.com/random)",
+      // backgroundImage: 'url(https://source.unsplash.com/random)',
+      background: "#ccc",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center"
@@ -128,11 +129,6 @@ function MyLoginPage(props) {
                 Enviar
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Olvido su contraseña?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link href="/registro" variant="body2">
                     {"No tienes cuenta? Registrate"}

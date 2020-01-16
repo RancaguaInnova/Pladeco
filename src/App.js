@@ -19,6 +19,7 @@ import { ResourceWithPermissions } from "ra-auth-acl"
 import Profile from "./pages/profile"
 import AuthProvider from "./auth"
 import { FirebaseAuthProvider, FirebaseDataProvider } from "react-admin-firebase"
+import Login from "./pages/login"
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es")
 
@@ -34,7 +35,7 @@ const firebaseConfig = {
 // All options are optional
 const options = {
   // Enable logging of react-admin-firebase
-  logging: true
+  logging: false
 }
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, options)
@@ -47,6 +48,7 @@ const App = () => (
     layout={Layout}
     customRoutes={CustomRouters}
     authProvider={authProvider}
+    loginPage={Login}
   >
     {/*   {permissions => {
       return [
