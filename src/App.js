@@ -18,10 +18,7 @@ import AddUploadCapabilities from "./helpers/UploadImage";
 import { ResourceWithPermissions } from "ra-auth-acl";
 import Profile from "./pages/profile";
 import AuthProvider from "./auth";
-import {
-  FirebaseAuthProvider,
-  FirebaseDataProvider
-} from "react-admin-firebase";
+import { FirebaseDataProvider } from "react-admin-firebase";
 import Login from "./pages/login";
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
@@ -50,7 +47,7 @@ const App = () => (
     i18nProvider={i18nProvider}
     layout={Layout}
     customRoutes={CustomRouters}
-    authProvider={authProvider}
+    //authProvider={authProvider}
     loginPage={Login}
   >
     {permissions => {

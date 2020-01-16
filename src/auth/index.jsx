@@ -9,7 +9,7 @@ import {
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-
+import { Redirect } from "react-router-dom";
 const baseConfig = {
   userProfilePath: "users",
   userAdminProp: "isAdmin",
@@ -34,6 +34,7 @@ const baseConfig = {
 
         return user;
       } else {
+        console.log("fuera");
         firebase.auth().signOut();
         localStorage.removeItem(config.localStorageTokenName);
         localStorage.removeItem(config.localStorageRoleId);
@@ -47,8 +48,9 @@ const baseConfig = {
   }
 };
 
-export default (config = {}) => {
-  config = { ...baseConfig, ...config };
+export default props => {
+  console.log(props);
+  const config = baseConfig;
 
   const firebaseLoaded = () =>
     new Promise(resolve => {
@@ -65,6 +67,7 @@ export default (config = {}) => {
   };
 
   return async (type, params) => {
+    console.log(type);
     if (type === AUTH_LOGOUT) {
       config.handleAuthStateChange(null, config).catch(() => {});
       localStorage.removeItem(config.localStorageTokenName);
@@ -77,15 +80,17 @@ export default (config = {}) => {
     }
 
     if (type === AUTH_CHECK) {
-      return localStorage.getItem(config.localStorageTokenName)
+      return localStorage.getItem("token")
         ? Promise.resolve()
-        : Promise.reject();
+        : Promise.reject({ Redirect: "/no-access" });
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
+      if (!firebase.auth().currentUser) {
+        throw new Error("sign_in_error");
+      }
       const roleId = localStorage.getItem(config.localStorageRoleId);
       const per = await permissions(roleId);
-      console.log("per", per);
       try {
         delete per.id;
         delete per.name;
