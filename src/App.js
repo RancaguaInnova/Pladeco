@@ -18,10 +18,8 @@ import AddUploadCapabilities from "./helpers/UploadImage";
 import { ResourceWithPermissions } from "ra-auth-acl";
 import Profile from "./pages/profile";
 import AuthProvider from "./auth";
-import {
-  FirebaseAuthProvider,
-  FirebaseDataProvider
-} from "react-admin-firebase";
+import { FirebaseDataProvider } from "react-admin-firebase";
+
 import Login from "./pages/login";
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
@@ -42,7 +40,7 @@ const options = {
 };
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, options);
-const authProvider = FirebaseAuthProvider(firebaseConfig, options);
+const authProvider = AuthProvider();
 
 const App = () => (
   <Admin
@@ -53,7 +51,7 @@ const App = () => (
     authProvider={authProvider}
     loginPage={Login}
   >
-    {/*   {permissions => {
+    {permissions => {
       return [
         <ResourceWithPermissions
           name="workplans"
@@ -106,17 +104,7 @@ const App = () => (
           permissions={permissions}
         />
       ];
-    }} */}
-    <Resource name="workplans" {...WorkPlan} />
-
-    <Resource name="areas" {...Area} />
-    <Resource name="lines" {...Line} />
-    <Resource name="objectives" {...Objective} />
-    <Resource name="actions" {...Action} />
-    <Resource name="activities" {...Activity} />
-    <Resource name="users" {...Users} />
-    <Resource name="departments" {...Deparment} />
-    <Resource name="roles" {...Roles} />
+    }}
   </Admin>
 );
 export default App;

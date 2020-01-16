@@ -3,6 +3,7 @@ import {
   AUTH_LOGIN,
   AUTH_LOGOUT,
   AUTH_CHECK,
+  AUTH_ERROR,
   AUTH_GET_PERMISSIONS
 } from "react-admin";
 import firebase from "firebase/app";
@@ -10,30 +11,37 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const baseConfig = {
-  collection: "users",
+  userProfilePath: "users",
   userAdminProp: "isAdmin",
-  localStorageTokenName: "RAFirebaseClientToken",
+  localStorageTokenName: "token",
+  localStorageRoleId: "roleId",
+  permissionsCollection: "roles",
   handleAuthStateChange: async (auth, config) => {
     if (auth) {
-      const querySnapshot = await firebase
+      const snapshot = await firebase
         .firestore()
-        .collection(config.collection)
+        .collection(config.userProfilePath)
         .where("uid", "==", auth.user.uid)
         .limit(1)
         .get();
-
       let profile;
-      querySnapshot.forEach(function(doc) {
+      snapshot.forEach(function(doc) {
+        console.log(doc.id, " => ", doc.data());
         profile = doc.data();
       });
+
       if (profile && profile[config.userAdminProp]) {
         const firebaseToken = await auth.user.getIdToken();
         let user = { auth, profile, firebaseToken };
         localStorage.setItem(config.localStorageTokenName, firebaseToken);
+        localStorage.setItem(config.localStorageRoleId, profile.role);
+
         return user;
       } else {
         firebase.auth().signOut();
         localStorage.removeItem(config.localStorageTokenName);
+        localStorage.removeItem(config.localStorageRoleId);
+
         throw new Error("sign_in_error");
       }
     } else {
@@ -51,9 +59,20 @@ export default (config = {}) => {
       firebase.auth().onAuthStateChanged(resolve);
     });
 
+  const permissions = async roleId => {
+    const snapshot = await firebase
+      .firestore()
+      .collection(config.permissionsCollection)
+      .doc(roleId)
+      .get();
+    return snapshot.data();
+  };
+
   return async (type, params) => {
     if (type === AUTH_LOGOUT) {
       config.handleAuthStateChange(null, config).catch(() => {});
+      localStorage.removeItem(config.localStorageTokenName);
+      localStorage.removeItem(config.localStorageRoleId);
       return firebase.auth().signOut();
     }
 
@@ -62,25 +81,20 @@ export default (config = {}) => {
     }
 
     if (type === AUTH_CHECK) {
-      await firebaseLoaded();
-
-      if (!firebase.auth().currentUser) {
-        throw new Error("sign_in_error");
-      }
-
-      return true;
+      return localStorage.getItem(config.localStorageTokenName)
+        ? Promise.resolve()
+        : Promise.reject();
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
-      console.log("AUTH_GET_PERMISSIONS");
-      await firebaseLoaded();
-
-      if (!firebase.auth().currentUser) {
-        throw new Error("sign_in_error");
-      }
-
-      const token = await firebase.auth().currentUser.getIdTokenResult();
-      return token.claims;
+      const roleId = localStorage.getItem(config.localStorageRoleId);
+      const per = await permissions(roleId);
+      console.log("per", per);
+      try {
+        delete per.id;
+        delete per.name;
+      } catch (error) {}
+      return Promise.resolve(per);
     }
 
     if (type === AUTH_LOGIN) {
@@ -92,10 +106,17 @@ export default (config = {}) => {
           .auth()
           .signInWithEmailAndPassword(username, password);
       }
-      console.log("auth", auth);
-      console.log("config", config);
 
       return config.handleAuthStateChange(auth, config);
+    }
+    if (type === AUTH_ERROR) {
+      const status = params.status;
+      if (status === 401 || status === 403) {
+        localStorage.removeItem(config.localStorageTokenName);
+        localStorage.removeItem(config.localStorageRoleId);
+        return Promise.reject();
+      }
+      return Promise.resolve();
     }
 
     return false;
