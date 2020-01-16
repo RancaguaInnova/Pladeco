@@ -21,16 +21,12 @@ const baseConfig = {
       const snapshot = await firebase
         .firestore()
         .collection(config.userProfilePath)
-        .where("uid", "==", auth.user.uid)
-        .limit(1)
+        .doc(auth.user.uid)
         .get();
-      let profile;
-      snapshot.forEach(function(doc) {
-        console.log(doc.id, " => ", doc.data());
-        profile = doc.data();
-      });
 
-      if (profile && profile[config.userAdminProp]) {
+      let profile = snapshot.data();
+
+      if (profile) {
         const firebaseToken = await auth.user.getIdToken();
         let user = { auth, profile, firebaseToken };
         localStorage.setItem(config.localStorageTokenName, firebaseToken);
