@@ -32,9 +32,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 };
 
-// All options are optional
 const options = {
-  // Enable logging of react-admin-firebase
   logging: false
 };
 
