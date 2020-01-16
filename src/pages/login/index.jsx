@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { userLogin } from "react-admin";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from "react"
+import { connect } from "react-redux"
+import { userLogin } from "react-admin"
+import { MuiThemeProvider } from "@material-ui/core/styles"
+import Avatar from "@material-ui/core/Avatar"
+import Button from "@material-ui/core/Button"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import TextField from "@material-ui/core/TextField"
+import FormControlLabel from "@material-ui/core/FormControlLabel"
+import Checkbox from "@material-ui/core/Checkbox"
+import Link from "@material-ui/core/Link"
+import Paper from "@material-ui/core/Paper"
+import Box from "@material-ui/core/Box"
+import Grid from "@material-ui/core/Grid"
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
+import Typography from "@material-ui/core/Typography"
+import { makeStyles } from "@material-ui/core/styles"
 
 function Copyright() {
   return (
@@ -26,11 +26,11 @@ function Copyright() {
       {new Date().getFullYear()}
       {"."}
     </Typography>
-  );
+  )
 }
 function MyLoginPage(props) {
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
+  let [username, setUsername] = useState("")
+  let [password, setPassword] = useState("")
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -60,23 +60,23 @@ function MyLoginPage(props) {
     submit: {
       margin: theme.spacing(3, 0, 2)
     }
-  }));
+  }))
   const submit = e => {
-    e.preventDefault();
+    e.preventDefault()
     // gather your data/credentials here
-    const credentials = { username: username, password: password };
-    console.log(e);
+    const credentials = { username: username, password: password }
+    console.log(e)
     // Dispatch the userLogin action (injected by connect)
-    props.userLogin(credentials);
-  };
-  const classes = useStyles();
+    props.userLogin(credentials)
+  }
+  const classes = useStyles()
 
   const handleChangeUsuario = event => {
-    setUsername(event.target.value);
-  };
+    setUsername(event.target.value)
+  }
   const handleChangePassword = event => {
-    setPassword(event.target.value);
-  };
+    setPassword(event.target.value)
+  }
   return (
     <MuiThemeProvider theme={props.theme}>
       <Grid container component="main" className={classes.root}>
@@ -128,18 +128,13 @@ function MyLoginPage(props) {
               >
                 Enviar
               </Button>
-              {/*               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Olvido su contraseña?
-                  </Link>
-                </Grid>
+              <Grid container>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/registro" variant="body2">
                     {"No tienes cuenta? Registrate"}
                   </Link>
                 </Grid>
-</Grid> */}
+              </Grid>
               <Box mt={5}>
                 <Copyright />
               </Box>
@@ -148,7 +143,7 @@ function MyLoginPage(props) {
         </Grid>
       </Grid>
     </MuiThemeProvider>
-  );
+  )
 }
 
-export default connect(undefined, { userLogin })(MyLoginPage);
+export default connect(undefined, { userLogin })(MyLoginPage)

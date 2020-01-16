@@ -11,15 +11,17 @@ import WorkPlan from "./pages/workPlan";
 import Dashboard from "./pages/dashboard";
 import Roles from "./pages/roles";
 import { Layout } from "./pages/layout";
-import CustomRouters from "./pages/customRouters";
+import CustomRouters from "./pages/customRoutes";
 import spanishMessages from "@blackbox-vision/ra-language-spanish";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import AddUploadCapabilities from "./helpers/UploadImage";
 import { ResourceWithPermissions } from "ra-auth-acl";
 import Profile from "./pages/profile";
 import AuthProvider from "./auth";
-import { FirebaseDataProvider } from "react-admin-firebase";
-
+import {
+  FirebaseAuthProvider,
+  FirebaseDataProvider
+} from "react-admin-firebase";
 import Login from "./pages/login";
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
