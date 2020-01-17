@@ -1,81 +1,112 @@
-import React, { Component } from 'react'
-import { Admin } from 'react-admin'
-import Provider from './provider'
-import Theme from './theme'
-import './App.scss'
-import I18nProvider from './i18n'
-import AddUploadCapabilities from './helpers/UploadImage'
-import AuthProvider from './auth'
-import LoginPage from './components/login'
-import Profile from './components/profile'
-import Users from './components/users'
-import { ResourceWithPermissions } from 'ra-auth-acl'
-import Action from './components/action'
-import Activity from './components/activity'
-import Area from './components/area'
-import Deparment from './components/department'
-import Objective from './components/objective'
-import Responsible from './components/responsible'
-import Line from './components/line'
-import WorkPlan from './components/workPlan'
-import Dashboard from './components/dashboard'
-import Roles from './components/roles'
-import { Layout } from './components/layout'
-import CustomRouters from './components/customRouters'
-import ReactDependentScript from 'react-dependent-script'
+import React from "react";
+import { Admin, Resource } from "react-admin";
+import Users from "./pages/users";
+import Action from "./pages/action";
+import Activity from "./pages/activity";
+import Area from "./pages/area";
+import Deparment from "./pages/department";
+import Objective from "./pages/objective";
+import Line from "./pages/line";
+import WorkPlan from "./pages/workPlan";
+import Dashboard from "./pages/dashboard";
+import Roles from "./pages/roles";
+import { Layout } from "./pages/layout";
+import CustomRouters from "./pages/customRoutes";
+import spanishMessages from "@blackbox-vision/ra-language-spanish";
+import polyglotI18nProvider from "ra-i18n-polyglot";
+import AddUploadCapabilities from "./helpers/UploadImage";
+import { ResourceWithPermissions } from "ra-auth-acl";
+import Profile from "./pages/profile";
+import AuthProvider from "./auth";
+import {
+  FirebaseAuthProvider,
+  FirebaseDataProvider
+} from "react-admin-firebase";
+import Login from "./pages/login";
 
-class App extends Component {
-  render() {
-    return (
-      <ReactDependentScript
-        scripts={[
-          'https://maps.googleapis.com/maps/api/js?key=' +
-            process.env.REACT_APP_MAP_KEY +
-            '&libraries=places'
-        ]}
-      >
-        <Admin
-          customRoutes={CustomRouters}
-          loginPage={LoginPage}
-          dashboard={Dashboard}
-          authProvider={AuthProvider}
-          theme={Theme}
-          dataProvider={AddUploadCapabilities(Provider)}
-          locale='es'
-          appLayout={Layout}
-          i18nProvider={I18nProvider}
-        >
-          {permissions => {
-            return [
-              <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
-              <ResourceWithPermissions name='areas' {...Area} permissions={permissions} />,
-              <ResourceWithPermissions name='lines' {...Line} permissions={permissions} />,
-              <ResourceWithPermissions
-                name='objectives'
-                {...Objective}
-                permissions={permissions}
-              />,
-              <ResourceWithPermissions name='actions' {...Action} permissions={permissions} />,
-              <ResourceWithPermissions name='activities' {...Activity} permissions={permissions} />,
-              <ResourceWithPermissions
-                name='departments'
-                {...Deparment}
-                permissions={permissions}
-              />,
-              <ResourceWithPermissions name='roles' {...Roles} permissions={permissions} />,
-              <ResourceWithPermissions name='users' {...Users} permissions={permissions} />,
-              <ResourceWithPermissions name='profile' {...Profile} permissions={permissions} />,
-              <ResourceWithPermissions
-                name='responsible'
-                {...Responsible}
-                permissions={permissions}
-              />
-            ]
-          }}
-        </Admin>
-      </ReactDependentScript>
-    )
-  }
-}
+const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
 
-export default App
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASED_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
+};
+
+// All options are optional
+const options = {
+  // Enable logging of react-admin-firebase
+  logging: false
+};
+
+const dataProvider = FirebaseDataProvider(firebaseConfig, options);
+const authProvider = AuthProvider();
+
+const App = () => (
+  <Admin
+    dataProvider={dataProvider}
+    i18nProvider={i18nProvider}
+    layout={Layout}
+    customRoutes={CustomRouters}
+    authProvider={authProvider}
+    loginPage={Login}
+  >
+    {permissions => {
+      return [
+        <ResourceWithPermissions
+          name="workplans"
+          {...WorkPlan}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="areas"
+          {...Area}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="lines"
+          {...Line}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="objectives"
+          {...Objective}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="actions"
+          {...Action}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="activities"
+          {...Activity}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="departments"
+          {...Deparment}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="roles"
+          {...Roles}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="users"
+          {...Users}
+          permissions={permissions}
+        />,
+        <ResourceWithPermissions
+          name="profile"
+          {...Profile}
+          permissions={permissions}
+        />
+      ];
+    }}
+  </Admin>
+);
+export default App;

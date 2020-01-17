@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 import "moment-timezone";
 
-const DateField = ({ source, record = {} }) => (
-  <span>
-    <Moment format="DD/MM/YYYY">{record[source]}</Moment>
-  </span>
-);
+const DateField = ({ source, record = {} }) => {
+  return (
+    <span>
+      <Moment format="DD/MM/YYYY">{record[source]}</Moment>
+    </span>
+  );
+};
 
 DateField.propTypes = {
   label: PropTypes.string,
