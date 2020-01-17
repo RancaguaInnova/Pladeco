@@ -80,9 +80,11 @@ function MyLoginPage(props) {
   const classes = useStyles();
 
   const handleChangeUsuario = event => {
+    setOpen(false);
     setUsername(event.target.value);
   };
   const handleChangePassword = event => {
+    setOpen(false);
     setPassword(event.target.value);
   };
   return (
@@ -162,7 +164,6 @@ function MyLoginPage(props) {
                 <LinkRouter to="/registro">
                   {"No tienes cuenta? Registrate"}
                 </LinkRouter>
-
               </Grid>
             </Grid>
             <Box mt={5}>
