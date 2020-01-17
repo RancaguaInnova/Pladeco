@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
 import { userLogin } from "react-admin"
-import { MuiThemeProvider } from "@material-ui/core/styles"
 import Avatar from "@material-ui/core/Avatar"
 import Button from "@material-ui/core/Button"
 import CssBaseline from "@material-ui/core/CssBaseline"
