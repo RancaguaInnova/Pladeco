@@ -130,7 +130,7 @@ function MyLoginPage(props) {
               </Button>
               <Grid container>
                 <Grid item>
-                  <Link href="/registro" variant="body2">
+                  <Link href="#/registro" variant="body2">
                     {"No tienes cuenta? Registrate"}
                   </Link>
                 </Grid>
