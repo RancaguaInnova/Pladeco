@@ -16,6 +16,7 @@ const baseConfig = {
   localStorageTokenName: "token",
   localStorageRoleId: "roleId",
   permissionsCollection: "roles",
+  permissions: "permissions",
   handleAuthStateChange: async (auth, config) => {
     if (auth) {
       const snapshot = await firebase
@@ -34,7 +35,6 @@ const baseConfig = {
 
         return user;
       } else {
-        console.log("fuera");
         firebase.auth().signOut();
         localStorage.removeItem(config.localStorageTokenName);
         localStorage.removeItem(config.localStorageRoleId);
@@ -48,8 +48,16 @@ const baseConfig = {
   }
 };
 
+const permissions = async roleId => {
+  const snapshot = await firebase
+    .firestore()
+    .collection("roles")
+    .doc(roleId)
+    .get();
+  return snapshot.data();
+};
+
 export default props => {
-  console.log(props);
   const config = baseConfig;
 
   const firebaseLoaded = () =>
@@ -57,21 +65,14 @@ export default props => {
       firebase.auth().onAuthStateChanged(resolve);
     });
 
-  const permissions = async roleId => {
-    const snapshot = await firebase
-      .firestore()
-      .collection(config.permissionsCollection)
-      .doc(roleId)
-      .get();
-    return snapshot.data();
-  };
-
   return async (type, params) => {
     console.log(type);
     if (type === AUTH_LOGOUT) {
       config.handleAuthStateChange(null, config).catch(() => {});
       localStorage.removeItem(config.localStorageTokenName);
       localStorage.removeItem(config.localStorageRoleId);
+      localStorage.removeItem(config.permissions);
+
       return firebase.auth().signOut();
     }
 
@@ -91,6 +92,8 @@ export default props => {
       }
       const roleId = localStorage.getItem(config.localStorageRoleId);
       const per = await permissions(roleId);
+      localStorage.setItem(config.permissions, per);
+
       try {
         delete per.id;
         delete per.name;
@@ -115,6 +118,8 @@ export default props => {
       if (status === 401 || status === 403) {
         localStorage.removeItem(config.localStorageTokenName);
         localStorage.removeItem(config.localStorageRoleId);
+        localStorage.removeItem(config.permissions);
+
         return Promise.reject();
       }
       return Promise.resolve();

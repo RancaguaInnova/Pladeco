@@ -101,7 +101,6 @@ const ActivityCreate = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <SearchGoogle />
-
         <TextInput
           source="comments"
           label="Comentarios"

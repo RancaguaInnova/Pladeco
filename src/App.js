@@ -45,7 +45,7 @@ const App = () => (
     i18nProvider={i18nProvider}
     layout={Layout}
     customRoutes={CustomRouters}
-    //authProvider={authProvider}
+    authProvider={authProvider}
     loginPage={Login}
   >
     {permissions => {
