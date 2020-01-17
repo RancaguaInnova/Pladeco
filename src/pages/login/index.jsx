@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { userLogin } from "react-admin";
-import { MuiThemeProvider } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -33,6 +32,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 function MyLoginPage(props) {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
@@ -67,6 +67,7 @@ function MyLoginPage(props) {
       margin: theme.spacing(3, 0, 2)
     }
   }));
+
   const submit = e => {
     e.preventDefault();
 
@@ -77,6 +78,7 @@ function MyLoginPage(props) {
       setOpen(true);
     }
   };
+
   const classes = useStyles();
 
   const handleChangeUsuario = event => {
