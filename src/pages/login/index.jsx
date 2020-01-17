@@ -28,6 +28,7 @@ function Copyright() {
     </Typography>
   )
 }
+
 function MyLoginPage(props) {
   let [username, setUsername] = useState("")
   let [password, setPassword] = useState("")
@@ -61,22 +62,25 @@ function MyLoginPage(props) {
       margin: theme.spacing(3, 0, 2)
     }
   }))
+
   const submit = e => {
     e.preventDefault()
     // gather your data/credentials here
     const credentials = { username: username, password: password }
-    console.log(e)
     // Dispatch the userLogin action (injected by connect)
     props.userLogin(credentials)
   }
+
   const classes = useStyles()
 
   const handleChangeUsuario = event => {
     setUsername(event.target.value)
   }
+
   const handleChangePassword = event => {
     setPassword(event.target.value)
   }
+
   return (
     <MuiThemeProvider theme={props.theme}>
       <Grid container component="main" className={classes.root}>
