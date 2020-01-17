@@ -1,8 +1,15 @@
 /* globals localStorage */
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS } from "react-admin"
-import firebase from "firebase/app"
-import "firebase/firestore"
-import "firebase/auth"
+import {
+  AUTH_LOGIN,
+  AUTH_LOGOUT,
+  AUTH_CHECK,
+  AUTH_ERROR,
+  AUTH_GET_PERMISSIONS
+} from "react-admin";
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+import { Redirect } from "react-router-dom";
 
 const baseConfig = {
   userProfilePath: "users",
@@ -10,6 +17,7 @@ const baseConfig = {
   localStorageTokenName: "token",
   localStorageRoleId: "roleId",
   permissionsCollection: "roles",
+  permissions: "permissions",
   handleAuthStateChange: async (auth, config) => {
     if (auth) {
       const snapshot = await firebase
@@ -41,29 +49,35 @@ const baseConfig = {
   }
 }
 
-export default (config = {}) => {
-  config = { ...baseConfig, ...config }
+const permissions = async roleId => {
+  const snapshot = await firebase
+    .firestore()
+    .collection("roles")
+    .doc(roleId)
+    .get();
+  return snapshot.data();
+};
+
+export default props => {
+  const config = baseConfig;
+
 
   const firebaseLoaded = () =>
     new Promise(resolve => {
       firebase.auth().onAuthStateChanged(resolve)
     })
 
-  const permissions = async roleId => {
-    const snapshot = await firebase
-      .firestore()
-      .collection(config.permissionsCollection)
-      .doc(roleId)
-      .get()
-    return snapshot.data()
-  }
 
   return async (type, params) => {
+    console.log(type);
     if (type === AUTH_LOGOUT) {
-      config.handleAuthStateChange(null, config).catch(() => {})
-      localStorage.removeItem(config.localStorageTokenName)
-      localStorage.removeItem(config.localStorageRoleId)
-      return firebase.auth().signOut()
+      config.handleAuthStateChange(null, config).catch(() => {});
+      localStorage.removeItem(config.localStorageTokenName);
+      localStorage.removeItem(config.localStorageRoleId);
+      localStorage.removeItem(config.permissions);
+
+      return firebase.auth().signOut();
+
     }
 
     if (firebase.auth().currentUser) {
@@ -71,14 +85,20 @@ export default (config = {}) => {
     }
 
     if (type === AUTH_CHECK) {
-      return localStorage.getItem(config.localStorageTokenName)
+      return localStorage.getItem("token")
         ? Promise.resolve()
-        : Promise.reject()
+        : Promise.reject({ Redirect: "/registro" });
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
-      const roleId = localStorage.getItem(config.localStorageRoleId)
-      const per = await permissions(roleId)
+      if (!firebase.auth().currentUser) {
+        Promise.reject({ Redirect: "/registro" });
+      }
+      const roleId = localStorage.getItem(config.localStorageRoleId);
+      const per = await permissions(roleId);
+      localStorage.setItem(config.permissions, per);
+
+
       try {
         delete per.id
         delete per.name
@@ -99,9 +119,11 @@ export default (config = {}) => {
     if (type === AUTH_ERROR) {
       const status = params.status
       if (status === 401 || status === 403) {
-        localStorage.removeItem(config.localStorageTokenName)
-        localStorage.removeItem(config.localStorageRoleId)
-        return Promise.reject()
+        localStorage.removeItem(config.localStorageTokenName);
+        localStorage.removeItem(config.localStorageRoleId);
+        localStorage.removeItem(config.permissions);
+
+        return Promise.reject();
       }
       return Promise.resolve()
     }

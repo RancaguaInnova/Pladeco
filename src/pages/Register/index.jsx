@@ -1,20 +1,20 @@
-import React, { useState } from "react"
-import { MuiThemeProvider } from "@material-ui/core/styles"
-import Avatar from "@material-ui/core/Avatar"
-import Button from "@material-ui/core/Button"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import TextField from "@material-ui/core/TextField"
-import Link from "@material-ui/core/Link"
-import Paper from "@material-ui/core/Paper"
-import Box from "@material-ui/core/Box"
-import Grid from "@material-ui/core/Grid"
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
-import Typography from "@material-ui/core/Typography"
-import Alert from "../Alert"
-import { makeStyles } from "@material-ui/core/styles"
-import * as firebase from "firebase/app"
-import "firebase/auth"
-import "firebase/firestore"
+import React, { useState } from "react";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
+import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import Alert from "../Alert";
+import { makeStyles } from "@material-ui/core/styles";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -23,9 +23,9 @@ const firebaseConfig = {
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
-}
+};
 
-const Firebase = firebase.initializeApp(firebaseConfig, "AUTH")
+const Firebase = firebase.initializeApp(firebaseConfig, "AUTH");
 
 function Copyright() {
   return (
@@ -37,7 +37,7 @@ function Copyright() {
       {` ${new Date().getFullYear()}`}
       {"."}
     </Typography>
-  )
+  );
 }
 
 export default function Registro(props) {
@@ -46,7 +46,8 @@ export default function Registro(props) {
       height: "100vh"
     },
     image: {
-      backgroundImage: "url(https://source.unsplash.com/random)",
+      //backgroundImage: "url(https://source.unsplash.com/random)",
+      background: "#ccc",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       backgroundPosition: "center"
@@ -68,30 +69,30 @@ export default function Registro(props) {
     submit: {
       margin: theme.spacing(3, 0, 2)
     }
-  }))
+  }));
 
-  const classes = useStyles()
+  const classes = useStyles();
 
-  let [email, setEmail] = useState("")
-  let [password, setPassword] = useState("")
-  let [repeatedPassword, setRepeteadPassword] = useState("")
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [repeatedPassword, setRepeteadPassword] = useState("");
 
   const handleEmailChange = event => {
-    setEmail(event.target.value)
-  }
+    setEmail(event.target.value);
+  };
 
   const handlePasswordChange = event => {
-    setPassword(event.target.value)
-  }
+    setPassword(event.target.value);
+  };
 
   const handleRepeatPasswordChange = event => {
-    setRepeteadPassword(event.target.value)
-  }
+    setRepeteadPassword(event.target.value);
+  };
 
-  const [alert, setAlert] = useState({ open: false, title: "", body: "" })
+  const [alert, setAlert] = useState({ open: false, title: "", body: "" });
 
   const submit = async e => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validation
     if (password !== repeatedPassword) {
@@ -99,58 +100,58 @@ export default function Registro(props) {
         open: true,
         title: "Contraseñas no coinciden!",
         body: "Por favor verifique que las constraseñas coinsidan"
-      })
-      return
+      });
+      return;
     }
     if (password.length < 6) {
       setAlert({
         open: true,
         title: "Contraseña inválida!",
         body: "Por favor ingrese una constraseña de al menos 6 caracteres"
-      })
-      return
+      });
+      return;
     }
     if (!email || !password || !repeatedPassword) {
       setAlert({
         open: true,
         title: "Formulario inclompleto!",
         body: "Por favor rellene todos los campos"
-      })
-      return
+      });
+      return;
     }
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setAlert({
         open: true,
         title: "Email inválido!",
         body: "Por favor verifique su email"
-      })
-      return
+      });
+      return;
     }
 
     try {
       const {
         user: { uid }
-      } = await Firebase.auth().createUserWithEmailAndPassword(email, password)
+      } = await Firebase.auth().createUserWithEmailAndPassword(email, password);
       Firebase.firestore()
         .collection("users")
         .doc(uid)
-        .set({ email: { address: email } })
+        .set({ email: { address: email } });
 
       setAlert({
         open: true,
         title: "Usuario creado!",
         body: `Su usuario ha sido creado exitosamente. Contacte a su administrador para que le asigne sus permisos.`
-      })
+      });
     } catch (error) {
-      console.log("Error creating user:", error)
+      console.log("Error creating user:", error);
       setAlert({
         open: true,
         title: "Error!",
         body: `Ocurrión un error al registrar el usuario: ${error.message}`
-      })
-      return
+      });
+      return;
     }
-  }
+  };
 
   return (
     <MuiThemeProvider theme={props.theme}>
@@ -228,5 +229,5 @@ export default function Registro(props) {
       </Grid>
       <Alert handleClose={() => setAlert({ open: false })} {...alert} />
     </MuiThemeProvider>
-  )
+  );
 }
