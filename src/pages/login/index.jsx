@@ -162,6 +162,7 @@ function MyLoginPage(props) {
                 <LinkRouter to="/registro">
                   {"No tienes cuenta? Registrate"}
                 </LinkRouter>
+
               </Grid>
             </Grid>
             <Box mt={5}>
