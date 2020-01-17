@@ -65,10 +65,12 @@ function MyLoginPage(props) {
   const submit = e => {
     e.preventDefault();
     // gather your data/credentials here
-    const credentials = { username: username, password: password };
-    console.log(e);
-    // Dispatch the userLogin action (injected by connect)
-    props.userLogin(credentials);
+
+    if (username !== "" && password !== "") {
+      const credentials = { username: username, password: password };
+
+      props.userLogin(credentials);
+    }
   };
   const classes = useStyles();
 

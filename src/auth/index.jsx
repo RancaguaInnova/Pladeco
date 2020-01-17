@@ -83,12 +83,12 @@ export default props => {
     if (type === AUTH_CHECK) {
       return localStorage.getItem("token")
         ? Promise.resolve()
-        : Promise.reject({ Redirect: "/no-access" });
+        : Promise.reject({ Redirect: "/registro" });
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
       if (!firebase.auth().currentUser) {
-        throw new Error("sign_in_error");
+        Promise.reject({ Redirect: "/registro" });
       }
       const roleId = localStorage.getItem(config.localStorageRoleId);
       const per = await permissions(roleId);
