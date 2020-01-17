@@ -16,6 +16,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkRouter } from "react-router-dom";
+import Alert from "@material-ui/lab/Alert";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import Collapse from "@material-ui/core/Collapse";
 
 function Copyright() {
   return (
@@ -32,6 +36,7 @@ function Copyright() {
 function MyLoginPage(props) {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
+  const [open, setOpen] = React.useState(false);
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -64,12 +69,12 @@ function MyLoginPage(props) {
   }));
   const submit = e => {
     e.preventDefault();
-    // gather your data/credentials here
 
     if (username !== "" && password !== "") {
       const credentials = { username: username, password: password };
-
       props.userLogin(credentials);
+    } else {
+      setOpen(true);
     }
   };
   const classes = useStyles();
@@ -121,6 +126,27 @@ function MyLoginPage(props) {
               control={<Checkbox value="remember" color="primary" />}
               label="Recordar Contraseña"
             />
+            <Collapse in={open}>
+              <Alert
+                variant="filled"
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                Debe ingresar el usuario y contraseña
+              </Alert>
+            </Collapse>
+
             <Button
               type="submit"
               fullWidth
@@ -130,6 +156,7 @@ function MyLoginPage(props) {
             >
               Enviar
             </Button>
+
             <Grid container>
               <Grid item>
                 <LinkRouter to="/registro">
