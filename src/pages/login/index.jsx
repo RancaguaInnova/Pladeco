@@ -15,6 +15,11 @@ import Grid from "@material-ui/core/Grid"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import Typography from "@material-ui/core/Typography"
 import { makeStyles } from "@material-ui/core/styles"
+import { Link as LinkRouter } from "react-router-dom"
+import Alert from "@material-ui/lab/Alert"
+import IconButton from "@material-ui/core/IconButton"
+import CloseIcon from "@material-ui/icons/Close"
+import Collapse from "@material-ui/core/Collapse"
 
 function Copyright() {
   return (
@@ -32,6 +37,7 @@ function Copyright() {
 function MyLoginPage(props) {
   let [username, setUsername] = useState("")
   let [password, setPassword] = useState("")
+  const [open, setOpen] = React.useState(false)
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -65,10 +71,13 @@ function MyLoginPage(props) {
 
   const submit = e => {
     e.preventDefault()
-    // gather your data/credentials here
-    const credentials = { username: username, password: password }
-    // Dispatch the userLogin action (injected by connect)
-    props.userLogin(credentials)
+
+    if (username !== "" && password !== "") {
+      const credentials = { username: username, password: password }
+      props.userLogin(credentials)
+    } else {
+      setOpen(true)
+    }
   }
 
   const classes = useStyles()
@@ -76,77 +85,94 @@ function MyLoginPage(props) {
   const handleChangeUsuario = event => {
     setUsername(event.target.value)
   }
-
   const handleChangePassword = event => {
     setPassword(event.target.value)
   }
 
   return (
-    <MuiThemeProvider theme={props.theme}>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Project Manager Rancagua
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={submit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="Usuario"
-                label="Usuario"
-                name="Usuario"
-                autoComplete="Usuario"
-                autoFocus
-                onChange={handleChangeUsuario.bind(this)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="Contraseña"
-                onChange={handleChangePassword.bind(this)}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Recordar Contraseña"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
+    <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7} className={classes.image} />
+      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Project Manager Rancagua
+          </Typography>
+          <form className={classes.form} noValidate onSubmit={submit}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="Usuario"
+              label="Usuario"
+              name="Usuario"
+              autoComplete="Usuario"
+              autoFocus
+              onChange={handleChangeUsuario.bind(this)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Contraseña"
+              type="password"
+              id="password"
+              autoComplete="Contraseña"
+              onChange={handleChangePassword.bind(this)}
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Recordar Contraseña"
+            />
+            <Collapse in={open}>
+              <Alert
+                variant="filled"
+                severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false)
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
               >
-                Enviar
-              </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="#/registro" variant="body2">
-                    {"No tienes cuenta? Registrate"}
-                  </Link>
-                </Grid>
+                Debe ingresar el usuario y contraseña
+              </Alert>
+            </Collapse>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Enviar
+            </Button>
+
+            <Grid container>
+              <Grid item>
+                <LinkRouter to="/registro">{"No tienes cuenta? Registrate"}</LinkRouter>
               </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
-            </form>
-          </div>
-        </Grid>
+            </Grid>
+            <Box mt={5}>
+              <Copyright />
+            </Box>
+          </form>
+        </div>
       </Grid>
-    </MuiThemeProvider>
+    </Grid>
   )
 }
 
