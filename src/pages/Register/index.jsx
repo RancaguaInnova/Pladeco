@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
-import Paper from "@material-ui/core/Paper";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Alert from "../Alert";
 import { makeStyles } from "@material-ui/core/styles";
@@ -154,80 +147,55 @@ export default function Registro(props) {
   };
 
   return (
-    <MuiThemeProvider theme={props.theme}>
-      <Grid container component="main" className={classes.root}>
-        <CssBaseline />
-        <Grid item xs={false} sm={4} md={7} className={classes.image} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Project Manager Rancagua
-            </Typography>
-            <form className={classes.form} noValidate onSubmit={submit}>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                type="email"
-                onChange={handleEmailChange.bind(this)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Contraseña"
-                type="password"
-                id="password"
-                autoComplete="Contraseña"
-                onChange={handlePasswordChange.bind(this)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Repetir Contraseña"
-                type="password"
-                id="password"
-                autoComplete="Contraseña"
-                onChange={handleRepeatPasswordChange.bind(this)}
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Enviar
-              </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="#/login" variant="body2">
-                    {"Ya tienes cuenta? Ingresa"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-                <Copyright />
-              </Box>
-            </form>
-          </div>
-        </Grid>
-      </Grid>
+    <form className={classes.form} noValidate onSubmit={submit}>
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        id="email"
+        label="Email"
+        name="email"
+        autoComplete="email"
+        autoFocus
+        type="email"
+        onChange={handleEmailChange.bind(this)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Contraseña"
+        type="password"
+        id="password"
+        autoComplete="Contraseña"
+        onChange={handlePasswordChange.bind(this)}
+      />
+      <TextField
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        name="password"
+        label="Repetir Contraseña"
+        type="password"
+        id="password"
+        autoComplete="Contraseña"
+        onChange={handleRepeatPasswordChange.bind(this)}
+      />
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+      >
+        Enviar
+      </Button>
+
       <Alert handleClose={() => setAlert({ open: false })} {...alert} />
-    </MuiThemeProvider>
+    </form>
   );
 }

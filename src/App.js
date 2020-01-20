@@ -20,7 +20,9 @@ import Profile from "./pages/profile";
 import AuthProvider from "./auth";
 import { FirebaseDataProvider } from "react-admin-firebase";
 import Login from "./pages/login";
-
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Register from "./pages/Register";
+import Inicio from "./pages/Inicio";
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
 
 const firebaseConfig = {
@@ -40,68 +42,70 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, options);
 const authProvider = AuthProvider();
 
 const App = () => (
-  <Admin
-    dataProvider={dataProvider}
-    i18nProvider={i18nProvider}
-    layout={Layout}
-    customRoutes={CustomRouters}
-    authProvider={authProvider}
-    loginPage={Login}
-  >
-    {permissions => {
-      return [
-        <ResourceWithPermissions
-          name="workplans"
-          {...WorkPlan}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="areas"
-          {...Area}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="lines"
-          {...Line}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="objectives"
-          {...Objective}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="actions"
-          {...Action}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="activities"
-          {...Activity}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="departments"
-          {...Deparment}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="roles"
-          {...Roles}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="users"
-          {...Users}
-          permissions={permissions}
-        />,
-        <ResourceWithPermissions
-          name="profile"
-          {...Profile}
-          permissions={permissions}
-        />
-      ];
-    }}
-  </Admin>
+  <div>
+    <Admin
+      dataProvider={dataProvider}
+      i18nProvider={i18nProvider}
+      layout={Layout}
+      customRoutes={CustomRouters}
+      authProvider={authProvider}
+      loginPage={Inicio}
+    >
+      {permissions => {
+        return [
+          <ResourceWithPermissions
+            name="workplans"
+            {...WorkPlan}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="areas"
+            {...Area}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="lines"
+            {...Line}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="objectives"
+            {...Objective}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="actions"
+            {...Action}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="activities"
+            {...Activity}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="departments"
+            {...Deparment}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="roles"
+            {...Roles}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="users"
+            {...Users}
+            permissions={permissions}
+          />,
+          <ResourceWithPermissions
+            name="profile"
+            {...Profile}
+            permissions={permissions}
+          />
+        ];
+      }}
+    </Admin>
+  </div>
 );
 export default App;
