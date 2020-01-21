@@ -1,56 +1,52 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import compose from "recompose/compose";
-import { withRouter } from "react-router-dom";
-import { DashboardMenuItem, MenuItemLink, Responsive } from "react-admin";
-import Action from "../action";
-import Activity from "../activity";
-import Area from "../area";
-import Deparment from "../department";
-import Objective from "../objective";
-import Line from "../line";
-import WorkPlan from "../workPlan";
-import Roles from "../roles";
-import Profile from "../profile";
-import Users from "../users";
-
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import compose from "recompose/compose"
+import { withRouter } from "react-router-dom"
+import { DashboardMenuItem, MenuItemLink, Responsive } from "react-admin"
+import Action from "../action"
+import Activity from "../activity"
+import Area from "../area"
+import Deparment from "../department"
+import Objective from "../objective"
+import Line from "../line"
+import WorkPlan from "../workPlan"
+import Roles from "../roles"
+import Profile from "../profile"
+import Users from "../users"
 
 class Menu extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       menuAccion: false,
       permissions: []
-    };
+    }
   }
 
   static propTypes = {
     logout: PropTypes.object,
     onMenuClick: PropTypes.func
-  };
+  }
 
   handleToggle = menu => {
     this.setState(state => ({
       [menu]: !state[menu]
-    }));
-  };
+    }))
+  }
 
   componentDidMount() {
-    this.setState({ permissions: JSON.parse(localStorage.getItem('permissions')) }, function () {
-    })
-
-
-
+    const storedPermissions = localStorage.getItem("permissions")
+    if (storedPermissions === "undefined") return
+    this.setState({ permissions: JSON.parse(storedPermissions) })
   }
 
   render() {
-    const { onMenuClick, logout } = this.props;
+    const { onMenuClick, logout } = this.props
     const { permissions } = this.state
 
     return (
       <div>
-
         <DashboardMenuItem onClick={onMenuClick} />
         {permissions && permissions.workplans && permissions.workplans.list === true ? (
           <MenuItemLink
@@ -59,7 +55,9 @@ class Menu extends Component {
             leftIcon={<WorkPlan.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.areas && permissions.areas.list === true ? (
           <MenuItemLink
             to={`/areas`}
@@ -67,7 +65,9 @@ class Menu extends Component {
             leftIcon={<Area.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.lines && permissions.lines.list === true ? (
           <MenuItemLink
             to={`/lines`}
@@ -75,7 +75,9 @@ class Menu extends Component {
             leftIcon={<Line.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.objectives && permissions.objectives.list === true ? (
           <MenuItemLink
             to={`/objectives`}
@@ -83,7 +85,9 @@ class Menu extends Component {
             leftIcon={<Objective.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.actions && permissions.actions.list === true ? (
           <MenuItemLink
             to={`/actions`}
@@ -91,7 +95,9 @@ class Menu extends Component {
             leftIcon={<Action.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.activities && permissions.activities.list === true ? (
           <MenuItemLink
             to={`/activities`}
@@ -99,7 +105,9 @@ class Menu extends Component {
             leftIcon={<Activity.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.departments && permissions.departments.list === true ? (
           <MenuItemLink
             to={`/departments`}
@@ -107,7 +115,9 @@ class Menu extends Component {
             leftIcon={<Deparment.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.roles && permissions.roles.list === true ? (
           <MenuItemLink
             to={`/roles`}
@@ -115,8 +125,9 @@ class Menu extends Component {
             leftIcon={<Roles.icon />}
             onClick={onMenuClick}
           />
-
-        ) : ''}
+        ) : (
+          ""
+        )}
         {permissions && permissions.users && permissions.users.list === true ? (
           <MenuItemLink
             to={`/users`}
@@ -124,7 +135,9 @@ class Menu extends Component {
             leftIcon={<Users.icon />}
             onClick={onMenuClick}
           />
-        ) : ''}
+        ) : (
+          ""
+        )}
         <Responsive
           xsmall={
             <MenuItemLink
@@ -141,7 +154,7 @@ class Menu extends Component {
           medium={null} // Pass null to render nothing on larger devices
         />
       </div>
-    );
+    )
   }
 }
 
@@ -149,7 +162,7 @@ const mapStateToProps = state => {
   return {
     open: state.admin.ui.sidebarOpen,
     theme: state.theme
-  };
-};
-const enhance = compose(withRouter, connect(mapStateToProps, {}));
-export default enhance(Menu);
+  }
+}
+const enhance = compose(withRouter, connect(mapStateToProps, {}))
+export default enhance(Menu)
