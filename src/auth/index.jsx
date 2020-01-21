@@ -25,7 +25,6 @@ const baseConfig = {
         .get();
 
       let profile = snapshot.data();
-
       if (profile) {
         const firebaseToken = await auth.user.getIdToken();
         let user = { auth, profile, firebaseToken };
@@ -37,8 +36,9 @@ const baseConfig = {
         firebase.auth().signOut();
         localStorage.removeItem(config.localStorageTokenName);
         localStorage.removeItem(config.localStorageRoleId);
-
         throw new Error("sign_in_error");
+
+
       }
     } else {
       localStorage.removeItem(config.localStorageTokenName);
@@ -65,7 +65,7 @@ export default () => {
 
   return async (type, params) => {
     if (type === AUTH_LOGOUT) {
-      config.handleAuthStateChange(null, config).catch(() => {});
+      config.handleAuthStateChange(null, config).catch(() => { });
       localStorage.removeItem(config.localStorageTokenName);
       localStorage.removeItem(config.localStorageRoleId);
       localStorage.removeItem(config.permissions);
@@ -77,12 +77,16 @@ export default () => {
     }
 
     if (type === AUTH_CHECK) {
+      await firebaseLoaded();
+
       return localStorage.getItem("token")
         ? Promise.resolve()
         : Promise.reject();
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
+      await firebaseLoaded();
+
       if (!firebase.auth().currentUser) {
         return Promise.reject();
       }
@@ -91,7 +95,7 @@ export default () => {
       try {
         delete per.id;
         delete per.name;
-      } catch (error) {}
+      } catch (error) { }
       localStorage.setItem("permissions", JSON.stringify(per));
       return Promise.resolve(per);
     }
