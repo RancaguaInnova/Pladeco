@@ -19,7 +19,6 @@ const baseConfig = {
         .get()
 
       let profile = snapshot.data()
-
       if (profile) {
         const firebaseToken = await auth.user.getIdToken()
         let user = { auth, profile, firebaseToken }
@@ -31,7 +30,6 @@ const baseConfig = {
         firebase.auth().signOut()
         localStorage.removeItem(config.localStorageTokenName)
         localStorage.removeItem(config.localStorageRoleId)
-
         throw new Error("sign_in_error")
       }
     } else {
@@ -52,6 +50,10 @@ const permissions = async roleId => {
 
 export default () => {
   const config = baseConfig
+  const firebaseLoaded = () =>
+    new Promise(resolve => {
+      firebase.auth().onAuthStateChanged(resolve)
+    })
 
   return async (type, params) => {
     if (type === AUTH_LOGOUT) {
@@ -67,10 +69,14 @@ export default () => {
     }
 
     if (type === AUTH_CHECK) {
+      await firebaseLoaded()
+
       return localStorage.getItem("token") ? Promise.resolve() : Promise.reject()
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
+      await firebaseLoaded()
+
       if (!firebase.auth().currentUser) {
         return Promise.reject()
       }
