@@ -1,4 +1,3 @@
-/* globals localStorage */
 import {
   AUTH_LOGIN,
   AUTH_LOGOUT,
@@ -59,19 +58,13 @@ const permissions = async roleId => {
 
 export default () => {
   const config = baseConfig;
-
-
-
-
   return async (type, params) => {
     if (type === AUTH_LOGOUT) {
-      config.handleAuthStateChange(null, config).catch(() => {});
+      config.handleAuthStateChange(null, config).catch(() => { });
       localStorage.removeItem(config.localStorageTokenName);
       localStorage.removeItem(config.localStorageRoleId);
       localStorage.removeItem(config.permissions);
-
       return firebase.auth().signOut();
-
     }
 
     if (firebase.auth().currentUser) {
@@ -90,15 +83,11 @@ export default () => {
       }
       const roleId = localStorage.getItem(config.localStorageRoleId);
       const per = await permissions(roleId);
-      
-
-
       try {
         delete per.id
         delete per.name
-      } catch (error) {}
+      } catch (error) { }
       localStorage.setItem("permissions", JSON.stringify(per));
-
       return Promise.resolve(per)
     }
 
@@ -118,7 +107,6 @@ export default () => {
         localStorage.removeItem(config.localStorageTokenName);
         localStorage.removeItem(config.localStorageRoleId);
         localStorage.removeItem(config.permissions);
-
         return Promise.reject();
       }
       return Promise.resolve()
