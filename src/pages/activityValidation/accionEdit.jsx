@@ -17,7 +17,6 @@ import {
 const validateName = [required(), minLength(0), maxLength(550)]
 
 const ActionEdit = props => {
-  console.log(props)
   return (
     /*   <div>hola</div>*/
     <Edit

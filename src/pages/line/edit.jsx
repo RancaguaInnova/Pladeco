@@ -8,7 +8,6 @@ import {
 } from "react-admin";
 
 const LineEdit = props => {
-  console.log(props);
   return (
     <Edit title="Editar Linea" {...props}>
       <SimpleForm>

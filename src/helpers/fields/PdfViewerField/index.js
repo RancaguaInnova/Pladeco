@@ -55,10 +55,8 @@ export default class PDFViewer extends Component {
 
 
   render() { 
-     console.log("props",this.props)
     const { numPages, pageNumber } = this.state;
     const  fileUrl  = this.props.record[this.props.source].src
-    console.log("fileUrl",fileUrl)
     return (
       <React.Fragment>
         <Document

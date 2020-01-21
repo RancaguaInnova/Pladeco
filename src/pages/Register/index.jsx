@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
 import Alert from "../Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import * as firebase from "firebase/app";
@@ -20,20 +18,9 @@ const firebaseConfig = {
 
 const Firebase = firebase.initializeApp(firebaseConfig, "AUTH");
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="http://smart.rancagua.cl/">
-        Corporación de Desarrollo e Innovación de Rancagua
-      </Link>
-      {` ${new Date().getFullYear()}`}
-      {"."}
-    </Typography>
-  );
-}
 
-export default function Registro(props) {
+
+export default function Registro() {
   const useStyles = makeStyles(theme => ({
     root: {
       height: "100vh"
@@ -136,7 +123,6 @@ export default function Registro(props) {
         body: `Su usuario ha sido creado exitosamente. Contacte a su administrador para que le asigne sus permisos.`
       });
     } catch (error) {
-      console.log("Error creating user:", error);
       setAlert({
         open: true,
         title: "Error!",

@@ -8,17 +8,12 @@ const saveWithLocation = (values, basePath, redirectTo) =>
 
 class SaveWithLocationButtonView extends Component {
   handleClick = () => {
-    console.log('props', this.props)
-
     const { basePath, redirect, saveWithLocation, datos } = this.props
-
     return saveWithLocation(datos, basePath, redirect)
   }
 
   render() {
     const { handleSubmitWithRedirect, saveWithLocation, ...props } = this.props
-    console.log('props', props)
-
     return <SaveButton handleSubmitWithRedirect={this.handleClick} {...props} />
   }
 }

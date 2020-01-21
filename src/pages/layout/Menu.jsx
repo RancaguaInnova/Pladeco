@@ -15,6 +15,7 @@ import Roles from "../roles";
 import Profile from "../profile";
 import Users from "../users";
 
+
 class Menu extends Component {
   constructor(props) {
     super(props);
@@ -35,67 +36,95 @@ class Menu extends Component {
     }));
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ permissions: JSON.parse(localStorage.getItem('permissions')) }, function () {
+    })
+
+
+
+  }
 
   render() {
     const { onMenuClick, logout } = this.props;
+    const { permissions } = this.state
+
     return (
       <div>
+
         <DashboardMenuItem onClick={onMenuClick} />
-        <MenuItemLink
-          to={`/workplans`}
-          primaryText={WorkPlan.options.label}
-          leftIcon={<WorkPlan.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/areas`}
-          primaryText={Area.options.label}
-          leftIcon={<Area.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/lines`}
-          primaryText={Line.options.label}
-          leftIcon={<Line.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/objectives`}
-          primaryText={Objective.options.label}
-          leftIcon={<Objective.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/actions`}
-          primaryText={Action.options.label}
-          leftIcon={<Action.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/activities`}
-          primaryText={Activity.options.label}
-          leftIcon={<Activity.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/departments`}
-          primaryText={Deparment.options.label}
-          leftIcon={<Deparment.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/roles`}
-          primaryText={Roles.options.label}
-          leftIcon={<Roles.icon />}
-          onClick={onMenuClick}
-        />
-        <MenuItemLink
-          to={`/users`}
-          primaryText={Users.options.label}
-          leftIcon={<Users.icon />}
-          onClick={onMenuClick}
-        />
+        {permissions && permissions.workplans && permissions.workplans.list === true ? (
+          <MenuItemLink
+            to={`/workplans`}
+            primaryText={WorkPlan.options.label}
+            leftIcon={<WorkPlan.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.areas && permissions.areas.list === true ? (
+          <MenuItemLink
+            to={`/areas`}
+            primaryText={Area.options.label}
+            leftIcon={<Area.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.lines && permissions.lines.list === true ? (
+          <MenuItemLink
+            to={`/lines`}
+            primaryText={Line.options.label}
+            leftIcon={<Line.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.objectives && permissions.objectives.list === true ? (
+          <MenuItemLink
+            to={`/objectives`}
+            primaryText={Objective.options.label}
+            leftIcon={<Objective.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.actions && permissions.actions.list === true ? (
+          <MenuItemLink
+            to={`/actions`}
+            primaryText={Action.options.label}
+            leftIcon={<Action.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.activities && permissions.activities.list === true ? (
+          <MenuItemLink
+            to={`/activities`}
+            primaryText={Activity.options.label}
+            leftIcon={<Activity.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.departments && permissions.departments.list === true ? (
+          <MenuItemLink
+            to={`/departments`}
+            primaryText={Deparment.options.label}
+            leftIcon={<Deparment.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
+        {permissions && permissions.roles && permissions.roles.list === true ? (
+          <MenuItemLink
+            to={`/roles`}
+            primaryText={Roles.options.label}
+            leftIcon={<Roles.icon />}
+            onClick={onMenuClick}
+          />
+
+        ) : ''}
+        {permissions && permissions.users && permissions.users.list === true ? (
+          <MenuItemLink
+            to={`/users`}
+            primaryText={Users.options.label}
+            leftIcon={<Users.icon />}
+            onClick={onMenuClick}
+          />
+        ) : ''}
         <Responsive
           xsmall={
             <MenuItemLink

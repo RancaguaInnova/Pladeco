@@ -1,5 +1,5 @@
 import React from "react";
-import { Admin, Resource } from "react-admin";
+import { Admin } from "react-admin";
 import Users from "./pages/users";
 import Action from "./pages/action";
 import Activity from "./pages/activity";
@@ -8,20 +8,15 @@ import Deparment from "./pages/department";
 import Objective from "./pages/objective";
 import Line from "./pages/line";
 import WorkPlan from "./pages/workPlan";
-import Dashboard from "./pages/dashboard";
 import Roles from "./pages/roles";
 import { Layout } from "./pages/layout";
 import CustomRouters from "./pages/customRoutes";
 import spanishMessages from "@blackbox-vision/ra-language-spanish";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import AddUploadCapabilities from "./helpers/UploadImage";
 import { ResourceWithPermissions } from "ra-auth-acl";
 import Profile from "./pages/profile";
 import AuthProvider from "./auth";
 import { FirebaseDataProvider } from "react-admin-firebase";
-import Login from "./pages/login";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Register from "./pages/Register";
 import Inicio from "./pages/Inicio";
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, "es");
 

@@ -61,7 +61,6 @@ const addUploadCapabilities = requestHandler => async (
         if (value && typeof value === "object" && value.length) {
           value.forEach(fileCandidate => {
             if (_.has(fileCandidate, "rawFile")) {
-              console.log("candidate", key);
               fileCandidate.fieldKey = key;
               filesToUpload.push(fileCandidate);
             }
@@ -119,8 +118,6 @@ async function createOrUpdateFile(resource, file, uploadFile) {
       return downloadUrl;
     } else {
       const uploaded = await uploadFile(file, storageRef);
-      console.log(uploaded);
-
       return uploaded;
     }
   } catch (error) {

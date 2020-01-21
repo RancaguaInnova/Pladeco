@@ -23,8 +23,6 @@ class TabbedDatagrid extends React.Component {
   state = { 'not-started': [], 'in-progress': [], finished: [] }
 
   static getDerivedStateFromProps(props, state) {
-    console.log(props)
-
     if (props.ids !== state[props.filterValues.status]) {
       return { ...state, [props.filterValues.status]: props.ids }
     }
@@ -49,7 +47,6 @@ class TabbedDatagrid extends React.Component {
           onChange={this.handleChange}
         >
           {this.tabs.map(choice => {
-            console.log('choice', choice)
             return <Tab key={choice.id} label={choice.name} value={choice.id} />
           })}
         </Tabs>
@@ -59,7 +56,6 @@ class TabbedDatagrid extends React.Component {
             <div>
               {filterValues.status === 'not-started' && (
                 <div>
-                  {console.log('estado', this.state['not-started'])}
                   <Datagrid {...props} ids={this.state['not-started']}>
                     <TextField source='name' label='Nombre' />
 

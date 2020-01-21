@@ -9,7 +9,6 @@ import {
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { Redirect } from "react-router-dom";
 
 const baseConfig = {
   userProfilePath: "users",
@@ -58,18 +57,13 @@ const permissions = async roleId => {
   return snapshot.data();
 };
 
-export default props => {
+export default () => {
   const config = baseConfig;
 
 
-  const firebaseLoaded = () =>
-    new Promise(resolve => {
-      firebase.auth().onAuthStateChanged(resolve)
-    })
 
 
   return async (type, params) => {
-    console.log(type);
     if (type === AUTH_LOGOUT) {
       config.handleAuthStateChange(null, config).catch(() => {});
       localStorage.removeItem(config.localStorageTokenName);
@@ -87,22 +81,24 @@ export default props => {
     if (type === AUTH_CHECK) {
       return localStorage.getItem("token")
         ? Promise.resolve()
-        : Promise.reject({ Redirect: "/registro" });
+        : Promise.reject();
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
       if (!firebase.auth().currentUser) {
-        Promise.reject({ Redirect: "/registro" });
+        return Promise.reject();
       }
       const roleId = localStorage.getItem(config.localStorageRoleId);
       const per = await permissions(roleId);
-      localStorage.setItem(config.permissions, per);
+      
 
 
       try {
         delete per.id
         delete per.name
       } catch (error) {}
+      localStorage.setItem("permissions", JSON.stringify(per));
+
       return Promise.resolve(per)
     }
 
