@@ -51,8 +51,7 @@ function MyLoginPage(props) {
 
     if (username !== "" && password !== "") {
       const credentials = { username: username, password: password };
-      let response = props.userLogin(credentials);
-      console.log(response);
+      props.userLogin(credentials);
     } else {
       setOpen(true);
     }
