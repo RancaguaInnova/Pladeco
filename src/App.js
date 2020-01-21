@@ -19,9 +19,8 @@ import Profile from './pages/profile'
 import AuthProvider from './auth'
 import { FirebaseDataProvider } from 'react-admin-firebase'
 import Inicio from './pages/Inicio'
-const firebase = require("firebase");
-require("firebase/firestore");
-
+const firebase = require('firebase')
+require('firebase/firestore')
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, 'es')
 const firebaseConfig = {
@@ -32,7 +31,7 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID
 }
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
 const options = {
   logging: false

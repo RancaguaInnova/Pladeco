@@ -97,7 +97,7 @@ export default function Registro() {
       })
       return
     }
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+    if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       setAlert({
         open: true,
         title: 'Email inválido!',
