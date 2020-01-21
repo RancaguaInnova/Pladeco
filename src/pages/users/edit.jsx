@@ -4,7 +4,7 @@ import {
   SimpleForm,
   SelectInput,
   Edit,
-  ReferenceInput
+  ReferenceInput,BooleanInput
 } from "react-admin";
 
 const validateUserCreation = values => {
@@ -50,6 +50,8 @@ const UserEdit = props => (
       <ReferenceInput label="Rol" source="role" reference="roles">
         <SelectInput optionText="name" />
       </ReferenceInput>
+      <BooleanInput source='isAdmin' label='Tiene Permisos para ingresar al pladeco' defaultValue={false} />
+
     </SimpleForm>
   </Edit>
 );
