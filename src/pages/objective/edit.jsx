@@ -7,7 +7,7 @@ const ObjectiveEdit = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='lines' source='lineId' label='Linea' link='show'>
+        <ReferenceInput reference='lines' source='lineId' label='Linea' link='show' perPage={500}>
           <SelectInput optionText='name' />
         </ReferenceInput>
       </SimpleForm>

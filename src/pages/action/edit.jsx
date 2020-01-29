@@ -97,7 +97,12 @@ const ActionEdit = ({ permissions, ...props }) => {
           <TextField source='description' label='Descripción' validate={validateName} />
 
           <TextInput source='description' label='Descripción' validate={validateName} />
-          <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+          <ReferenceInput
+            reference='users'
+            source='responsibleId'
+            label='Responsable'
+            perPage={500}
+          >
             <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
           </ReferenceInput>
           <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
@@ -115,7 +120,12 @@ const ActionEdit = ({ permissions, ...props }) => {
           <DateInput source='initialDate' label='Fecha de inicio' locales='es-ES' />
           <DateInput source='endDate' label='Fecha de termino' locales='es-ES' />
           <NumberInput source='weight' label='Peso' />
-          <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
+          <ReferenceInput
+            reference='objectives'
+            source='objectiveId'
+            label='Objetivos'
+            perPage={500}
+          >
             <SelectInput optionText='name' />
           </ReferenceInput>
 

@@ -29,6 +29,7 @@ const ActivityEdit = props => {
           source='actionId'
           label='Acción'
           className='SelectInput'
+          perPage={500}
         >
           <SelectInput optionText='name' />
         </ReferenceInput>
@@ -49,6 +50,7 @@ const ActivityEdit = props => {
           source='responsibleId'
           label='Responsable'
           className='SelectInput'
+          perPage={500}
         >
           <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
@@ -71,16 +73,21 @@ const ActivityEdit = props => {
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area'>
+            <ReferenceInput reference='areas' source='areaId' label='Area' perPage={500}>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea'>
+            <ReferenceInput reference='lines' source='lineId' label='Linea' perPage={500}>
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='objectives' source='objectiveId' label='Objetivo'>
+            <ReferenceInput
+              reference='objectives'
+              source='objectiveId'
+              label='Objetivo'
+              perPage={500}
+            >
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción'>
+            <ReferenceInput reference='actions' source='actionId' label='Acción' perPage={500}>
               <SelectInput optionText='name' />
             </ReferenceInput>
           </SimpleFormIterator>
