@@ -29,7 +29,7 @@ const ActionEdit = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable'>
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable' perPage={500}>
           <SelectInput optionText='identifier' />
         </ReferenceInput>
         <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
@@ -48,7 +48,7 @@ const ActionEdit = props => {
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de termino' />
         <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos'>
+        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' perPage={500}>
           <SelectInput optionText='name' />
         </ReferenceInput>
         <BooleanInput label='Aprobado' source='approved' defaultValue={false} />

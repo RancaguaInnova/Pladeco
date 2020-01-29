@@ -7,7 +7,13 @@ const AreaCreate = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='workplans' source='workplanId' label='Pladeco' link='show'>
+        <ReferenceInput
+          reference='workplans'
+          source='workplanId'
+          label='Pladeco'
+          link='show'
+          perPage={500}
+        >
           <SelectInput optionText='name' />
         </ReferenceInput>
       </SimpleForm>

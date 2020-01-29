@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput, SimpleForm, SelectInput, Create ,ReferenceInput} from 'react-admin'
+import { TextInput, SimpleForm, SelectInput, Create, ReferenceInput } from 'react-admin'
 
 const ObjectiveCreate = props => {
   return (
@@ -7,7 +7,7 @@ const ObjectiveCreate = props => {
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' />
         <TextInput source='description' label='Descripción' defaultValue='' />
-        <ReferenceInput reference='lines' source='lineId' label='Linea'  >
+        <ReferenceInput reference='lines' source='lineId' label='Linea' perPage={500}>
           <SelectInput optionText='name' />
         </ReferenceInput>
       </SimpleForm>
