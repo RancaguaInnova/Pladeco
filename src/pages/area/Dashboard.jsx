@@ -6,8 +6,7 @@ import AreaList from './list'
 import ReferenceField from '../../helpers/ReferenceField'
 
 const AreaView = props => {
-  let [collectionName, setCollectionName] = useState(null)
-  console.log('COLLECTIONNAME:', collectionName)
+  let [workplan, setWorkplan] = useState(null)
 
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
@@ -27,13 +26,13 @@ const AreaView = props => {
             labelField='name'
             nullOptionLabel='Sin selección'
             helperText='Las Áreas a mostrar se filtrarán en función a esta selección.'
-            onChange={setCollectionName}
+            onChange={setWorkplan}
           />
         </Paper>
       </Grid>
       <Grid item xs={12}>
-        {collectionName ? (
-          <AreaList {...props} workplanId={collectionName} />
+        {workplan ? (
+          <AreaList {...props} workplanId={workplan} />
         ) : (
           <Paper style={{ padding: '1rem 2rem', textAlign: 'center', marginTop: '2rem' }}>
             <Typography variant='h6'>Esperando selección...</Typography>
