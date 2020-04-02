@@ -23,12 +23,12 @@ export default props => {
         labelField='name'
         nullOptionLabel='Sin selección'
         helperText='Las Áreas a mostrar se filtrarán en función a esta selección.'
-        onChange={change =>
+        onChange={change => {
           dispatch({
             type: 'changeSelection',
             newSelections: { workplanId: change }
           })
-        }
+        }}
       />
     </Grid>
   )

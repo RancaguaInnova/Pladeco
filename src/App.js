@@ -22,7 +22,7 @@ import Inicio from './pages/Inicio'
 
 // PROVIDERS
 import AuthProvider from './auth'
-import { initialContext, SelectionsContext, reducer } from './provider/context'
+import { initialContext, SelectionsProvider, reducer } from './provider/context'
 
 const firebase = require('firebase')
 require('firebase/firestore')
@@ -47,7 +47,7 @@ const authProvider = AuthProvider()
 
 const App = () => {
   return (
-    <SelectionsContext.Provider value={initialContext} reducer={reducer}>
+    <SelectionsProvider initialSelections={initialContext} reducer={reducer}>
       <Admin
         dataProvider={dataProvider}
         i18nProvider={i18nProvider}
@@ -71,7 +71,7 @@ const App = () => {
           ]
         }}
       </Admin>
-    </SelectionsContext.Provider>
+    </SelectionsProvider>
   )
 }
 export default App

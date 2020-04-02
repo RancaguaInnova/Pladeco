@@ -20,9 +20,10 @@ export const SelectionsProvider = ({ reducer, initialSelections, children }) => 
 export const useSelectedValues = () => useContext(SelectionsContext)
 
 export const reducer = (state, action) => {
+  console.log('STATE:', state)
+  console.log('ACTION:', action)
   switch (action.type) {
     case 'changeSelection':
-      console.log('ACTION:', action)
       return {
         ...state,
         ...action.newSelections

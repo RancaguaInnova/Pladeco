@@ -1,27 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import ReferenceField from '../ReferenceField'
+import { useSelectedValues } from '../../provider/context'
 
 export default props => {
-  let [area, setArea] = useState(null)
+  const [{ areaId, workplanId }, dispatch] = useSelectedValues()
 
   return (
     <Grid item xs={12} md={6} lg={2}>
       <ReferenceField
-        name='Área'
+        initialValue={areaId}
+        name='Areas'
         query={{
           type: 'getList',
           resource: 'areas',
           payload: {
             pagination: { page: 1, perPage: 3000 },
             sort: { field: 'name', order: 'desc' },
-            filter: {}
+            filter: { workplanId }
           }
         }}
         labelField='name'
         nullOptionLabel='Sin selección'
-        helperText='Las Lineas a mostrar se filtrarán en función a el Área seleccionada.'
-        onChange={setArea}
+        helperText='Las Líneas a mostrar se filtrarán en función de esta selección.'
+        onChange={change => {
+          dispatch({
+            type: 'changeSelection',
+            newSelections: { areaId: change }
+          })
+        }}
       />
     </Grid>
   )
