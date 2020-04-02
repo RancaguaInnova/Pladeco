@@ -12,7 +12,7 @@ const listStyles = {
 }
 
 export const ObjectiveList = withStyles(listStyles)(({ classes, ...props }) => (
-  <List {...props} title='Objetivos'>
+  <List {...props} title='Objetivos' filter={{ lineId: props.lineId }}>
     <Datagrid rowClick='edit' classes={classes}>
       <TextField source='name' label='Nombre' defaultValue='' />
       <ReferenceField label='Linea' source='lineId' reference='lines' link='show'>

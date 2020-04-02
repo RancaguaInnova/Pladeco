@@ -1,12 +1,20 @@
 import React from 'react'
 import FormControl from '@material-ui/core/FormControl'
-import Typography from '@material-ui/core/Typography'
+import InputLabel from '@material-ui/core/InputLabel'
 import NativeSelect from '@material-ui/core/NativeSelect'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import { useQuery, Loading, Error } from 'react-admin'
 import _reduce from 'lodash/reduce'
 
-const ReferenceField = ({ query, onChange, name, labelField, nullOptionLabel, helperText }) => {
+const ReferenceField = ({
+  initialValue,
+  query,
+  onChange,
+  name,
+  labelField,
+  nullOptionLabel,
+  helperText
+}) => {
   const { data, loading, error } = useQuery(query)
 
   if (loading) return <Loading />
@@ -27,15 +35,16 @@ const ReferenceField = ({ query, onChange, name, labelField, nullOptionLabel, he
 
   return (
     <FormControl fullWidth margin='normal' required variant='outlined'>
-      <Typography variant='h5'>{name}</Typography>
+      <InputLabel htmlFor={`selector-${name}`}>{name}</InputLabel>
       <NativeSelect
-        defaultValue={null}
+        defaultValue={initialValue || null}
         inputProps={{
           name: `${name}`,
           id: `${name}-selector`
         }}
         label={`Seleccione ${name}`}
         onChange={e => onChange(e.target.value === `${nullOptionLabel}` ? null : e.target.value)}
+        fullWidth
       >
         {[
           <option key='none' value={null}>
@@ -44,7 +53,7 @@ const ReferenceField = ({ query, onChange, name, labelField, nullOptionLabel, he
           ...choices
         ]}
       </NativeSelect>
-      <FormHelperText>{helperText}</FormHelperText>
+      {/* <FormHelperText>{helperText}</FormHelperText> */}
     </FormControl>
   )
 }
