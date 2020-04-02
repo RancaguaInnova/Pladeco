@@ -142,7 +142,7 @@ const ActionList = ({ ...props }) => (
     hasList={true}
     hasShow={true}
     match={true}
-    filterDefaultValues={{ status: 'not-started' }}
+    // filterDefaultValues={{ status: 'not-started' }}
     sort={{ field: 'date', order: 'DESC' }}
     perPage={25}
     filters={<ActionFilter />}
