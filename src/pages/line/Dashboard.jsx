@@ -6,7 +6,7 @@ import LinesList from './list'
 import { useSelectedValues } from '../../provider/context'
 
 const LinesView = props => {
-  let [{ areaId, lineId }, dispatch] = useSelectedValues()
+  let [{ areaId }, dispatch] = useSelectedValues()
 
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
