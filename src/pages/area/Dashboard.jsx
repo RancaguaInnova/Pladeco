@@ -7,7 +7,7 @@ import WorkplanSelector from '../../helpers/Selectors/workplan'
 import { useSelectedValues } from '../../provider/context'
 
 const AreaView = props => {
-  const [{ workplanId }, dispatch] = useSelectedValues()
+  const [{ workplanId }] = useSelectedValues()
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
       <WorkplanSelector />

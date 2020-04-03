@@ -135,12 +135,11 @@ class TabbedDatagrid extends React.Component {
 }
 
 const ActionList = ({ ...props }) => {
-  let [{ objectiveId }, dispatch] = useSelectedValues()
-  console.log('OBJECTIVE:', objectiveId)
+  let [{ objectiveId }] = useSelectedValues()
   return (
     <List
       {...props}
-      basePath='/AccionValidation'
+      // basePath='/AccionValidation'
       resource='actions'
       hasCreate={true}
       hasEdit={true}

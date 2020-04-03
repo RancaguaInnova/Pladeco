@@ -43,7 +43,7 @@ const ActivityFilter = props => (
 )
 
 export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
-  let [{ actionId }, dispatch] = useSelectedValues()
+  let [{ actionId }] = useSelectedValues()
   return (
     <List {...props} title='Actividades' filters={<ActivityFilter />} filter={{ actionId }}>
       <Datagrid rowClick='edit' classes={classes}>

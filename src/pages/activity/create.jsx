@@ -16,6 +16,7 @@ import {
   FileInput,
   FileField
 } from 'react-admin'
+import { useSelectedValues } from '../../provider/context'
 
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 
@@ -26,6 +27,7 @@ const validateActivityCreation = values => {
 }
 
 const ActivityCreate = props => {
+  let [{ workplanId, areaId, lineId, objectiveId, actionId }] = useSelectedValues()
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
@@ -37,8 +39,9 @@ const ActivityCreate = props => {
           label='Acción'
           className='TextInput'
           perPage={500}
+          filter={{ objectiveId }}
         >
-          <SelectInput optionText='name' />
+          <SelectInput optionText='name' value={actionId} />
         </ReferenceInput>
         <SelectInput
           source='status'
@@ -85,10 +88,22 @@ const ActivityCreate = props => {
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
         <ArrayInput source='transversality' label='Transversalidad'>
           <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area' perPage={500}>
+            <ReferenceInput
+              reference='areas'
+              source='areaId'
+              label='Area'
+              perPage={500}
+              filter={{ workplanId }}
+            >
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea' perPage={500}>
+            <ReferenceInput
+              reference='lines'
+              source='lineId'
+              label='Linea'
+              perPage={500}
+              filter={{ areaId }}
+            >
               <SelectInput optionText='name' />
             </ReferenceInput>
             <ReferenceInput
@@ -96,10 +111,17 @@ const ActivityCreate = props => {
               source='objectiveId'
               label='Objetivo'
               perPage={500}
+              filter={{ lineId }}
             >
               <SelectInput optionText='name' />
             </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción' perPage={500}>
+            <ReferenceInput
+              reference='actions'
+              source='actionId'
+              label='Acción'
+              perPage={500}
+              filter={{ objectiveId }}
+            >
               <SelectInput optionText='name' />
             </ReferenceInput>
           </SimpleFormIterator>
@@ -110,6 +132,14 @@ const ActivityCreate = props => {
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
+        <SelectInput
+          source='original'
+          label='Actividad existente en PLADECO (original)'
+          choices={[
+            { id: 'original', name: 'Original' },
+            { id: 'agregada', name: 'Nueva' }
+          ]}
+        />
       </SimpleForm>
     </Create>
   )

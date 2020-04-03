@@ -7,7 +7,7 @@ import ObjectivesList from './list'
 import { useSelectedValues } from '../../provider/context'
 
 const ObjectivesView = props => {
-  let [{ lineId }, dispatch] = useSelectedValues()
+  let [{ lineId }] = useSelectedValues()
 
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>

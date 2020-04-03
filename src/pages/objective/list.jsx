@@ -14,7 +14,7 @@ const listStyles = {
 }
 
 export const ObjectiveList = withStyles(listStyles)(({ classes, ...props }) => {
-  let [{ lineId }, dispatch] = useSelectedValues()
+  let [{ lineId }] = useSelectedValues()
   return (
     <List {...props} title='Objetivos' filter={{ lineId }}>
       <Datagrid rowClick='edit' classes={classes}>

@@ -19,7 +19,7 @@ const listStyles = {
 }
 
 export const LineList = withStyles(listStyles)(({ classes, ...props }) => {
-  let [{ areaId }, dispatch] = useSelectedValues()
+  let [{ areaId }] = useSelectedValues()
   return (
     <List {...props} title='Lineas' filter={{ areaId }}>
       <Datagrid rowClick='edit' classes={classes}>

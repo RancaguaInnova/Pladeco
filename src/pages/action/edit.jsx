@@ -119,7 +119,7 @@ const ActionEdit = ({ permissions, ...props }) => {
           />
           <DateInput source='initialDate' label='Fecha de inicio' locales='es-ES' />
           <DateInput source='endDate' label='Fecha de termino' locales='es-ES' />
-          <NumberInput source='weight' label='Peso' />
+          {/* <NumberInput source='weight' label='Peso' /> */}
           <ReferenceInput
             reference='objectives'
             source='objectiveId'
@@ -128,8 +128,16 @@ const ActionEdit = ({ permissions, ...props }) => {
           >
             <SelectInput optionText='name' />
           </ReferenceInput>
+          <SelectInput
+            source='original'
+            label='Actividad existente en PLADECO (original)'
+            choices={[
+              { id: 'original', name: 'Original' },
+              { id: 'agregada', name: 'Nueva' }
+            ]}
+          />
 
-          <BooleanInput source='approved' />
+          <BooleanInput source='approved' label='Aprobado' />
         </SimpleForm>
       )}
     </Edit>

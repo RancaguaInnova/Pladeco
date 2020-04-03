@@ -6,9 +6,9 @@ import Dashboard from './Dashboard'
 
 export default {
   list: Dashboard,
-  create: create,
-  edit: edit,
-  icon: icon,
-  show: show,
+  create,
+  edit,
+  icon,
+  show,
   options: { label: 'Acciones' }
 }

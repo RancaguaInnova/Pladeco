@@ -2,8 +2,7 @@ import React from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import NativeSelect from '@material-ui/core/NativeSelect'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import { useQuery, Loading, Error } from 'react-admin'
+import { useQuery, Error } from 'react-admin'
 import _reduce from 'lodash/reduce'
 import { Typography } from '@material-ui/core'
 
@@ -59,7 +58,6 @@ const ReferenceField = ({
           ...choices
         ]}
       </NativeSelect>
-      {/* <FormHelperText>{helperText}</FormHelperText> */}
     </FormControl>
   )
 }

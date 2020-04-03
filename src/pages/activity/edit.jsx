@@ -98,6 +98,14 @@ const ActivityEdit = props => {
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
+        <SelectInput
+          source='original'
+          label='Actividad existente en PLADECO (original)'
+          choices={[
+            { id: 'original', name: 'Original' },
+            { id: 'agregada', name: 'Nueva' }
+          ]}
+        />
       </SimpleForm>
     </Edit>
   )
