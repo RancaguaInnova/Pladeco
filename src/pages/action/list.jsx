@@ -141,15 +141,15 @@ const ActionList = ({ ...props }) => {
     <List
       {...props}
       basePath='/AccionValidation'
-      // resource='actions'
-      // hasCreate={true}
-      // hasEdit={true}
-      // hasList={true}
-      // hasShow={true}
-      // match={true}
+      resource='actions'
+      hasCreate={true}
+      hasEdit={true}
+      hasList={true}
+      hasShow={true}
+      match={true}
       // filterDefaultValues={{ status: 'not-started' }}
-      // sort={{ field: 'date', order: 'DESC' }}
-      // perPage={25}
+      sort={{ field: 'date', order: 'DESC' }}
+      perPage={50}
       // filters={<ActionFilter />}
       filter={{ objectiveId }}
       title='Acciones'
