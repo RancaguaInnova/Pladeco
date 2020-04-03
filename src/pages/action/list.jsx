@@ -15,6 +15,7 @@ import Divider from '@material-ui/core/Divider'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import DateField from '../../helpers/fields/DateField'
+import { useSelectedValues } from '../../provider/context'
 
 const ActionFilter = props => (
   <Filter {...props}>
@@ -133,24 +134,46 @@ class TabbedDatagrid extends React.Component {
   }
 }
 
-const ActionList = ({ ...props }) => (
-  <List
-    basePath='/AccionValidation'
-    resource='actions'
-    hasCreate={true}
-    hasEdit={true}
-    hasList={true}
-    hasShow={true}
-    match={true}
-    // filterDefaultValues={{ status: 'not-started' }}
-    sort={{ field: 'date', order: 'DESC' }}
-    perPage={25}
-    filters={<ActionFilter />}
-    filter={{ objectiveId: props.objectiveId }}
-    {...props}
-  >
-    <TabbedDatagrid />
-  </List>
-)
+const ActionList = ({ ...props }) => {
+  let [{ objectiveId }, dispatch] = useSelectedValues()
+  console.log('OBJECTIVE:', objectiveId)
+  return (
+    <List
+      {...props}
+      basePath='/AccionValidation'
+      // resource='actions'
+      // hasCreate={true}
+      // hasEdit={true}
+      // hasList={true}
+      // hasShow={true}
+      // match={true}
+      // filterDefaultValues={{ status: 'not-started' }}
+      // sort={{ field: 'date', order: 'DESC' }}
+      // perPage={25}
+      // filters={<ActionFilter />}
+      filter={{ objectiveId }}
+      title='Acciones'
+    >
+      {/*    <TabbedDatagrid /> */}
+
+      <Datagrid rowClick={'edit'}>
+        <TextField source='name' label='Nombre' />
+        <SelectField
+          source='status'
+          label='Estado'
+          choices={[
+            { id: 'not-started', name: 'No iniciado' },
+            { id: 'in-progress', name: 'En progreso' },
+            { id: 'finished', name: 'Finalizado' }
+          ]}
+        />
+        <DateField source='initialDate' label='Fecha de inicio' />
+        <DateField source='endDate' label='Fecha de termino' />
+        <EditButton label='Editar' />
+        <DeleteButton label='Eliminar' />
+      </Datagrid>
+    </List>
+  )
+}
 
 export default ActionList
