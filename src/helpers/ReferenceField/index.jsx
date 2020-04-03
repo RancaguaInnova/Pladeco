@@ -5,6 +5,7 @@ import NativeSelect from '@material-ui/core/NativeSelect'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import { useQuery, Loading, Error } from 'react-admin'
 import _reduce from 'lodash/reduce'
+import { Typography } from '@material-ui/core'
 
 const ReferenceField = ({
   initialValue,
@@ -17,7 +18,12 @@ const ReferenceField = ({
 }) => {
   const { data, loading, error } = useQuery(query)
 
-  if (loading) return <Loading />
+  if (loading)
+    return (
+      <Typography variant='body2' style={{ marginTop: 35 }}>
+        Cargando...
+      </Typography>
+    )
   if (error) return <Error />
   if (!data) return null
   const choices = _reduce(
