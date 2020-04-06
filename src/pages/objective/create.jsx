@@ -10,6 +10,9 @@ const ObjectiveCreate = props => {
         <ReferenceInput reference='lines' source='lineId' label='Linea' perPage={500}>
           <SelectInput optionText='name' />
         </ReferenceInput>
+        <ReferenceInput reference='users' source='responsibleId' label='Responsable' perPage={500}>
+          <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   )

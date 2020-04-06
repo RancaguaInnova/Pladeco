@@ -11,7 +11,6 @@ import {
   Toolbar,
   DateInput,
   ReferenceInput,
-  NumberInput,
   ReferenceArrayInput,
   SelectArrayInput,
   ImageInput,
@@ -79,7 +78,6 @@ const ActionCreate = ({ classes, ...props }) => {
         />
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
-        {/* <NumberInput source='weight' label='Peso' /> */}
         <ReferenceInput
           reference='objectives'
           source='objectiveId'

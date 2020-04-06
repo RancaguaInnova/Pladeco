@@ -8,7 +8,6 @@ import {
   maxLength,
   DateInput,
   ReferenceInput,
-  NumberInput,
   BooleanInput,
   Edit,
   ReferenceArrayInput,
@@ -119,7 +118,6 @@ const ActionEdit = ({ permissions, ...props }) => {
           />
           <DateInput source='initialDate' label='Fecha de inicio' locales='es-ES' />
           <DateInput source='endDate' label='Fecha de termino' locales='es-ES' />
-          {/* <NumberInput source='weight' label='Peso' /> */}
           <ReferenceInput
             reference='objectives'
             source='objectiveId'
