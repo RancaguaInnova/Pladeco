@@ -17,6 +17,7 @@ import {
   FileField
 } from 'react-admin'
 import { useSelectedValues } from '../../provider/context'
+import Transversality from './Transversality'
 
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 
@@ -27,7 +28,8 @@ const validateActivityCreation = values => {
 }
 
 const ActivityCreate = props => {
-  let [{ workplanId, areaId, lineId, objectiveId, actionId }] = useSelectedValues()
+  let [{ objectiveId, actionId }] = useSelectedValues()
+
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
@@ -86,46 +88,7 @@ const ActivityCreate = props => {
         </ArrayInput>
         <SearchGoogle />
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
-        <ArrayInput source='transversality' label='Transversalidad'>
-          <SimpleFormIterator>
-            <ReferenceInput
-              reference='areas'
-              source='areaId'
-              label='Area'
-              perPage={500}
-              filter={{ workplanId }}
-            >
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput
-              reference='lines'
-              source='lineId'
-              label='Linea'
-              perPage={500}
-              filter={{ areaId }}
-            >
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput
-              reference='objectives'
-              source='objectiveId'
-              label='Objetivo'
-              perPage={500}
-              filter={{ lineId }}
-            >
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput
-              reference='actions'
-              source='actionId'
-              label='Acción'
-              perPage={500}
-              filter={{ objectiveId }}
-            >
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-          </SimpleFormIterator>
-        </ArrayInput>
+        <Transversality />
         <ImageInput source='images' label='Imagenes' accept='image/*'>
           <ImageField source='src' title='title' />
         </ImageInput>

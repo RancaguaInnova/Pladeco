@@ -6,15 +6,7 @@ import { useQuery, Error } from 'react-admin'
 import _reduce from 'lodash/reduce'
 import { Typography } from '@material-ui/core'
 
-const ReferenceField = ({
-  initialValue,
-  query,
-  onChange,
-  name,
-  labelField,
-  nullOptionLabel,
-  helperText
-}) => {
+const ReferenceField = ({ initialValue, query, onChange, name, labelField, nullOptionLabel }) => {
   const { data, loading, error } = useQuery(query)
 
   if (loading)
