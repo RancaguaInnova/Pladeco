@@ -11,7 +11,6 @@ import {
   Toolbar,
   DateInput,
   ReferenceInput,
-  NumberInput,
   ReferenceArrayInput,
   SelectArrayInput,
   ImageInput,
@@ -20,6 +19,7 @@ import {
   FileInput,
   BooleanInput
 } from 'react-admin'
+import { useSelectedValues } from '../../provider/context'
 
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -55,6 +55,7 @@ const ActionCreateToolbar = props => {
 }
 
 const ActionCreate = ({ classes, ...props }) => {
+  let [{ lineId, objectiveId }] = useSelectedValues()
   return (
     <Create label='Crear' title='Crear Acción' {...props}>
       <SimpleForm toolbar={<ActionCreateToolbar />}>
@@ -77,9 +78,14 @@ const ActionCreate = ({ classes, ...props }) => {
         />
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
-        <NumberInput source='weight' label='Peso' />
-        <ReferenceInput reference='objectives' source='objectiveId' label='Objetivos' perPage={500}>
-          <SelectInput optionText='name' />
+        <ReferenceInput
+          reference='objectives'
+          source='objectiveId'
+          label='Objetivos'
+          perPage={500}
+          filter={{ lineId }}
+        >
+          <SelectInput optionText='name' value={objectiveId} />
         </ReferenceInput>
         <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
           <ImageField source='src' title='title' />
@@ -88,9 +94,18 @@ const ActionCreate = ({ classes, ...props }) => {
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
-        <BooleanInput source='approved' />
+        <SelectInput
+          source='original'
+          label='Actividad existente en PLADECO (original)'
+          choices={[
+            { id: 'original', name: 'Original' },
+            { id: 'agregada', name: 'Nueva' }
+          ]}
+        />
       </SimpleForm>
+      <BooleanInput source='approved' />
     </Create>
   )
 }
+
 export default ActionCreate

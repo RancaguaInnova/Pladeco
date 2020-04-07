@@ -17,6 +17,7 @@ import {
   FileInput
 } from 'react-admin'
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
+import Transversality from './Transversality'
 
 const ActivityEdit = props => {
   return (
@@ -71,33 +72,21 @@ const ActivityEdit = props => {
         </ArrayInput>
         <SearchGoogle />
         <TextInput source='comments' label='Comentarios' defaultValue='' className='TextInput' />
-        <ArrayInput source='transversality' label='Transversalidad'>
-          <SimpleFormIterator>
-            <ReferenceInput reference='areas' source='areaId' label='Area' perPage={500}>
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput reference='lines' source='lineId' label='Linea' perPage={500}>
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput
-              reference='objectives'
-              source='objectiveId'
-              label='Objetivo'
-              perPage={500}
-            >
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-            <ReferenceInput reference='actions' source='actionId' label='Acción' perPage={500}>
-              <SelectInput optionText='name' />
-            </ReferenceInput>
-          </SimpleFormIterator>
-        </ArrayInput>
+        <Transversality />
         <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
           <ImageField source='src' title='title' />
         </ImageInput>
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
+        <SelectInput
+          source='original'
+          label='Actividad existente en PLADECO (original)'
+          choices={[
+            { id: 'original', name: 'Original' },
+            { id: 'agregada', name: 'Nueva' }
+          ]}
+        />
       </SimpleForm>
     </Edit>
   )

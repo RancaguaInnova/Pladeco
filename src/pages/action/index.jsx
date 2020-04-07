@@ -1,14 +1,14 @@
 import create from './create'
 import edit from './edit'
-import list from './list'
 import show from './show'
 import icon from './icon'
+import Dashboard from './Dashboard'
 
 export default {
-  list: list,
-  create: create,
-  edit: edit,
-  icon: icon,
-  show: show,
+  list: Dashboard,
+  create,
+  edit,
+  icon,
+  show,
   options: { label: 'Acciones' }
 }
