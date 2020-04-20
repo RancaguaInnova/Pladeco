@@ -54,7 +54,7 @@ const ActivityCreate = props => {
             { id: 'finished', name: 'Finalizado' }
           ]}
         />
-        <DateInput source='createAt' label='Fecha de creación' defaultValue='' />
+        <DateInput source='createAt' label='Fecha de realización' defaultValue='' />
         <ReferenceInput
           reference='users'
           source='responsibleId'
@@ -66,19 +66,19 @@ const ActivityCreate = props => {
         </ReferenceInput>
         <ArrayInput source='executedFunds' label='Fondos ejecutados' className='TextInput'>
           <SimpleFormIterator>
-            <TextInput source='source' label='source' />
+            <TextInput source='source' label='Origen' />
             <NumberInput source='amount' label='Monto' />
           </SimpleFormIterator>
         </ArrayInput>
         <ReferenceArrayInput
-          reference='users'
+          reference='departments'
           source='coordinatedWith'
           label='Coordinado con'
           className='TextInput'
           allowEmpty
           perPage={500}
         >
-          <SelectArrayInput optionText={record => `${record.firstName} ${record.lastName}`} />
+          <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>

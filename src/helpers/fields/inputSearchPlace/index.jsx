@@ -1,17 +1,17 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import parse from "autosuggest-highlight/parse";
-import throttle from "lodash/throttle";
-import { useForm } from "react-final-form";
-import { Field } from "react-final-form";
+import React, { useEffect, useMemo, useState, useRef } from 'react'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import LocationOnIcon from '@material-ui/icons/LocationOn'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import parse from 'autosuggest-highlight/parse'
+import throttle from 'lodash/throttle'
+import { useForm } from 'react-final-form'
+import { Field } from 'react-final-form'
 
-const autocompleteService = { current: null };
+const autocompleteService = { current: null }
 const useStyles = makeStyles(theme => ({
   icon: {
     color: theme.palette.text.secondary,
@@ -22,159 +22,160 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 10,
     marginTop: 10
   }
-}));
+}))
+
 function loadScript(src, position, id) {
   if (!position) {
-    return;
+    return
   }
 
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  position.appendChild(script);
+  const script = document.createElement('script')
+  script.setAttribute('async', '')
+  script.setAttribute('id', id)
+  script.src = src
+  position.appendChild(script)
 }
 
 const GoogleMaps = () => {
-  const form = useForm();
-  const classes = useStyles();
-  const [inputValue, setInputValue] = React.useState("");
-  const [options, setOptions] = React.useState([]);
-  const loaded = React.useRef(false);
+  const form = useForm()
+  const classes = useStyles()
+  const [inputValue, setInputValue] = useState('')
+  const [options, setOptions] = useState([])
+  const loaded = useRef(false)
 
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
+  if (typeof window !== 'undefined' && !loaded.current) {
+    if (!document.querySelector('#google-maps')) {
       loadScript(
-        "https://maps.googleapis.com/maps/api/js?key=" +
+        'https://maps.googleapis.com/maps/api/js?key=' +
           process.env.REACT_APP_MAP_KEY +
-          "&libraries=places",
-        document.querySelector("head"),
-        "google-maps"
-      );
+          '&libraries=places',
+        document.querySelector('head'),
+        'google-maps'
+      )
     }
 
-    loaded.current = true;
+    loaded.current = true
   }
 
   const handleChange = event => {
-    setInputValue(event.target.value);
-  };
+    setInputValue(event.target.value)
+  }
 
-  const fetch = React.useMemo(
+  const fetch = useMemo(
     () =>
       throttle((input, callback) => {
-        autocompleteService.current.getPlacePredictions(input, callback);
+        autocompleteService.current.getPlacePredictions(input, callback)
       }, 200),
     []
-  );
+  )
 
-  React.useEffect(() => {
-    let active = true;
+  useEffect(() => {
+    let active = true
 
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+    if (window.google) {
+      if (!autocompleteService.current) {
+        autocompleteService.current = new window.google.maps.places.AutocompleteService()
+      }
+      if (!autocompleteService.current) {
+        return undefined
+      }
     }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
 
-    if (inputValue === "") {
-      setOptions([]);
-      return undefined;
+    if (inputValue === '') {
+      setOptions([])
+      return undefined
     }
 
     fetch({ input: inputValue }, results => {
       if (active) {
-        setOptions(results || []);
+        setOptions(results || [])
       }
-    });
+    })
 
     return () => {
-      active = false;
-    };
-  }, [inputValue, fetch]);
+      active = false
+    }
+  }, [inputValue, fetch])
 
   const selectItem = async item => {
-    let locationResponse = await geocodeByPlaceId(item.place_id);
+    let locationResponse = await geocodeByPlaceId(item.place_id)
     let location = {
       name: item.description,
       lat: locationResponse[0].geometry.location.lat(),
       lng: locationResponse[0].geometry.location.lng()
-    };
-    form.change("location", location);
-  };
+    }
+    form.change('location', location)
+  }
 
   const geocodeByPlaceLocation = LatLng => {
-    const geocoder = new window.google.maps.Geocoder();
-    const OK = window.google.maps.GeocoderStatus.OK;
+    const geocoder = new window.google.maps.Geocoder()
+    const OK = window.google.maps.GeocoderStatus.OK
 
     return new Promise((resolve, reject) => {
       geocoder.geocode({ location: LatLng }, (results, status) => {
         if (status !== OK) {
-          reject(status);
+          reject(status)
         }
-        resolve(results);
-      });
-    });
-  };
+        resolve(results)
+      })
+    })
+  }
 
   const geocodeByPlaceId = placeId => {
-    const geocoder = new window.google.maps.Geocoder();
-    const OK = window.google.maps.GeocoderStatus.OK;
+    const geocoder = new window.google.maps.Geocoder()
+    const OK = window.google.maps.GeocoderStatus.OK
     return new Promise((resolve, reject) => {
       geocoder.geocode({ placeId }, (results, status) => {
         if (status !== OK) {
-          reject(status);
+          reject(status)
         }
-        resolve(results);
-      });
-    });
-  };
+        resolve(results)
+      })
+    })
+  }
 
   const clear = () => {
-    form.change("location", { name: "", lat: "", lng: "" });
-    setInputValue("");
-  };
+    form.change('location', { name: '', lat: '', lng: '' })
+    setInputValue('')
+  }
 
   const myLocation = () => {
-    var startPos;
+    var startPos
     var geoOptions = {
       enableHighAccuracy: true
-    };
+    }
 
     var geoSuccess = async function(position) {
-      startPos = position;
+      startPos = position
       var latlng = new window.google.maps.LatLng(
         startPos.coords.latitude,
         startPos.coords.longitude
-      );
+      )
       try {
-        let locationResponse = await geocodeByPlaceLocation(latlng);
+        let locationResponse = await geocodeByPlaceLocation(latlng)
 
         let location = {
           name: locationResponse[0].formatted_address,
           lat: locationResponse[0].geometry.location.lat(),
           lng: locationResponse[0].geometry.location.lng()
-        };
-        form.change("location", location);
+        }
+        form.change('location', location)
       } catch (e) {
-        console.log("Error occurred. Error : " + e);
+        console.log('Error occurred. Error : ' + e)
       }
-    };
+    }
     var geoError = function(error) {
-      console.log("Error occurred. Error code: " + error.code);
-    };
-    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
-  };
+      console.log('Error occurred. Error code: ' + error.code)
+    }
+    navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)
+  }
 
   return (
-    <div className="inputsLocationMap">
-      <div className="AutocompleteDiv">
+    <div className='inputsLocationMap'>
+      <div className='AutocompleteDiv'>
         <Autocomplete
-          id="google-map-demo"
-          getOptionLabel={option =>
-            typeof option === "string" ? option : option.description
-          }
+          id='google-map-demo'
+          getOptionLabel={option => (typeof option === 'string' ? option : option.description)}
           filterOptions={x => x}
           options={options}
           autoComplete
@@ -185,96 +186,83 @@ const GoogleMaps = () => {
             return (
               <TextField
                 {...params}
-                label="Buscar ubicación"
+                label='Buscar ubicación'
                 fullWidth
                 onChange={handleChange}
-                className="TextInput inputLocation"
+                className='TextInput inputLocation'
               />
-            );
+            )
           }}
           renderOption={option => {
-            const matches =
-              option.structured_formatting.main_text_matched_substrings;
+            const matches = option.structured_formatting.main_text_matched_substrings
             const parts = parse(
               option.structured_formatting.main_text,
               matches.map(match => [match.offset, match.offset + match.length])
-            );
+            )
 
             return (
-              <Grid
-                container
-                alignItems="center"
-                onClick={() => selectItem(option)}
-              >
+              <Grid container alignItems='center' onClick={() => selectItem(option)}>
                 <Grid item>
                   <LocationOnIcon className={classes.icon} />
                 </Grid>
                 <Grid item xs>
                   {parts.map((part, index) => (
-                    <span
-                      key={index}
-                      style={{ fontWeight: part.highlight ? 700 : 400 }}
-                    >
+                    <span key={index} style={{ fontWeight: part.highlight ? 700 : 400 }}>
                       {part.text}
                     </span>
                   ))}
 
-                  <Typography variant="body2" color="textSecondary">
+                  <Typography variant='body2' color='textSecondary'>
                     {option.structured_formatting.secondary_text}
                   </Typography>
                 </Grid>
               </Grid>
-            );
+            )
           }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={clear}
-          className={classes.button}
-        >
+        <Button variant='contained' color='primary' onClick={clear} className={classes.button}>
           Limpiar
         </Button>
         <Button
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           className={classes.button}
           onClick={myLocation}
         >
           Usar mi ubicación actual
         </Button>
       </div>
-      <span className="locationData">
-        <div className="locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense">
+      <span className='locationData'>
+        <div className='locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
           <Field
-            name="location.name"
-            component="input"
-            type="text"
-            placeholder="Dirección"
-            className=" TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+            name='location.name'
+            component='input'
+            type='text'
+            placeholder='Dirección'
+            className=' TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
           />
         </div>
-        <div className=" locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense">
+        <div className=' locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
           <Field
-            name="location.lat"
-            component="input"
-            type="text"
-            placeholder="latitude"
-            className="TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+            name='location.lat'
+            component='input'
+            type='text'
+            placeholder='latitude'
+            className='TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
           />
         </div>
-        <div className=" locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense">
+        <div className=' locationPadding MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense'>
           <Field
-            name="location.lng"
-            component="input"
-            type="text"
-            placeholder="longitude"
-            className="TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+            name='location.lng'
+            component='input'
+            type='text'
+            placeholder='longitude'
+            className='TextInput MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense'
           />
         </div>
       </span>
     </div>
-  );
-};
+  )
+}
 
-export default GoogleMaps;
+export default GoogleMaps
