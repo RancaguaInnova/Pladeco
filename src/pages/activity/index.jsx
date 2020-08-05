@@ -2,10 +2,10 @@ import create from './create'
 import edit from './edit'
 import show from './show'
 import icon from './icon'
-import Dashboard from './Dashboard'
+import list from './Dashboard'
 
 export default {
-  list: Dashboard,
+  list: list,
   create: create,
   edit: edit,
   icon: icon,

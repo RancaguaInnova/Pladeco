@@ -18,7 +18,7 @@ const ActivitiesView = props => {
       <ObjectivesSelector />
       <ActionsSelector />
       <Grid item xs={12}>
-        {actionId ? <ActivitiesList {...props} actionId={actionId} /> : null}
+        {actionId ? <ActivitiesList {...props} /> : null}
       </Grid>
     </Grid>
   )

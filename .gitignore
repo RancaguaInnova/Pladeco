@@ -22,3 +22,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.idea/misc.xml
+.idea/modules.xml
+.idea/Pladeco.iml
+package.json
+.idea/vcs.xml
