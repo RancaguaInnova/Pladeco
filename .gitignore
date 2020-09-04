@@ -27,3 +27,5 @@ yarn-error.log*
 .idea/Pladeco.iml
 package.json
 .idea/vcs.xml
+.idea/codeStyles/codeStyleConfig.xml
+.firebase/hosting.YnVpbGQ.cache

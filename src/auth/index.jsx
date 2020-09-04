@@ -71,7 +71,7 @@ export default () => {
     if (type === AUTH_CHECK) {
       await firebaseLoaded()
 
-      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject()
+      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject({redirectTo: '/login'})
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
