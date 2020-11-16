@@ -35,5 +35,22 @@
     "**/dist/**": true,
     "**/log/**": true,
     "**/tmp/**": true
-  }
+  },
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#3c291b",
+    "titleBar.activeBackground": "#19110b",
+    "titleBar.activeForeground": "#e7e7e7",
+    "activityBar.activeBackground": "#3c291b",
+    "activityBar.activeBorder": "#316e4b",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#316e4b",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "statusBar.background": "#19110b",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#3c291b",
+    "titleBar.inactiveBackground": "#19110b99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "peacock.color": "#19110b"
 }
