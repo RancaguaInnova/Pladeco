@@ -1,15 +1,16 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS } from "react-admin"
-import firebase from "firebase/app"
-import "firebase/firestore"
-import "firebase/auth"
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_CHECK, AUTH_ERROR, AUTH_GET_PERMISSIONS } from 'react-admin'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
 
 const baseConfig = {
-  userProfilePath: "users",
-  userAdminProp: "isAdmin",
-  localStorageTokenName: "token",
-  localStorageRoleId: "roleId",
-  permissionsCollection: "roles",
-  permissions: "permissions",
+  userProfilePath: 'users',
+  userAdminProp: 'isAdmin',
+  localStorageTokenName: 'token',
+  localStorageRoleId: 'roleId',
+  permissionsCollection: 'roles',
+  permissions: 'permissions',
+  localStorageUserEmail:'',
   handleAuthStateChange: async (auth, config) => {
     if (auth) {
       const snapshot = await firebase
@@ -20,8 +21,13 @@ const baseConfig = {
 
       let profile = snapshot.data()
       if (profile) {
+        console.log(profile)
         const firebaseToken = await auth.user.getIdToken()
         let user = { auth, profile, firebaseToken }
+        try {
+          localStorage.setItem(config.localStorageUserEmail, profile.email.address)
+        } catch (e) {}
+
         localStorage.setItem(config.localStorageTokenName, firebaseToken)
         localStorage.setItem(config.localStorageRoleId, profile.role)
 
@@ -30,11 +36,11 @@ const baseConfig = {
         firebase.auth().signOut()
         localStorage.removeItem(config.localStorageTokenName)
         localStorage.removeItem(config.localStorageRoleId)
-        throw new Error("sign_in_error")
+        throw new Error('sign_in_error')
       }
     } else {
       localStorage.removeItem(config.localStorageTokenName)
-      throw new Error("sign_in_error")
+      throw new Error('sign_in_error')
     }
   }
 }
@@ -42,7 +48,7 @@ const baseConfig = {
 const permissions = async roleId => {
   const snapshot = await firebase
     .firestore()
-    .collection("roles")
+    .collection('roles')
     .doc(roleId)
     .get()
   return snapshot.data()
@@ -71,7 +77,9 @@ export default () => {
     if (type === AUTH_CHECK) {
       await firebaseLoaded()
 
-      return localStorage.getItem("token") ? Promise.resolve() : Promise.reject({redirectTo: '/login'})
+      return localStorage.getItem('token')
+        ? Promise.resolve()
+        : Promise.reject({ redirectTo: '/login' })
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
@@ -86,7 +94,7 @@ export default () => {
         delete per.id
         delete per.name
       } catch (error) {}
-      localStorage.setItem("permissions", JSON.stringify(per))
+      localStorage.setItem('permissions', JSON.stringify(per))
       return Promise.resolve(per)
     }
 

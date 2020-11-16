@@ -92,7 +92,7 @@ function Inicio(props) {
 
           {page && page === 'Login' ? (
             <Grid container>
-              <Grid xs={6} direction='row' justify='flex-end' alignItems='center'>
+              <Grid xs={6}  justify='flex-end'>
                 <Button
                   type='button'
                   variant='contained'
@@ -103,7 +103,7 @@ function Inicio(props) {
                   No tienes cuenta? Registrate
                 </Button>
               </Grid>
-              <Grid container xs={6} direction='row' justify='flex-end' alignItems='center'>
+              <Grid container xs={6}  justify='flex-end'>
                 <ForgotPasswordButton {...props} />
               </Grid>
             </Grid>

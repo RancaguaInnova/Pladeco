@@ -4,6 +4,7 @@ import spanishMessages from '@blackbox-vision/ra-language-spanish'
 import polyglotI18nProvider from 'ra-i18n-polyglot'
 import { ResourceWithPermissions } from 'ra-auth-acl'
 import { FirebaseDataProvider } from 'react-admin-firebase'
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 // PAGES
 import Users from './pages/users'
@@ -23,6 +24,7 @@ import Inicio from './pages/Inicio'
 // PROVIDERS
 import AuthProvider from './auth'
 import { initialContext, SelectionsProvider, reducer } from './provider/context'
+import Analytics from "./core/Analytics/";
 
 const firebase = require('firebase')
 require('firebase/firestore')
@@ -46,6 +48,8 @@ const dataProvider = FirebaseDataProvider(firebaseConfig, options)
 const authProvider = AuthProvider()
 
 const App = () => {
+  Analytics();
+
   return (
     <SelectionsProvider initialSelections={initialContext} reducer={reducer}>
       <Admin
