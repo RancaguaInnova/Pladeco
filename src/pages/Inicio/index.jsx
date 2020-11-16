@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Login from '../login'
 import Register from '../Register'
+import ForgotPasswordButton from './CustomForgotPassword'
 
 function Copyright() {
   return (
@@ -63,7 +64,7 @@ const PageCharge = props => {
   }
 }
 
-function Inicio() {
+function Inicio(props) {
   const [page, setPage] = React.useState('Login')
   const classes = useStyles()
 
@@ -91,10 +92,9 @@ function Inicio() {
 
           {page && page === 'Login' ? (
             <Grid container>
-              <Grid item>
+              <Grid xs={6} direction='row' justify='flex-end' alignItems='center'>
                 <Button
                   type='button'
-                  fullWidth
                   variant='contained'
                   color='primary'
                   className={classes.submit}
@@ -102,6 +102,9 @@ function Inicio() {
                 >
                   No tienes cuenta? Registrate
                 </Button>
+              </Grid>
+              <Grid container xs={6} direction='row' justify='flex-end' alignItems='center'>
+                <ForgotPasswordButton {...props} />
               </Grid>
             </Grid>
           ) : (
