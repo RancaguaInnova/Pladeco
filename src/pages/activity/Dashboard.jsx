@@ -13,11 +13,11 @@ const ActivitiesView = props => {
   console.log(actionId)
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
-      <WorkplanSelector />
-      <AreaSelector />
-      <LinesSelector />
-      <ObjectivesSelector />
-      <ActionsSelector />
+      <WorkplanSelector {...props} />
+      <AreaSelector {...props} />
+      <LinesSelector {...props} />
+      <ObjectivesSelector {...props} />
+      <ActionsSelector {...props} />
       <Grid item xs={12}>
         {actionId ? <ActivitiesList {...props} /> : null}
       </Grid>

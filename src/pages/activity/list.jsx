@@ -70,7 +70,6 @@ export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
 
         <BooleanField source='approved' label='Aprobado' defaultValue='' />
         <EditButton label='Editar' />
-        <DeleteButton label='Eliminar' />
       </Datagrid>
     </List>
   )

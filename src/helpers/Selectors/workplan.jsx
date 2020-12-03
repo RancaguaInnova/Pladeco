@@ -5,7 +5,7 @@ import { useSelectedValues } from '../../provider/context'
 
 export default props => {
   const [{ workplanId }, dispatch] = useSelectedValues()
-
+  console.log('workplanId', workplanId)
   return (
     <Grid item xs={12} md={6} lg={2}>
       <ReferenceField

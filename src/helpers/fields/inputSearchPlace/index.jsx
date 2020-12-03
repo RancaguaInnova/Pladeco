@@ -24,26 +24,13 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-function loadScript(src, position, id) {
-  if (!position) {
-    return
-  }
-
-  const script = document.createElement('script')
-  script.setAttribute('async', '')
-  script.setAttribute('id', id)
-  script.src = src
-  position.appendChild(script)
-}
-
 const GoogleMaps = () => {
   const form = useForm()
   const classes = useStyles()
   const [inputValue, setInputValue] = useState('')
   const [options, setOptions] = useState([])
-  const loaded = useRef(false)
 
-  if (typeof window !== 'undefined' && !loaded.current) {
+  /*   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
       loadScript(
         'https://maps.googleapis.com/maps/api/js?key=' +
@@ -55,7 +42,7 @@ const GoogleMaps = () => {
     }
 
     loaded.current = true
-  }
+  } */
 
   const handleChange = event => {
     setInputValue(event.target.value)
