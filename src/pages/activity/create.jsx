@@ -23,18 +23,22 @@ import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 
 const validateActivityCreation = values => {
   const errors = {}
-
+  if (!values.actionId) {
+    errors.actionId = ['La Acción es requerida']
+  }
   return errors
 }
 
 const ActivityCreate = props => {
   let [{ objectiveId, actionId }] = useSelectedValues()
+  console.log(actionId)
 
   return (
     <Create title='Crear Actividad' {...props}>
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
+
         <ReferenceInput
           reference='actions'
           source='actionId'
@@ -43,8 +47,9 @@ const ActivityCreate = props => {
           perPage={500}
           filter={{ objectiveId }}
         >
-          <SelectInput optionText='name' value={actionId} />
+          <SelectInput optionText='name' />
         </ReferenceInput>
+
         <SelectInput
           source='status'
           label='Estado'

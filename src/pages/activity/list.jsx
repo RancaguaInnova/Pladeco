@@ -44,8 +44,13 @@ const ActivityFilter = props => (
 
 export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
   let [{ actionId }] = useSelectedValues()
-    return (
-    <List {...props} title='Actividades' filters={<ActivityFilter />} filter={{ actionId: actionId }}>
+  return (
+    <List
+      {...props}
+      title='Actividades'
+      filters={<ActivityFilter />}
+      filter={{ actionId: actionId }}
+    >
       <Datagrid rowClick='edit' classes={classes}>
         <TextField source='name' label='Nombre' defaultValue='' />
         <TextField source='description' label='Descripción' defaultValue='' />

@@ -10,6 +10,7 @@ import { useSelectedValues } from '../../provider/context'
 
 const ActivitiesView = props => {
   let [{ actionId }] = useSelectedValues()
+  console.log(actionId)
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
       <WorkplanSelector />

@@ -17,8 +17,8 @@ import {
   FileInput
 } from 'react-admin'
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
+import _get from 'lodash/get'
 import Transversality from './Transversality'
-
 const ActivityEdit = props => {
   return (
     <Edit title='Editar Actividad' {...props}>
@@ -62,7 +62,13 @@ const ActivityEdit = props => {
           </SimpleFormIterator>
         </ArrayInput>
         <ReferenceArrayInput reference='users' source='coordinatedWith' label='Coordinado con'>
-          <SelectArrayInput optionText={record => `${record.firstName} ${record.lastName}`} />
+          <SelectArrayInput
+            optionText={record => {
+              let firstName = _get(record, 'firstName', 'Sin Nombre')
+              let lastName = _get(record, 'lastName', 'Sin Apellido')
+              return `${firstName} ${lastName}`
+            }}
+          />
         </ReferenceArrayInput>
         <ArrayInput source='beneficiaries' label='Beneficiarios'>
           <SimpleFormIterator>
