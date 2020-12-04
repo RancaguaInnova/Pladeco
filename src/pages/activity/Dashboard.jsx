@@ -9,8 +9,12 @@ import ActivitiesList from './list'
 import { useSelectedValues } from '../../provider/context'
 
 const ActivitiesView = props => {
-  let [{ actionId }] = useSelectedValues()
+  let [{ actionId, workplanId, lineId, objectiveId }] = useSelectedValues()
   console.log(actionId)
+  console.log(workplanId)
+  console.log(lineId)
+  console.log(objectiveId)
+
   return (
     <Grid container spacing={3} style={{ marginTop: '2rem' }}>
       <WorkplanSelector {...props} />
@@ -19,7 +23,7 @@ const ActivitiesView = props => {
       <ObjectivesSelector {...props} />
       <ActionsSelector {...props} />
       <Grid item xs={12}>
-        {actionId ? <ActivitiesList {...props} /> : null}
+        {workplanId && lineId && actionId && objectiveId ? <ActivitiesList {...props} /> : null}
       </Grid>
     </Grid>
   )

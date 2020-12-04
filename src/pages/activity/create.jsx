@@ -14,7 +14,10 @@ import {
   ImageInput,
   ImageField,
   FileInput,
-  FileField
+  FileField,
+  useNotify,
+  useRefresh,
+  useRedirect
 } from 'react-admin'
 import { useSelectedValues } from '../../provider/context'
 import Transversality from './Transversality'
@@ -30,11 +33,18 @@ const validateActivityCreation = values => {
 }
 
 const ActivityCreate = props => {
+  const notify = useNotify()
+  const refresh = useRefresh()
+  const redirect = useRedirect()
   let [{ objectiveId, actionId }] = useSelectedValues()
   console.log(actionId)
-
+  const onSuccess = ({ data }) => {
+    notify(`Actividad creada correctamente`)
+    refresh()
+    redirect('/activities')
+  }
   return (
-    <Create title='Crear Actividad' {...props}>
+    <Create title='Crear Actividad' {...props} onSuccess={onSuccess}>
       <SimpleForm validate={validateActivityCreation}>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
