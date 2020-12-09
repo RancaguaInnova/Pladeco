@@ -67,8 +67,8 @@ export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
           ]}
         />
         <DateField source='createAt' label='Fecha de creación' defaultValue='' />
-
-        <BooleanField source='approved' label='Aprobado' defaultValue='' />
+        {/*         <BooleanField source='approved' label='Aprobado' defaultValue='' />
+         */}{' '}
         <EditButton label='Editar' />
       </Datagrid>
     </List>

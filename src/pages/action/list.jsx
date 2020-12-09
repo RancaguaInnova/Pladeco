@@ -9,7 +9,8 @@ import {
   DateInput,
   DeleteButton,
   TextInput,
-  Filter
+  Filter,
+  BooleanField
 } from 'react-admin'
 import Divider from '@material-ui/core/Divider'
 import Tabs from '@material-ui/core/Tabs'
@@ -80,6 +81,7 @@ class TabbedDatagrid extends React.Component {
                     />
                     <DateField source='initialDate' label='Fecha de inicio' />
                     <DateField source='endDate' label='Fecha de termino' />
+                    <BooleanField source='approved' label='Aprobado' />
 
                     <EditButton label='Editar' />
                     <DeleteButton label='Eliminar' />
@@ -168,6 +170,8 @@ const ActionList = ({ ...props }) => {
         />
         <DateField source='initialDate' label='Fecha de inicio' />
         <DateField source='endDate' label='Fecha de termino' />
+        <BooleanField source='approved' label='Aprobado' />
+
         <EditButton label='Editar' />
         <DeleteButton label='Eliminar' />
       </Datagrid>
