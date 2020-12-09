@@ -32,14 +32,15 @@ const ActivityEdit = props => {
   let history = useHistory()
 
   const onSuccess = ({ data }) => {
-    notify(`Cambios realizados correctamente`)
-    refresh()
+    // notify(`Cambios realizados correctamente`)
+    //refresh()
     history.push('/activities')
     //redirect('/activities')
   }
 
   return (
-    <Edit title='Editar Actividad' {...props} onSuccess={onSuccess}>
+    <Edit title='Editar Actividad' {...props} >
+    {/* <Edit title='Editar Actividad' {...props} onSuccess={onSuccess}> */}
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />

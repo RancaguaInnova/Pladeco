@@ -15,8 +15,11 @@ const ReferenceField = ({ initialValue, query, onChange, name, labelField, nullO
         Cargando...
       </Typography>
     )
-  if (error) return <Error />
-  if (!data) return null
+    console.log('error!!!!!!!!!!', error)
+  if (error || !data) return null// <Error error={error} />
+  //if (!data) return null
+
+
   const choices = _reduce(
     data,
     (alternatives, document, index) => {
