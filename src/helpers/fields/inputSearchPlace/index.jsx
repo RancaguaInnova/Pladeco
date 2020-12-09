@@ -10,6 +10,7 @@ import parse from 'autosuggest-highlight/parse'
 import throttle from 'lodash/throttle'
 import { useForm } from 'react-final-form'
 import { Field } from 'react-final-form'
+import _get from 'lodash/get'
 
 const autocompleteService = { current: null }
 const useStyles = makeStyles(theme => ({
@@ -51,33 +52,35 @@ const GoogleMaps = () => {
   const fetch = useMemo(
     () =>
       throttle((input, callback) => {
-        autocompleteService.current.getPlacePredictions(input, callback)
+        const current = _get(autocompleteService, 'current', null)
+        if (current) current.getPlacePredictions(input, callback)
       }, 200),
     []
   )
 
   useEffect(() => {
     let active = true
-
     if (window.google) {
       if (!autocompleteService.current) {
         autocompleteService.current = new window.google.maps.places.AutocompleteService()
       }
-      if (!autocompleteService.current) {
+      /* if (!autocompleteService.current) {
         return undefined
-      }
+      } */
     }
 
     if (inputValue === '') {
       setOptions([])
-      return undefined
+      /* return undefined */
+    } else {
+      fetch({ input: inputValue }, results => {
+        if (active) {
+          setOptions(results || [])
+        }
+      })
     }
 
-    fetch({ input: inputValue }, results => {
-      if (active) {
-        setOptions(results || [])
-      }
-    })
+    
 
     return () => {
       active = false
