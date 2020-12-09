@@ -19,6 +19,7 @@ import {
   useRefresh,
   useRedirect
 } from 'react-admin'
+
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 import _get from 'lodash/get'
 import Transversality from './Transversality'
@@ -29,15 +30,17 @@ const ActivityEdit = props => {
   const refresh = useRefresh()
   const redirect = useRedirect()
   let history = useHistory()
+
   const onSuccess = ({ data }) => {
-    notify(`Cambios realizados correctamente`)
-    refresh()
+    // notify(`Cambios realizados correctamente`)
+    //refresh()
     history.push('/activities')
     //redirect('/activities')
   }
 
   return (
-    <Edit title='Editar Actividad' {...props} onSuccess={onSuccess}>
+    <Edit title='Editar Actividad' {...props} >
+    {/* <Edit title='Editar Actividad' {...props} onSuccess={onSuccess}> */}
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />
