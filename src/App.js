@@ -54,12 +54,12 @@ const App = () => {
     <SelectionsProvider initialSelections={initialContext} reducer={reducer}>
       <Admin
         dataProvider={dataProvider}
-                /* i18nProvider={i18nProvider} */
+        i18nProvider={i18nProvider}
         layout={Layout}
         customRoutes={CustomRouters}
         authProvider={authProvider}
         loginPage={Inicio}
-            >
+      >
         {permissions => {
           return [
             <ResourceWithPermissions name='workplans' {...WorkPlan} permissions={permissions} />,
