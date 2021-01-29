@@ -26,8 +26,8 @@ import AuthProvider from './auth'
 import { initialContext, SelectionsProvider, reducer } from './provider/context'
 import Analytics from './core/Analytics/'
 
-const firebase = require('firebase')
-require('firebase/firestore')
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const i18nProvider = polyglotI18nProvider(() => spanishMessages, 'es')
 const firebaseConfig = {

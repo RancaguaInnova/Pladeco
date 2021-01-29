@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Alert from '../Alert'
 import { makeStyles } from '@material-ui/core/styles'
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
@@ -110,7 +110,7 @@ export default function Registro() {
       const {
         user: { uid }
       } = await Firebase.auth().createUserWithEmailAndPassword(email, password)
-      Firebase.firestore()
+      await Firebase.firestore()
         .collection('users')
         .doc(uid)
         .set({ email: { address: email } })
@@ -126,7 +126,7 @@ export default function Registro() {
         title: 'Error!',
         body: `Ocurrión un error al registrar el usuario: ${error.message}`
       })
-      return
+
     }
   }
 
