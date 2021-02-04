@@ -41,7 +41,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 const options = {
-  logging: false
+  logging: false,  persistence: 'none',
 }
 
 const dataProvider = FirebaseDataProvider(firebaseConfig, options)

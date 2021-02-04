@@ -18,7 +18,7 @@
     "ra-auth-acl": "^0.1.1",
     "react": "^16.12.0",
     "react-admin": "^3.7.2",
-    "react-admin-firebase": "^3.2.2",
+    "react-admin-firebase": "^3.2.17",
     "react-countup": "^4.3.2",
     "react-dom": "^16.12.0",
     "react-ga": "^3.2.1",
