@@ -78,7 +78,7 @@ const ActionCreate = ({ classes, ...props }) => {
         />
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
-        <ReferenceInput
+    <ReferenceInput
           reference='objectives'
           source='objectiveId'
           label='Objetivos'
@@ -87,14 +87,15 @@ const ActionCreate = ({ classes, ...props }) => {
         >
           <SelectInput optionText='name' value={objectiveId} />
         </ReferenceInput>
-        <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
+
+    <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
           <ImageField source='src' title='title' />
         </ImageInput>
 
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
-        <SelectInput
+       <SelectInput
           source='original'
           label='Actividad existente en PLADECO (original)'
           choices={[
@@ -102,8 +103,9 @@ const ActionCreate = ({ classes, ...props }) => {
             { id: 'agregada', name: 'Nueva' }
           ]}
         />
+         <BooleanInput source='approved' />
       </SimpleForm>
-      <BooleanInput source='approved' />
+
     </Create>
   )
 }
