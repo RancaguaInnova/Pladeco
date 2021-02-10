@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -31,20 +31,6 @@ const GoogleMaps = () => {
   const [inputValue, setInputValue] = useState('')
   const [options, setOptions] = useState([])
 
-  /*   if (typeof window !== 'undefined' && !loaded.current) {
-    if (!document.querySelector('#google-maps')) {
-      loadScript(
-        'https://maps.googleapis.com/maps/api/js?key=' +
-          process.env.REACT_APP_MAP_KEY +
-          '&libraries=places',
-        document.querySelector('head'),
-        'google-maps'
-      )
-    }
-
-    loaded.current = true
-  } */
-
   const handleChange = event => {
     setInputValue(event.target.value)
   }
@@ -64,9 +50,6 @@ const GoogleMaps = () => {
       if (!autocompleteService.current) {
         autocompleteService.current = new window.google.maps.places.AutocompleteService()
       }
-      /* if (!autocompleteService.current) {
-        return undefined
-      } */
     }
 
     if (inputValue === '') {
@@ -79,8 +62,6 @@ const GoogleMaps = () => {
         }
       })
     }
-
-    
 
     return () => {
       active = false
@@ -130,14 +111,14 @@ const GoogleMaps = () => {
   }
 
   const myLocation = () => {
-    var startPos
-    var geoOptions = {
+    let startPos
+    const geoOptions = {
       enableHighAccuracy: true
     }
 
-    var geoSuccess = async function(position) {
+    const geoSuccess = async function(position) {
       startPos = position
-      var latlng = new window.google.maps.LatLng(
+      const latlng = new window.google.maps.LatLng(
         startPos.coords.latitude,
         startPos.coords.longitude
       )
@@ -154,7 +135,7 @@ const GoogleMaps = () => {
         console.log('Error occurred. Error : ' + e)
       }
     }
-    var geoError = function(error) {
+    const geoError = function(error) {
       console.log('Error occurred. Error code: ' + error.code)
     }
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions)

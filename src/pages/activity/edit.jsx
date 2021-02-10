@@ -14,33 +14,16 @@ import {
   ImageInput,
   ImageField,
   FileField,
-  FileInput,
-  useNotify,
-  useRefresh,
-  useRedirect
+  FileInput
 } from 'react-admin'
 
 import SearchGoogle from '../../helpers/fields/inputSearchPlace'
 import _get from 'lodash/get'
 import Transversality from './Transversality'
-import { useHistory } from 'react-router-dom'
 
 const ActivityEdit = props => {
-  const notify = useNotify()
-  const refresh = useRefresh()
-  const redirect = useRedirect()
-  let history = useHistory()
-
-  const onSuccess = ({ data }) => {
-    // notify(`Cambios realizados correctamente`)
-    //refresh()
-    history.push('/activities')
-    //redirect('/activities')
-  }
-
   return (
-    <Edit title='Editar Actividad' {...props} >
-    {/* <Edit title='Editar Actividad' {...props} onSuccess={onSuccess}> */}
+    <Edit title='Editar Actividad' {...props}>
       <SimpleForm>
         <TextInput source='name' label='Nombre' defaultValue='' className='TextInput' />
         <TextInput source='description' label='Descripción' defaultValue='' className='TextInput' />

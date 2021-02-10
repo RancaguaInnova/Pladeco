@@ -1,163 +1,29 @@
-import React, { Fragment } from 'react'
-import {
-  Datagrid,
-  EditButton,
-  List,
-  Responsive,
-  TextField,
-  SelectField,
-  DateInput,
-  DeleteButton,
-  TextInput,
-  Filter,
-  BooleanField
-} from 'react-admin'
-import Divider from '@material-ui/core/Divider'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
+import React from 'react'
+import { Datagrid, EditButton, List, TextField, SelectField, BooleanField } from 'react-admin'
 import DateField from '../../helpers/fields/DateField'
 import { useSelectedValues } from '../../provider/context'
-
-const ActionFilter = props => (
-  <Filter {...props}>
-    <TextInput label='Buscar' source='name' alwaysOn />
-    <DateInput label='Fecha Inicio' source='initialDate' />
-    <DateInput label='Fecha Fin' source='endDate' />
-  </Filter>
-)
-class TabbedDatagrid extends React.Component {
-  tabs = [
-    { id: 'not-started', name: 'No iniciado' },
-    { id: 'in-progress', name: 'En progreso' },
-    { id: 'finished', name: 'Finalizado' }
-  ]
-
-  state = { 'not-started': [], 'in-progress': [], finished: [] }
-
-  static getDerivedStateFromProps(props, state) {
-    if (props.ids !== state[props.filterValues.status]) {
-      return { ...state, [props.filterValues.status]: props.ids }
-    }
-    return null
-  }
-
-  handleChange = (event, value) => {
-    const { filterValues, setFilters } = this.props
-    setFilters({ ...filterValues, status: value })
-  }
-
-  render() {
-    const { classes, filterValues, ...props } = this.props
-
-    return (
-      <Fragment>
-        <Tabs
-          centered
-          value={filterValues.status}
-          indicatorColor='primary'
-          onChange={this.handleChange}
-        >
-          {this.tabs.map(choice => {
-            return <Tab key={choice.id} label={choice.name} value={choice.id} />
-          })}
-        </Tabs>
-        <Divider />
-        <Responsive
-          medium={
-            <div>
-              {filterValues.status === 'not-started' && (
-                <div>
-                  <Datagrid {...props} ids={this.state['not-started']}>
-                    <TextField source='name' label='Nombre' />
-
-                    <SelectField
-                      source='status'
-                      label='Estado'
-                      choices={[
-                        { id: 'not-started', name: 'No iniciado' },
-                        { id: 'in-progress', name: 'En progreso' },
-                        { id: 'finished', name: 'Finalizado' }
-                      ]}
-                    />
-                    <DateField source='initialDate' label='Fecha de inicio' />
-                    <DateField source='endDate' label='Fecha de termino' />
-                    <BooleanField source='approved' label='Aprobado' />
-
-                    <EditButton label='Editar' />
-                    <DeleteButton label='Eliminar' />
-                  </Datagrid>
-                </div>
-              )}
-              {filterValues.status === 'in-progress' && (
-                <Datagrid {...props} ids={this.state['in-progress']}>
-                  <TextField source='name' label='Nombre' />
-
-                  <SelectField
-                    source='status'
-                    label='Estado'
-                    choices={[
-                      { id: 'not-started', name: 'No iniciado' },
-                      { id: 'in-progress', name: 'En progreso' },
-                      { id: 'finished', name: 'Finalizado' }
-                    ]}
-                  />
-                  <DateField source='initialDate' label='Fecha de inicio' />
-                  <DateField source='endDate' label='Fecha de termino' />
-
-                  <EditButton label='Editar' />
-                  <DeleteButton label='Eliminar' />
-                </Datagrid>
-              )}
-              {filterValues.status === 'finished' && (
-                <Datagrid {...props} ids={this.state['finished']}>
-                  <TextField source='name' label='Nombre' />
-
-                  <SelectField
-                    source='status'
-                    label='Estado'
-                    choices={[
-                      { id: 'not-started', name: 'No iniciado' },
-                      { id: 'in-progress', name: 'En progreso' },
-                      { id: 'finished', name: 'Finalizado' }
-                    ]}
-                  />
-                  <DateField source='initialDate' label='Fecha de inicio' />
-                  <DateField source='endDate' label='Fecha de termino' />
-
-                  <EditButton label='Editar' />
-                  <DeleteButton label='Eliminar' />
-                </Datagrid>
-              )}
-            </div>
-          }
-        />
-      </Fragment>
-    )
-  }
-}
-
+import DeleteButtonWithConfirmation from '../../helpers/DeleteButton'
+import { usePermissions } from 'react-admin'
+import _get from 'lodash/get'
 const ActionList = ({ ...props }) => {
   let [{ objectiveId }] = useSelectedValues()
+  const { permissions } = usePermissions()
+
   return (
     <List
       {...props}
-      // basePath='/AccionValidation'
       resource='actions'
       hasCreate={true}
       hasEdit={true}
       hasList={true}
       hasShow={true}
       match={true}
-      // filterDefaultValues={{ status: 'not-started' }}
       sort={{ field: 'date', order: 'DESC' }}
       perPage={50}
-      // filters={<ActionFilter />}
       filter={{ objectiveId }}
       title='Acciones'
     >
-      {/*    <TabbedDatagrid /> */}
-
-      <Datagrid rowClick={'edit'}>
+      <Datagrid>
         <TextField source='name' label='Nombre' />
         <SelectField
           source='status'
@@ -171,9 +37,10 @@ const ActionList = ({ ...props }) => {
         <DateField source='initialDate' label='Fecha de inicio' />
         <DateField source='endDate' label='Fecha de termino' />
         <BooleanField source='approved' label='Aprobado' />
-
         <EditButton label='Editar' />
-        <DeleteButton label='Eliminar' />
+        {_get(permissions, 'actions.delete', false) && (
+          <DeleteButtonWithConfirmation label='Eliminar' />
+        )}
       </Datagrid>
     </List>
   )

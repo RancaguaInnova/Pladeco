@@ -1,24 +1,14 @@
 import React from 'react'
-import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import NativeSelect from '@material-ui/core/NativeSelect'
-import { useQuery, Error } from 'react-admin'
+import { useQuery } from 'react-admin'
 import _reduce from 'lodash/reduce'
-import { Typography } from '@material-ui/core'
 
 const ReferenceField = ({ initialValue, query, onChange, name, labelField, nullOptionLabel }) => {
   const { data, loading, error } = useQuery(query)
 
-  if (loading)
-    return (
-      <Typography variant='body2' style={{ marginTop: 35 }}>
-        Cargando...
-      </Typography>
-    )
-    console.log('error!!!!!!!!!!', error)
-  if (error || !data) return null// <Error error={error} />
-  //if (!data) return null
-
+  if (loading) return <div style={{ marginTop: 35 }}>Cargando...</div>
+  if (error || !data) return null
 
   const choices = _reduce(
     data,
@@ -34,7 +24,7 @@ const ReferenceField = ({ initialValue, query, onChange, name, labelField, nullO
   )
 
   return (
-    <FormControl fullWidth margin='normal' required variant='outlined'>
+    <div>
       <InputLabel htmlFor={`selector-${name}`}>{name}</InputLabel>
       <NativeSelect
         defaultValue={initialValue || null}
@@ -53,7 +43,7 @@ const ReferenceField = ({ initialValue, query, onChange, name, labelField, nullO
           ...choices
         ]}
       </NativeSelect>
-    </FormControl>
+    </div>
   )
 }
 

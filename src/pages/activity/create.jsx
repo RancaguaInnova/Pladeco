@@ -37,7 +37,6 @@ const ActivityCreate = props => {
   const refresh = useRefresh()
   const redirect = useRedirect()
   let [{ objectiveId, actionId }] = useSelectedValues()
-  console.log(actionId)
   const onSuccess = ({ data }) => {
     notify(`Actividad creada correctamente`)
     refresh()
@@ -57,7 +56,7 @@ const ActivityCreate = props => {
           perPage={500}
           filter={{ objectiveId }}
         >
-          <SelectInput optionText='name' />
+          <SelectInput optionText='name' initialValue={actionId} />
         </ReferenceInput>
 
         <SelectInput
@@ -76,6 +75,7 @@ const ActivityCreate = props => {
           label='Responsable'
           className='TextInput'
           perPage={500}
+          sort={{ field: 'firstName', order: 'ASC' }}
         >
           <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
@@ -92,6 +92,7 @@ const ActivityCreate = props => {
           className='TextInput'
           allowEmpty
           perPage={500}
+          sort={{ field: 'name', order: 'ASC' }}
         >
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>

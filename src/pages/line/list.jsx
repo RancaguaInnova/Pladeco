@@ -4,12 +4,14 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  DeleteButton,
   ReferenceField,
-  FunctionField
+  FunctionField,
+  usePermissions
 } from 'react-admin'
 import { withStyles } from '@material-ui/core/styles'
 import { useSelectedValues } from '../../provider/context'
+import _get from 'lodash/get'
+import DeleteButtonWithConfirmation from '../../helpers/DeleteButton'
 
 const listStyles = {
   thead: {
@@ -20,9 +22,11 @@ const listStyles = {
 
 export const LineList = withStyles(listStyles)(({ classes, ...props }) => {
   let [{ areaId }] = useSelectedValues()
+  const { permissions } = usePermissions()
+
   return (
     <List {...props} title='Lineas' filter={{ areaId }}>
-      <Datagrid rowClick='edit' classes={classes}>
+      <Datagrid classes={classes}>
         <TextField source='name' label='Nombre' defaultValue='' />
         <ReferenceField reference='areas' source='areaId' label='Area' link='show'>
           <TextField source='name' />
@@ -31,7 +35,9 @@ export const LineList = withStyles(listStyles)(({ classes, ...props }) => {
           <FunctionField render={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceField>
         <EditButton label='Editar' />
-        <DeleteButton label='Eliminar' />
+        {_get(permissions, 'lines.delete', false) && (
+          <DeleteButtonWithConfirmation label='Eliminar' />
+        )}
       </Datagrid>
     </List>
   )

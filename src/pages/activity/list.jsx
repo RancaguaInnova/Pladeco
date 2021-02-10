@@ -4,10 +4,8 @@ import {
   Datagrid,
   TextField,
   EditButton,
-  DeleteButton,
   ReferenceField,
   SelectField,
-  BooleanField,
   Filter,
   TextInput,
   SelectInput
@@ -15,6 +13,9 @@ import {
 import DateField from '../../helpers/fields/DateField'
 import { withStyles } from '@material-ui/core/styles'
 import { useSelectedValues } from '../../provider/context'
+import DeleteButtonWithConfirmation from '../../helpers/DeleteButton'
+import { usePermissions } from 'react-admin'
+import _get from 'lodash/get'
 
 const listStyles = {
   thead: {
@@ -44,6 +45,8 @@ const ActivityFilter = props => (
 
 export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
   let [{ actionId }] = useSelectedValues()
+  const { permissions } = usePermissions()
+
   return (
     <List
       {...props}
@@ -67,9 +70,10 @@ export const ActivityList = withStyles(listStyles)(({ classes, ...props }) => {
           ]}
         />
         <DateField source='createAt' label='Fecha de creación' defaultValue='' />
-        {/*         <BooleanField source='approved' label='Aprobado' defaultValue='' />
-         */}{' '}
         <EditButton label='Editar' />
+        {_get(permissions, 'activities.delete', false) && (
+          <DeleteButtonWithConfirmation label='Eliminar' />
+        )}
       </Datagrid>
     </List>
   )

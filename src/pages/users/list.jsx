@@ -1,26 +1,45 @@
-import React from "react";
+import React from 'react'
 import {
   List,
   Datagrid,
   TextField,
   EditButton,
-  DeleteButton,
-  ReferenceField
-} from "react-admin";
-export const UserList = props => (
-  <List {...props} title="Listado de Usuarios">
-    <Datagrid rowClick="edit">
-      <TextField source="firstName" label="Nombre" />
-      <TextField source="lastName" label="Apellido" />
-      <TextField source="identifier" label="Rut" />
-      <TextField source="email.address" label="Email" />
-      <ReferenceField label="Rol" source="role" reference="roles">
-        <TextField source="name" />
-      </ReferenceField>
-      <EditButton label="Editar" />
-      <DeleteButton label="Eliminar" />
-    </Datagrid>
-  </List>
-);
+  ReferenceField,
+  usePermissions,
+  Filter,
+  TextInput
+} from 'react-admin'
+import _get from 'lodash/get'
+import DeleteButtonWithConfirmation from '../../helpers/DeleteButton'
 
-export default UserList;
+const UsersFilter = props => (
+  <Filter {...props}>
+    <TextInput label='Nombre' source='firstName' alwaysOn />
+    <TextInput label='Apellido' source='lastName' alwaysOn />
+    <TextInput label='Rut' source='identifier' alwaysOn />
+  </Filter>
+)
+
+export const UserList = props => {
+  const { permissions } = usePermissions()
+
+  return (
+    <List {...props} title='Listado de Usuarios' filters={<UsersFilter />}>
+      <Datagrid>
+        <TextField source='firstName' label='Nombre' />
+        <TextField source='lastName' label='Apellido' />
+        <TextField source='identifier' label='Rut' />
+        <TextField source='email.address' label='Email' />
+        <ReferenceField label='Rol' source='role' reference='roles'>
+          <TextField source='name' />
+        </ReferenceField>
+        <EditButton label='Editar' />
+        {_get(permissions, 'users.delete', false) && (
+          <DeleteButtonWithConfirmation label='Eliminar' />
+        )}{' '}
+      </Datagrid>
+    </List>
+  )
+}
+
+export default UserList

@@ -20,6 +20,7 @@ import { Layout } from './pages/layout'
 import CustomRouters from './pages/customRoutes'
 import Profile from './pages/profile'
 import Inicio from './pages/Inicio'
+import Dashboard from "./pages/dashboard";
 
 // PROVIDERS
 import AuthProvider from './auth'
@@ -59,6 +60,7 @@ const App = () => {
         customRoutes={CustomRouters}
         authProvider={authProvider}
         loginPage={Inicio}
+        dashboard={Dashboard}
       >
         {permissions => {
           return [

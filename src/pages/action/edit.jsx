@@ -40,7 +40,7 @@ const ActionEdit = ({ permissions, ...props }) => {
         <SimpleForm>
           <TextField source='name' label='Nombre' validate={validateName} />
           <TextField source='description' label='Descripción' validate={validateName} />
-          <ReferenceField reference='users' source='responsibleId' label='Responsable'>
+          <ReferenceField reference='users' source='responsibleId' label='Responsable' sort={{ field: 'firstName', order: 'ASC' }}>
             <Field
               name='id'
               component={users => {

@@ -20,8 +20,8 @@ import {
   BooleanInput
 } from 'react-admin'
 import { useSelectedValues } from '../../provider/context'
-
 import { makeStyles } from '@material-ui/core/styles'
+import './styles.css'
 
 const useStyles = makeStyles({
   button: {
@@ -36,20 +36,24 @@ const ActionCreateToolbar = props => {
 
   return (
     <Toolbar {...props}>
-      <SaveButton
-        label='Guardar y Mostrar'
-        redirect='show'
-        submitOnEnter
-        className={classes.button}
-        {...props}
-      />
-      <SaveButton
-        label='Guardar y Agregar'
-        redirect={false}
-        submitOnEnter={false}
-        className={classes.button}
-        {...props}
-      />
+      <div className={'marginButton'}>
+        <SaveButton
+          label='Guardar y Mostrar'
+          redirect='show'
+          submitOnEnter
+          className={classes.button}
+          {...props}
+        />
+      </div>
+      <div className={'marginButton'}>
+        <SaveButton
+          label='Guardar y Agregar'
+          redirect={false}
+          submitOnEnter={false}
+          className={classes.button}
+          {...props}
+        />{' '}
+      </div>
     </Toolbar>
   )
 }
@@ -61,10 +65,22 @@ const ActionCreate = ({ classes, ...props }) => {
       <SimpleForm toolbar={<ActionCreateToolbar />}>
         <TextInput source='name' label='Nombre' validate={validateName} />
         <TextInput source='description' label='Descripción' validate={validateName} />
-        <ReferenceInput reference='users' source='responsibleId' label='Responsable' perPage={500}>
+        <ReferenceInput
+          reference='users'
+          source='responsibleId'
+          label='Responsable'
+          perPage={500}
+          sort={{ field: 'firstName', order: 'ASC' }}
+        >
           <SelectInput optionText={record => `${record.firstName} ${record.lastName}`} />
         </ReferenceInput>
-        <ReferenceArrayInput source='dependsOnIds' reference='actions' label='Depende de:'>
+        <ReferenceArrayInput
+          source='dependsOnIds'
+          reference='actions'
+          label='Depende de:'
+          perPage={500}
+          sort={{ field: 'name', order: 'ASC' }}
+        >
           <SelectArrayInput optionText='name' />
         </ReferenceArrayInput>
         <SelectInput
@@ -78,24 +94,24 @@ const ActionCreate = ({ classes, ...props }) => {
         />
         <DateInput source='initialDate' label='Fecha de inicio' />
         <DateInput source='endDate' label='Fecha de término' />
-    <ReferenceInput
+        <ReferenceInput
           reference='objectives'
           source='objectiveId'
           label='Objetivos'
           perPage={500}
           filter={{ lineId }}
         >
-          <SelectInput optionText='name' value={objectiveId} />
+          <SelectInput optionText='name' initialValue={objectiveId} />
         </ReferenceInput>
 
-    <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
+        <ImageInput source='images' label='Imagenes' accept='image/*' multiple>
           <ImageField source='src' title='title' />
         </ImageInput>
 
         <FileInput source='documents' label='Documentos' accept='application/pdf' multiple>
           <FileField source='src' title='title' />
         </FileInput>
-       <SelectInput
+        <SelectInput
           source='original'
           label='Actividad existente en PLADECO (original)'
           choices={[
@@ -103,9 +119,8 @@ const ActionCreate = ({ classes, ...props }) => {
             { id: 'agregada', name: 'Nueva' }
           ]}
         />
-         <BooleanInput source='approved' />
+        <BooleanInput source='approved' />
       </SimpleForm>
-
     </Create>
   )
 }
